@@ -1,0 +1,23 @@
+FROM centos
+MAINTAINER cwong@radiantblue.com
+RUN yum install git -y
+RUN yum install wget -y
+RUN wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz
+RUN tar -xzf go1.4.2.linux-amd64.tar.gz -C /usr/local
+RUN rm go1.4.2.linux-amd64.tar.gz
+RUN git clone https://github.com/sausheong/gwp
+RUN mkdir -p /src/first_webapp
+
+RUN cp gwp/Chapter_1_Go_And_Web_Applications/first_webapp/server.go src/first_webapp
+ENV GOROOT=/usr/local/go
+ENV GOPATH=/
+ENV PATH=$PATH:$GOROOT/bin
+RUN go install first_webapp
+EXPOSE 8080
+CMD ["/bin/first_webapp"]
+
+#Test this script:
+# vi Dockerfile
+# docker build -t mycontainer:0.1 .
+# docker run -p 8080:8080 <sha of image produced by the docker build>
+
