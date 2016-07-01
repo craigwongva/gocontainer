@@ -1,0 +1,74 @@
+FROM centos
+MAINTAINER cwong@radiantblue.com
+RUN yum install git -y
+RUN yum install wget -y
+
+
+sudo yum install java-1.8.0-openjdk-devel -y
+ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
+
+#This installer is interactive, and I want silent.
+# http://www.sonatype.com/oss-thank-you-unix.sh
+#So I've tar'd up my exploded files and stored them on s3.
+
+#aws s3 cp s3://venicegeo-devops-dev-gocontainer-project/craig-nexus-3.0.0-03-unix.tar .
+RUN git clone https://github.com/craigwongva/gocontainer
+RUN cp /gocontainer/craig-nexus-3.0.0-03-unix.tar /
+RUN tar -xvf craig-nexus-3.0.0-03-unix.tar
+RUN rm craig-nexus-3.0.0-03-unix.tar 
+RUN cd nexus-3.0.0-03/bin
+EXPOSE 8081
+RUN ./nexus start
+
+#make sure 8081 is open
+
+
+
+RUN wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz
+RUN tar -xzf go1.4.2.linux-amd64.tar.gz -C /usr/local
+RUN rm go1.4.2.linux-amd64.tar.gz
+RUN git clone https://github.com/sausheong/gwp
+RUN mkdir -p /src/first_webapp
+
+RUN cp gwp/Chapter_1_Go_And_Web_Applications/first_webapp/server.go src/first_webapp
+
+
+ENV GOROOT=/usr/local/go
+ENV GOPATH=/
+ENV PATH=$PATH:$GOROOT/bin
+RUN go install first_webapp
+EXPOSE 8080
+#CMD ["/bin/first_webapp"]
+
+#Test this script:
+# vi Dockerfile
+# docker build -t mycontainer:0.1 .
+# docker run -p 8080:8080 <sha of image produced by the docker build>
+
+
+#Create a repo.
+
+RUN echo  > createrawrepo.json
+RUN sed -i '$a {'                                                                   createrawrepo.json
+RUN sed -i '$a  \"name\": \"rawcmd\",'                                              createrawrepo.json
+RUN sed -i '$a  \"type\": \"groovy\",'                                              createrawrepo.json
+RUN sed -i '$a  \"content\": \"repository.createRawHosted(SINGLEQUOTEmyrawrepoSINGLEQUOTE)\"'          createrawrepo.json
+RUN sed -i '$a }' createrawrepo.json
+RUN sed -i '1,$s/SINGLEQUOTE/\x27/g'                                                createrawrepo.json
+
+RUN curl -XPOST -u admin:admin123 --header "Content-Type: application/json" 'http://localhost:8081/service/siesta/rest/v1/script' -d @createrawrepo.json
+RUN curl -XGET -u admin:admin123 'http://localhost:8081/service/siesta/rest/v1/script'
+RUN curl -XPOST -u admin:admin123 --header "Content-Type: text/plain" 'http://localhost:8081/service/siesta/rest/v1/script/rawcmd/run'
+
+#In real life, Jenkins loads a jar (Java) or executable (Go) into a repo.
+#I'm not sure why/how, but the Nexus repo by default is publicly viewable.
+RUN curl --user 'admin:admin123' --upload-file /bin/first_webapp http://localhost:8081/myrawrepo/first_webapp_from_nexus
+
+
+
+#I'm not sure why/how, but the Nexus repo by default is publicly viewable.
+RUN rm /first_webapp_from_nexus
+RUN wget http://localhost:8081/repository/myrawrepo/first_webapp_from_nexus
+RUN chmod +x first_webapp_from_nexus
+CMD ["/first_webapp_from_nexus"]
+
