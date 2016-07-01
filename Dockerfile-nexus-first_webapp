@@ -15,18 +15,21 @@ ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
 RUN git clone https://github.com/craigwongva/gocontainer
 RUN cp /gocontainer/craig-nexus-3.0.0-03-unix.tar /
 RUN tar -xvf craig-nexus-3.0.0-03-unix.tar
-RUN rm craig-nexus-3.0.0-03-unix.tar 
+#RUN rm craig-nexus-3.0.0-03-unix.tar 
 RUN cd nexus-3.0.0-03/bin
 EXPOSE 8081
+
+#The following does NOT work:
+#But that's OK, because we're not trying to prove that we can run Nexus in a container.
 RUN ./nexus start
 
 #make sure 8081 is open
 
 
-
+RUN cd /
 RUN wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz
 RUN tar -xzf go1.4.2.linux-amd64.tar.gz -C /usr/local
-RUN rm go1.4.2.linux-amd64.tar.gz
+#RUN rm go1.4.2.linux-amd64.tar.gz
 RUN git clone https://github.com/sausheong/gwp
 RUN mkdir -p /src/first_webapp
 
@@ -56,19 +59,22 @@ RUN sed -i '$a  \"content\": \"repository.createRawHosted(SINGLEQUOTEmyrawrepoSI
 RUN sed -i '$a }' createrawrepo.json
 RUN sed -i '1,$s/SINGLEQUOTE/\x27/g'                                                createrawrepo.json
 
-RUN curl -XPOST -u admin:admin123 --header "Content-Type: application/json" 'http://localhost:8081/service/siesta/rest/v1/script' -d @createrawrepo.json
-RUN curl -XGET -u admin:admin123 'http://localhost:8081/service/siesta/rest/v1/script'
-RUN curl -XPOST -u admin:admin123 --header "Content-Type: text/plain" 'http://localhost:8081/service/siesta/rest/v1/script/rawcmd/run'
+#idempotent?:
+#curl -v -X DELETE -u admin:admin123 'http://52.41.119.94:8081/service/siesta/rest/v1/script/maven'
+RUN curl -XPOST -u admin:admin123 --header "Content-Type: application/json" 'http://52.41.119.94:8081/service/siesta/rest/v1/script' -d @createrawrepo.json
+RUN curl -XGET -u admin:admin123 'http://52.41.119.94:8081/service/siesta/rest/v1/script'
+RUN curl -XPOST -u admin:admin123 --header "Content-Type: text/plain" 'http://52.41.119.94:8081/service/siesta/rest/v1/script/rawcmd/run'
 
 #In real life, Jenkins loads a jar (Java) or executable (Go) into a repo.
-#I'm not sure why/how, but the Nexus repo by default is publicly viewable.
-RUN curl --user 'admin:admin123' --upload-file /bin/first_webapp http://localhost:8081/myrawrepo/first_webapp_from_nexus
+#If the destination URL is wrong (e.g. forgot '/repository'), curl won't tell you :(
+#I think you must have include a name in the destination, e.g. first_webapp_from_nexus.
+RUN curl --user 'admin:admin123' --upload-file /bin/first_webapp http://52.41.119.94:8081/repository/myrawrepo/first_webapp_from_nexus
 
 
 
 #I'm not sure why/how, but the Nexus repo by default is publicly viewable.
 RUN rm /first_webapp_from_nexus
-RUN wget http://localhost:8081/repository/myrawrepo/first_webapp_from_nexus
+RUN wget http://52.41.119.94:8081/repository/myrawrepo/first_webapp_from_nexus
 RUN chmod +x first_webapp_from_nexus
 CMD ["/first_webapp_from_nexus"]
 
