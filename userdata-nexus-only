@@ -10,7 +10,8 @@ cd nexus-3.0.0-03/bin
 #EXPOSE 8081
 
 ./nexus start
-sleep 20
+echo sleeping for 40 seconds
+sleep 40
 echo done sleeping
 #
 ##make sure 8081 is open
