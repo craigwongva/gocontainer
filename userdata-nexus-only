@@ -11,6 +11,7 @@ cd nexus-3.0.0-03/bin
 
 ./nexus start
 sleep 20
+echo done sleeping
 #
 ##make sure 8081 is open
 
@@ -18,6 +19,7 @@ sleep 20
 #CREATE A NEXUS REPO
 
 cd ~/gocontainer
+echo 100
 echo  > createrawrepo.json
 sed -i '$a {'                                                                   createrawrepo.json
 sed -i '$a  \"name\": \"rawcmd\",'                                              createrawrepo.json
@@ -25,12 +27,17 @@ sed -i '$a  \"type\": \"groovy\",'                                              
 sed -i '$a  \"content\": \"repository.createRawHosted(SINGLEQUOTEmyrawrepoSINGLEQUOTE)\"'          createrawrepo.json
 sed -i '$a }' createrawrepo.json
 sed -i '1,$s/SINGLEQUOTE/\x27/g'                                                createrawrepo.json
+echo 200
 
 #idempotent?:
-curl -XDELETE -u admin:admin123 'http://52.41.214.100:8081/service/siesta/rest/v1/script/maven'
-curl -XPOST -u admin:admin123 --header "Content-Type: application/json" 'http://52.41.214.100:8081/service/siesta/rest/v1/script' -d @createrawrepo.json
-curl -XGET -u admin:admin123 'http://52.41.214.100:8081/service/siesta/rest/v1/script'
-curl -XPOST -u admin:admin123 --header "Content-Type: text/plain" 'http://52.41.214.100:8081/service/siesta/rest/v1/script/rawcmd/run'
+curl -XDELETE -u admin:admin123 'http://localhost:8081/service/siesta/rest/v1/script/maven'
+echo 210
+curl -XPOST -u admin:admin123 --header "Content-Type: application/json" 'http://localhost:8081/service/siesta/rest/v1/script' -d @createrawrepo.json
+echo 220
+curl -XGET -u admin:admin123 'http://localhost:8081/service/siesta/rest/v1/script'
+echo 230
+curl -XPOST -u admin:admin123 --header "Content-Type: text/plain" 'http://localhost:8081/service/siesta/rest/v1/script/rawcmd/run'
+echo 300
 
 #CREATE AN ARTIFACT FOR NEXUS REPO'S CONSUMPTION
 
@@ -50,5 +57,4 @@ go install first_webapp
 
 
 #POPULATE THE NEXUS REPO
-#curl --user 'admin:admin123' --upload-file /bin/first_webapp http://52.41.214.100:8081/repository/myrawrepo/first_webapp_from_nexus
-curl --user 'admin:admin123' --upload-file bin/first_webapp http://52.41.214.100:8081/repository/myrawrepo/first_webapp_from_nexus
+curl --user 'admin:admin123' --upload-file bin/first_webapp http://localhost:8081/repository/myrawrepo/first_webapp_from_nexus
