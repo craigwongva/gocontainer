@@ -1,41 +1,42 @@
-#BBBB#INSTALL NEXUS
-#BBBBsudo yum install java-1.8.0-openjdk-devel -y
-#BBBBexport JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
-#BBBB
-#BBBB#git clone https://github.com/craigwongva/gocontainer
-#BBBB#cd gocontainer
-#BBBBrm -rf nexus-3.0.0-03
-#BBBBtar -xvf craig-nexus-3.0.0-03-unix.tar
-#BBBBcd nexus-3.0.0-03/bin
-#BBBB#EXPOSE 8081
-#BBBB
-#BBBB./nexus start
-#BBBBsleep 20
-#BBBB#
-#BBBB##make sure 8081 is open
-#BBBB
-#BBBB
-#BBBB#CREATE A NEXUS REPO
-#BBBB
-#BBBBecho  > createrawrepo.json
-#BBBBsed -i '$a {'                                                                   createrawrepo.json
-#BBBBsed -i '$a  \"name\": \"rawcmd\",'                                              createrawrepo.json
-#BBBBsed -i '$a  \"type\": \"groovy\",'                                              createrawrepo.json
-#BBBBsed -i '$a  \"content\": \"repository.createRawHosted(SINGLEQUOTEmyrawrepoSINGLEQUOTE)\"'          createrawrepo.json
-#BBBBsed -i '$a }' createrawrepo.json
-#BBBBsed -i '1,$s/SINGLEQUOTE/\x27/g'                                                createrawrepo.json
-#BBBB
-#BBBB#idempotent?:
-#BBBBcurl -XDELETE -u admin:admin123 'http://52.41.214.100:8081/service/siesta/rest/v1/script/maven'
-#BBBBcurl -XPOST -u admin:admin123 --header "Content-Type: application/json" 'http://52.41.214.100:8081/service/siesta/rest/v1/script' -d @createrawrepo.json
-#BBBBcurl -XGET -u admin:admin123 'http://52.41.214.100:8081/service/siesta/rest/v1/script'
-#BBBBcurl -XPOST -u admin:admin123 --header "Content-Type: text/plain" 'http://52.41.214.100:8081/service/siesta/rest/v1/script/rawcmd/run'
+#INSTALL NEXUS
+sudo yum install java-1.8.0-openjdk-devel -y
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
+
+#git clone https://github.com/craigwongva/gocontainer
+#cd gocontainer
+rm -rf nexus-3.0.0-03
+tar -xvf craig-nexus-3.0.0-03-unix.tar
+cd nexus-3.0.0-03/bin
+#EXPOSE 8081
+
+./nexus start
+sleep 20
+#
+##make sure 8081 is open
+
+
+#CREATE A NEXUS REPO
+
+cd ~/gocontainer
+echo  > createrawrepo.json
+sed -i '$a {'                                                                   createrawrepo.json
+sed -i '$a  \"name\": \"rawcmd\",'                                              createrawrepo.json
+sed -i '$a  \"type\": \"groovy\",'                                              createrawrepo.json
+sed -i '$a  \"content\": \"repository.createRawHosted(SINGLEQUOTEmyrawrepoSINGLEQUOTE)\"'          createrawrepo.json
+sed -i '$a }' createrawrepo.json
+sed -i '1,$s/SINGLEQUOTE/\x27/g'                                                createrawrepo.json
+
+#idempotent?:
+curl -XDELETE -u admin:admin123 'http://52.41.214.100:8081/service/siesta/rest/v1/script/maven'
+curl -XPOST -u admin:admin123 --header "Content-Type: application/json" 'http://52.41.214.100:8081/service/siesta/rest/v1/script' -d @createrawrepo.json
+curl -XGET -u admin:admin123 'http://52.41.214.100:8081/service/siesta/rest/v1/script'
+curl -XPOST -u admin:admin123 --header "Content-Type: text/plain" 'http://52.41.214.100:8081/service/siesta/rest/v1/script/rawcmd/run'
 
 #CREATE AN ARTIFACT FOR NEXUS REPO'S CONSUMPTION
 
 sudo yum install wget -y
 wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz
-tar -xzf go1.4.2.linux-amd64.tar.gz -C /usr/local
+sudo tar -xzf go1.4.2.linux-amd64.tar.gz -C /usr/local
 rm -rf gwp
 git clone https://github.com/sausheong/gwp
 mkdir -p src/first_webapp
