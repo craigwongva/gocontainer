@@ -2,37 +2,13 @@ sudo yum install docker -y
 sudo service docker start
 #The following is necessary if working interactively as ec2-user:
 # sudo usermod -a -G docker ec2-user
-git clone https://github.com/craigwongva/gocontainer
-mkdir /gocontainerbuilder
-cp gocontainer/Dockerfile-first_webapp gocontainerbuilder/Dockerfile
-cd /gocontainerbuilder
-docker build -t first_webapp .
-docker run -d -p 8080:8080 first_webapp
+
+cd ~/gocontainer
+sudo cp Dockerfile-first_webapp Dockerfile
+sudo docker build -t first_webapp .
+sudo docker run -d -p 8080:8080 first_webapp
 
 
 
 
 
-sudo yum install git -y
-sudo yum install wget -y
-
-sudo yum install java-1.8.0-openjdk-devel -y
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
-
-#This installer is interactive, and I want silent.
-## http://www.sonatype.com/oss-thank-you-unix.sh
-##So I've tar'd up my exploded files and stored them on s3.
-#
-##aws s3 cp s3://venicegeo-devops-dev-gocontainer-project/craig-nexus-3.0.0-03-unix.tar .
-git clone https://github.com/craigwongva/gocontainer
-cp /gocontainer/craig-nexus-3.0.0-03-unix.tar /
-tar -xvf craig-nexus-3.0.0-03-unix.tar
-#rm craig-nexus-3.0.0-03-unix.tar
-cd nexus-3.0.0-03/bin
-#EXPOSE 8081
-#
-##The following does NOT work:
-##But that's OK, because we're not trying to prove that we can run Nexus in a container.
-./nexus start
-#
-##make sure 8081 is open
