@@ -4,9 +4,10 @@ sudo service docker start
 # sudo usermod -a -G docker ec2-user
 
 cd ~/gocontainer
-sudo cp Dockerfile-first_webapp Dockerfile
-sudo docker build -t first_webapp .
-sudo docker run -d -p 8080:8080 first_webapp
+sudo cp Dockerfile-first_webapp Dockerfile #this starts 8080 for test purposes but isn't central to docker+nexus issue
+sudo cp Dockerfile-nexus-first_webapp Dockerfile
+sudo docker build -t container_first_webapp .
+#sudo docker run -d -p 8080:8080 container_first_webapp
 
 
 
