@@ -4,7 +4,7 @@ RUN yum install git -y
 RUN yum install wget -y
 
 
-sudo yum install java-1.8.0-openjdk-devel -y
+RUN yum install java-1.8.0-openjdk-devel -y
 ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
 
 #This installer is interactive, and I want silent.
