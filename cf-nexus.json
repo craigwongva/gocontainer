@@ -57,7 +57,8 @@
 "yum install git -y\n",
 "sudo -u ec2-user bash -c 'cd /home/ec2-user; git clone https://github.com/craigwongva/gocontainer.git > /tmp/two 2>&1 '\n",
 "sudo -u ec2-user bash -c '/home/ec2-user/gocontainer/userdata-nexus-only > /tmp/three 2>&1'\n",
-"sudo -u ec2-user bash -c 'whoami > /tmp/four'\n"
+"sudo -u ec2-user bash -c '/home/ec2-user/gocontainer/userdata-nexus-first_webapp > /tmp/four 2>&1'\n",
+"sudo -u ec2-user bash -c 'whoami > /tmp/five'\n"
      ]
     ]}}
    }
