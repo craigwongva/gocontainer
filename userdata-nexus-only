@@ -18,8 +18,8 @@ echo `pwd` > /tmp/400
 #EXPOSE 8081
 
 ./nexus start > /tmp/440 2>&1
-echo sleeping for 40 seconds > /tmp/500
-sleep 40
+echo sleeping for 90 seconds > /tmp/500
+sleep 90
 echo done sleeping > /tmp/600
 #
 ##make sure 8081 is open
@@ -41,8 +41,8 @@ touch /tmp/800
 #idempotent?:
 curl -XDELETE -u admin:admin123 'http://localhost:8081/service/siesta/rest/v1/script/maven' > /tmp/810 2>&1
 curl -XPOST -u admin:admin123 --header "Content-Type: application/json" 'http://localhost:8081/service/siesta/rest/v1/script' -d @createrawrepo.json > /tmp/820 2>&1
-curl -XGET -u admin:admin123 'http://localhost:8081/service/siesta/rest/v1/script' /tmp/830 2>&1
-curl -XPOST -u admin:admin123 --header "Content-Type: text/plain" 'http://localhost:8081/service/siesta/rest/v1/script/rawcmd/run' /tmp/840 2>&1
+curl -XGET -u admin:admin123 'http://localhost:8081/service/siesta/rest/v1/script' > /tmp/830 2>&1
+curl -XPOST -u admin:admin123 --header "Content-Type: text/plain" 'http://localhost:8081/service/siesta/rest/v1/script/rawcmd/run' > /tmp/840 2>&1
 
 #CREATE AN ARTIFACT FOR NEXUS REPO'S CONSUMPTION
 
