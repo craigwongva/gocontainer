@@ -1,13 +1,13 @@
-sudo yum install docker -y
-sudo service docker start
+sudo yum install docker -y > /tmp/1100 2>&1
+sudo service docker start > /tmp/1200 2>&1
 #The following is necessary if working interactively as ec2-user:
 # sudo usermod -a -G docker ec2-user
 
-cd ~/gocontainer
+cd /home/ec2-user/gocontainer > /tmp/1300 2>&1
 sudo cp Dockerfile-first_webapp Dockerfile #this starts 8080 for test purposes but isn't central to docker+nexus issue
-sudo cp Dockerfile-nexus-first_webapp Dockerfile
-sudo docker build --build-arg WHEREISNEXUS=$1 -t container_first_webapp .
-#sudo docker run -d -p 8080:8080 container_first_webapp
+sudo cp Dockerfile-nexus-first_webapp Dockerfile > /tmp/1400 2>&1
+sudo docker build --build-arg WHEREISNEXUS=$1 -t container_first_webapp . > /tmp/1500 2>&1
+sudo docker run -d -p 8080:8080 container_first_webapp > /tmp/1600 2>&1
 
 
 
