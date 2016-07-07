@@ -1,26 +1,34 @@
 #INSTALL NEXUS
 sudo yum install java-1.8.0-openjdk-devel -y
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
+echo $JAVA_HOME > /tmp/090
 
-#git clone https://github.com/craigwongva/gocontainer
-#cd gocontainer
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
+echo $JAVA_HOME > /tmp/100
+
+cd /home/ec2-user/gocontainer
+echo `pwd` > /tmp/200
+
 rm -rf nexus-3.0.0-03
-tar -xvf craig-nexus-3.0.0-03-unix.tar
-cd nexus-3.0.0-03/bin
+tar -xvf craig-nexus-3.0.0-03-unix.tar > /tmp/240 2>&1
+echo `ls` > /tmp/300
+
+cd /home/ec2-user/nexus-3.0.0-03/bin
+echo `pwd` > /tmp/400
+
 #EXPOSE 8081
 
-./nexus start
-echo sleeping for 40 seconds
+./nexus start > /tmp/440 2>&1
+echo sleeping for 40 seconds > /tmp/500
 sleep 40
-echo done sleeping
+echo done sleeping > /tmp/600
 #
 ##make sure 8081 is open
 
 
 #CREATE A NEXUS REPO
 
-cd ~/gocontainer
-echo 100
+cd /home/ec2-user/gocontainer
+touch /tmp/700
 echo  > createrawrepo.json
 sed -i '$a {'                                                                   createrawrepo.json
 sed -i '$a  \"name\": \"rawcmd\",'                                              createrawrepo.json
@@ -28,17 +36,13 @@ sed -i '$a  \"type\": \"groovy\",'                                              
 sed -i '$a  \"content\": \"repository.createRawHosted(SINGLEQUOTEmyrawrepoSINGLEQUOTE)\"'          createrawrepo.json
 sed -i '$a }' createrawrepo.json
 sed -i '1,$s/SINGLEQUOTE/\x27/g'                                                createrawrepo.json
-echo 200
+touch /tmp/800
 
 #idempotent?:
-curl -XDELETE -u admin:admin123 'http://localhost:8081/service/siesta/rest/v1/script/maven'
-echo 210
-curl -XPOST -u admin:admin123 --header "Content-Type: application/json" 'http://localhost:8081/service/siesta/rest/v1/script' -d @createrawrepo.json
-echo 220
-curl -XGET -u admin:admin123 'http://localhost:8081/service/siesta/rest/v1/script'
-echo 230
-curl -XPOST -u admin:admin123 --header "Content-Type: text/plain" 'http://localhost:8081/service/siesta/rest/v1/script/rawcmd/run'
-echo 300
+curl -XDELETE -u admin:admin123 'http://localhost:8081/service/siesta/rest/v1/script/maven' > /tmp/810 2>&1
+curl -XPOST -u admin:admin123 --header "Content-Type: application/json" 'http://localhost:8081/service/siesta/rest/v1/script' -d @createrawrepo.json > /tmp/820 2>&1
+curl -XGET -u admin:admin123 'http://localhost:8081/service/siesta/rest/v1/script' /tmp/830 2>&1
+curl -XPOST -u admin:admin123 --header "Content-Type: text/plain" 'http://localhost:8081/service/siesta/rest/v1/script/rawcmd/run' /tmp/840 2>&1
 
 #CREATE AN ARTIFACT FOR NEXUS REPO'S CONSUMPTION
 
