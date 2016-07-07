@@ -12,7 +12,7 @@ rm -rf nexus-3.0.0-03
 tar -xvf craig-nexus-3.0.0-03-unix.tar > /tmp/240 2>&1
 echo `ls` > /tmp/300
 
-cd /home/ec2-user/nexus-3.0.0-03/bin
+cd /home/ec2-user/gocontainer/nexus-3.0.0-03/bin
 echo `pwd` > /tmp/400
 
 #EXPOSE 8081
@@ -46,18 +46,21 @@ curl -XPOST -u admin:admin123 --header "Content-Type: text/plain" 'http://localh
 
 #CREATE AN ARTIFACT FOR NEXUS REPO'S CONSUMPTION
 
-sudo yum install wget -y
-wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz
-sudo tar -xzf go1.4.2.linux-amd64.tar.gz -C /usr/local
-rm -rf gwp
-git clone https://github.com/sausheong/gwp
-mkdir -p src/first_webapp
+sudo yum install wget -y > /tmp/850 2>&1
+wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz > /tmp/860 2>&1
+sudo tar -xzf go1.4.2.linux-amd64.tar.gz -C /usr/local > /tmp/870 2>&1
+cd /home/ec2-user/gocontainer > /tmp/880 2>&1
+
+rm -rf gwp > /tmp/882 2>&1
+git clone https://github.com/sausheong/gwp > /tmp/884 2>&1
+mkdir -p src/first_webapp > /tmp/886 2>&1
 
 cp gwp/Chapter_1_Go_And_Web_Applications/first_webapp/server.go src/first_webapp
 export GOROOT=/usr/local/go
 export GOPATH=/home/ec2-user/gocontainer
 export PATH=$PATH:$GOROOT/bin
 go install first_webapp
+touch /tmp/900
 #CMD ["/bin/first_webapp"]
 
 
