@@ -1,0 +1,61 @@
+{
+"AWSTemplateFormatVersion": "2010-09-09",
+"Description": "uses Amazon Marketplace 'Ansible-Demo' AMI (ami-e1173ed1)",
+
+"Mappings": {
+  "EC2RegionMap": {
+   "us-west-2": {"craigansibleami": "ami-e1173ed1"}
+  }
+},
+"Resources": {
+  "SecurityGroup": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "craigansible security group",
+    "VpcId": "vpc-a0383dc5",
+    "SecurityGroupIngress": [
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 22,
+     "IpProtocol": "tcp",
+     "ToPort": 22
+    }
+    ]
+   }
+  },
+  "Server": {
+   "Type": "AWS::EC2::Instance",
+   "Properties": {
+    "Tags" : [{
+     "Key":"craig-ansible-component",
+     "Value":"craig-ansible"
+    }],
+    "ImageId": {
+     "Fn::FindInMap": [
+      "EC2RegionMap", {
+       "Ref": "AWS::Region"
+      },
+      "craigansibleami"
+     ]
+    },
+    "InstanceType": "t2.micro",
+    "KeyName":  "oregonkeypair" ,
+    "SecurityGroupIds": [{
+     "Ref": "SecurityGroup"
+    }],
+    "IamInstanceProfile": "RoleForTestingRoles",
+    "UserData": {"Fn::Base64": {"Fn::Join": ["",
+     [
+"#!/bin/bash -ex\n",
+"echo `whoami` > /tmp/one\n",
+"echo yum install git -y\n",
+"echo sudo -u ec2-user bash -c 'cd /home/ec2-user; git clone https://github.com/craigwongva/gocontainer.git > /tmp/two 2>&1 '\n",
+"echo sudo -u ec2-user bash -c '/home/ec2-user/gocontainer/userdata-nexus-only > /tmp/three 2>&1'\n",
+"echo sudo -u ec2-user bash -c '/home/ec2-user/gocontainer/userdata-nexus-first_webapp `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/four 2>&1'\n",
+"echo sudo -u ec2-user bash -c 'whoami > /tmp/five'\n"
+     ]
+    ]}}
+   }
+  }
+}
+}

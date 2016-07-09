@@ -1,0 +1,19 @@
+yum install java-1.8.0-openjdk-devel -y > /tmp/2000 2>&1
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/2010 2>&1
+
+##
+# Install Groovy.
+##
+
+aws s3 cp s3://redf4rth-ansible/dotsdkman.zip / > /tmp/2020 2>&1
+unzip dotsdkman.zip > /tmp/2030 2>&1
+
+##
+# 
+#
+##
+cd / > /tmp/2040 2>&1
+cp /.sdkman/candidates/groovy/2.4.7/lib/groovy-2.4.7.jar . > /tmp/2050 2>&1
+cp /.sdkman/candidates/groovy/2.4.7/lib/groovy-json-2.4.7.jar . > /tmp/2060 2>&1
+/.sdkman/candidates/groovy/2.4.7/bin/groovyc launch_instance.groovy > /tmp/2070 2>&1
+java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar launch_instance > /tmp/2080 2>&1
