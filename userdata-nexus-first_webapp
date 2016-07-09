@@ -6,8 +6,11 @@ sudo service docker start > /tmp/1200 2>&1
 cd /home/ec2-user/gocontainer > /tmp/1300 2>&1
 sudo cp Dockerfile-first_webapp Dockerfile #this starts 8080 for test purposes but isn't central to docker+nexus issue
 sudo cp Dockerfile-nexus-first_webapp Dockerfile > /tmp/1400 2>&1
-sudo docker build --build-arg WHEREISNEXUS=$1 -t container_first_webapp . > /tmp/1500 2>&1
-sudo docker run -d -p 8080:8080 container_first_webapp > /tmp/1600 2>&1
+sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_first_webapp . > /tmp/1500 2>&1
+sudo docker login --username venicegeodev --password demo1024 > /tmp/1510 2>&1
+sudo docker push venicegeodev/container_first_webapp > /tmp/1520 2>&1
+sudo docker pull venicegeodev/container_first_webapp > /tmp/1530 2>&1
+sudo docker run -d -p 8080:8080 venicegeodev/container_first_webapp > /tmp/1600 2>&1
 
 
 
