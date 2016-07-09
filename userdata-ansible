@@ -12,7 +12,7 @@ unzip dotsdkman.zip > /tmp/2030 2>&1
 # 
 #
 ##
-cd / > /tmp/2040 2>&1
+cd /gocontainer > /tmp/2040 2>&1
 cp /.sdkman/candidates/groovy/2.4.7/lib/groovy-2.4.7.jar . > /tmp/2050 2>&1
 cp /.sdkman/candidates/groovy/2.4.7/lib/groovy-json-2.4.7.jar . > /tmp/2060 2>&1
 /.sdkman/candidates/groovy/2.4.7/bin/groovyc launch_instance_for_ansible.groovy > /tmp/2070 2>&1
