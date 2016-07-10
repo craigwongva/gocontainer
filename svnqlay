@@ -1,0 +1,66 @@
+# invocation:
+#  ansible-playbook svnqlay -i inventory --private-key ~/oregonkeypair.pem
+#  Note: don't use --sudo
+---
+- hosts: greekserver
+  tasks:
+
+  - name: get.sdkman.io
+    get_url: url=http://get.sdkman.io dest=/tmp/deletesdkman mode=0440
+
+  - name: install sdk (1 of 2)
+    command: /bin/bash /tmp/deletesdkman
+
+  - name: install sdk (2 of 2)
+    command: /bin/bash /home/ec2-user/.sdkman/bin/sdkman-init.sh
+
+  - name: turn off manual verification in prep for sdk groovy install
+    command: sed -i -e 's/sdkman_auto_answer=false/sdkman_auto_answer=true/g' /home/ec2-user/.sdkman/etc/config
+
+  - name: install groovy and grails (1 of 2)
+    command: chmod 744 /home/ec2-user/.sdkman/bin/sdkman-init.sh
+
+  - name: create ~/.subversion folder
+    command: /usr/bin/svn help
+
+  - name: copy bashrc-modified to install Grails and set JAVA_HOME
+    copy: src=bashrc-modified dest=/home/ec2-user/.bashrc mode=700
+
+##something is missing here
+##need to run /home/ec2-user/.bashrc to install Grails 2.4.0
+##  - name: allow sudo root to execute this script
+##    command: chmod 744 /home/ec2-user/.bashrc
+
+##Exec format error
+##  - name: install Grails and set JAVA_HOME
+##    command: /home/ec2-user/.bashrc
+
+  - name: set store-password values
+    command: sed -i -e 's/# store-passwords = no/store-passwords = no/' /home/ec2-user/.subversion/servers
+
+  - name: set store-plaintext-password values
+    command: sed -i -e 's/# store-plaintext-passwords = no/store-plaintext-passwords = no/' /home/ec2-user/.subversion/servers
+
+  - name: Go to the folder and grails create-app
+    command: chdir=/home/ec2-user/.sdkman/candidates/grails/current /home/ec2-user/.sdkman/candidates/grails/current/bin/grails create-app rudm
+    environment:
+       JAVA_HOME: /usr/lib/jvm/java
+
+  - name: Avoid collision with pulled-from-svn content (1 of 3).
+    command: chdir=/home/ec2-user/.sdkman/candidates/grails/current/rudm rm -rf grails-app
+
+  - name: Avoid collision with pulled-from-svn content (2 of 3).
+    command: chdir=/home/ec2-user/.sdkman/candidates/grails/current/rudm rm -rf lib
+
+  - name: Avoid collision with pulled-from-svn content (3 of 3).
+    command: chdir=/home/ec2-user/.sdkman/candidates/grails/current/rudm rm -rf web-app
+
+  - name: Pull from svn.
+    command: chdir=/home/ec2-user/.sdkman/candidates/grails/current/rudm /usr/bin/svn --username abcd --password abcd checkout svn://a.b.c.d/home/ec2-user/trac-1.0.9-1/apps/trac/trac_repositories/repository/trianglerepos/lex/ .
+
+##  - name: grails run-app
+##    command: chdir=/home/ec2-user/.sdkman/candidates/grails/current/rudm /home/ec2-user/.sdkman/candidates/grails/current/bin/grails run-app
+##    async: 1000
+##    poll: 0
+#
+
