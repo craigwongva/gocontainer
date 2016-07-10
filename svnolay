@@ -1,4 +1,4 @@
 java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar launch_instance_for_ansible
 export ANSIBLE_HOST_KEY_CHECKING=False
-/usr/local/bin/ansible-playbook svnplay -i inventory --private-key /home/ec2-user/oregonkeypair.pem --sudo
-/usr/local/bin/ansible-playbook svnqlay -i inventory --private-key /home/ec2-user/oregonkeypair.pem
+/usr/local/bin/ansible-playbook svnplay -i inventory --private-key /home/ec2-user/oregonansiblegeneric.pem --sudo
+/usr/local/bin/ansible-playbook svnqlay -i inventory --private-key /home/ec2-user/oregonansiblegeneric.pem

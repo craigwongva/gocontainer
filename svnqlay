@@ -1,5 +1,5 @@
 # invocation:
-#  ansible-playbook svnqlay -i inventory --private-key ~/oregonkeypair.pem
+#  ansible-playbook svnqlay -i inventory --private-key ~/oregonansiblegeneric.pem
 #  Note: don't use --sudo
 ---
 - hosts: greekserver

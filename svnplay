@@ -1,5 +1,5 @@
 # invocation:
-#  ansible-playbook svnplay -i inventory --private-key ~/oregonkeypair.pem --sudo
+#  ansible-playbook svnplay -i inventory --private-key ~/oregonansiblegeneric.pem --sudo
 ---
 - hosts: greekserver
   tasks:
