@@ -1,5 +1,5 @@
 import groovy.json.JsonSlurper
-/*
+
 /////////////
 // usage:
 //   vi modsecgrp.groovy
@@ -7,29 +7,41 @@ import groovy.json.JsonSlurper
 //   java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar modsecgrp
 /////////////
 
-def getSecurityGroupID(keyvalue) {
- def awscmd = 'aws ec2 describe-security-groups --region us-east-1'
- def awscmdtext = awscmd.execute().text
- def slurper = new JsonSlurper()
- def result = slurper.parseText(awscmdtext)
- def keynames = result.SecurityGroups.GroupName
- def keyclosure = { it =~ keyvalue }
- def count = keynames.grep(keyclosure).size()
- if (count == 0) {
-  println "GroupName '$keyvalue' not found. exiting with rc=-1"
-  System.exit(-1)
- }
- if (count > 1) {
-  println "GroupName '$keyvalue' too common. exiting with rc=-1"
-  println keynames.grep(keyclosure)
-  System.exit(-1)
- }
- def ixkeyname = keynames.findIndexOf(keyclosure)
- result.SecurityGroups.GroupId[ixkeyname]
+def writeAnsibleInventoryFile(confFile, ip) {
+ def f = new File(confFile)
+ f.write("[greekserver]\n$ip\n")
 }
+def createTargetEC2Instance() {
 
+ def awscmd2 = 'aws cloudformation create-stack --stack-name ansible3 --template-url https://s3.amazonaws.com/redf4rth-ansible/cf-ansible.json --region us-west-2'
+ //s/m: here add logic to see error messages, not just .text
+ def awscmdtext2 = awscmd2.execute().text
+ def slurper2 = new JsonSlurper()
+ def result2 = slurper2.parseText(awscmdtext2)
+ println result2.StackId
+
+ def justTheLaunchedStack
+ def stackStatus = ''
+ for (int i=0; i<24; i++) {
+  if (stackStatus != 'CREATE_COMPLETE') {
+   def awscmd = 'aws cloudformation list-stacks --region us-west-2'
+   def awscmdtext = awscmd.execute().text
+   def slurper = new JsonSlurper()
+   def result = slurper.parseText(awscmdtext)
+   justTheLaunchedStack = result.StackSummaries.grep{ it.StackId == result2.StackId }
+   stackStatus = justTheLaunchedStack.StackStatus[0]
+   println "$i $stackStatus"
+   sleep(5000)
+  }
+ }
+ if (stackStatus != 'CREATE_COMPLETE') {
+  println "Stack not created within two minutes."
+  System.exit(1)
+ }
+ return result2.StackId
+}
 def getInstanceIPAddresses(keyvalue) {
- def awscmd = 'aws ec2 describe-instances --region us-east-1' +
+ def awscmd = 'aws ec2 describe-instances --region us-west-2' +
               ' --filters Name=instance-state-name,Values=running'
  def awscmdtext = awscmd.execute().text
  def returnResult = [:]
@@ -38,27 +50,27 @@ def getInstanceIPAddresses(keyvalue) {
  def result = slurper.parseText(awscmdtext)
  result.Reservations.Instances.each { i ->
   def found = i.Tags[0].grep {
-   (it.Key == 'Name') && (it.Value == keyvalue)
-  }  
+   (it.Key == 'aws:cloudformation:stack-id') && (it.Value == keyvalue)
+  }
   if (found.size() > 0) {
    returnResult.privateIpAddress = i[0].PrivateIpAddress
    returnResult.publicIpAddress =  i[0].PublicIpAddress
   }
  }
+ println "getInstanceIPAddresses($keyvalue) ==> $returnResult"
  returnResult
 }
-
 def authorizeSecurityGroupIngress(comment, groupID, cidr, port) {
  def proc
  def sb
 
- def cmd = 
+ def cmd =
        "aws ec2 authorize-security-group-ingress " +
        " --group-id $groupID" +
        " --cidr $cidr/32" +
        " --port $port " +
        " --protocol tcp " +
-       " --region us-east-1 " 
+       " --region us-west-2 "
  proc = cmd.execute()
  sb = new StringBuffer()
  proc.consumeProcessErrorStream(sb)
@@ -69,39 +81,22 @@ def authorizeSecurityGroupIngress(comment, groupID, cidr, port) {
  println ""
 }
 
-def updateLogstashForwarderConfFileLocalhost(confFile, ip) {
- def f = new File(confFile)
- f.write(f.text.replaceAll('localhost', ip))
+def StackId = createTargetEC2Instance()
+println "StackId: $StackId"
+def publicIpAddress = getInstanceIPAddresses(StackId).publicIpAddress
+println "publicIpAddress: $publicIpAddress"
+
+def tracSecurityGroupID = 'sg-1a31957c'
+authorizeSecurityGroupIngress(
+ 'allow trac to receive from Ansible target server on 3690',
+ tracSecurityGroupID,
+ publicIpAddress,
+ '3690')
+
+writeAnsibleInventoryFile('inventory', publicIpAddress)
+
+for (int i=0; i<24; i++) {
+ println "$i Waiting two minutes for ssh to become available."
+ sleep(5000)
 }
 
-///
-// Update AWS security groups
-///
-
-def logstashIPs                      = getInstanceIPAddresses('craigLg')
-def logstashSecurityGroupID          = getSecurityGroupID('craiglg-SecurityGroup')
-
-def elasticsearchIPs                 = getInstanceIPAddresses('craigES')
-def elasticsearchSecurityGroupID     = getSecurityGroupID('craiges-SecurityGroup')
-
-authorizeSecurityGroupIngress(
- 'allow Lg to receive from ES on 9200', 
- logstashSecurityGroupID, 
- elasticsearchIPs.publicIpAddress, 
- '9200')
-
-authorizeSecurityGroupIngress(
- 'allow ES to receive from Lg on 9200', 
- elasticsearchSecurityGroupID, 
- logstashIPs.publicIpAddress, 
- '9200')
-
-///
-// Update /etc/logstash-forwarder.conf
-///
-
-def confFile = args[0]
-assert confFile == '/opt/logstash/conf.d/30-lumberjack-output.conf'
-updateLogstashForwarderConfFileLocalhost(confFile, "'" + elasticsearchIPs.publicIpAddress + "'")
-*/
-println "welcome to Saturday!"
