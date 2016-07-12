@@ -47,8 +47,8 @@
      [
 "#!/bin/bash -ex\n",
 "yum install git -y > /tmp/one 2>&1\n",
-"sudo -u ec2-user -c 'git clone https://github.com/craigwongva/gocontainer.git > /tmp/two 2>&1'\n",
-"sudo -u ec2-user -c '/home/ec2-user/gocontainer/userdata-ansible > /tmp/three 2>&1'\n"
+"sudo -u ec2-user bash -c 'git clone https://github.com/craigwongva/gocontainer.git > /tmp/two 2>&1'\n",
+"sudo -u ec2-user bash -c '/home/ec2-user/gocontainer/userdata-ansible > /tmp/three 2>&1'\n"
      ]
     ]}}
    }
