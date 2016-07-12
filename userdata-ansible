@@ -1,4 +1,4 @@
-yum install java-1.8.0-openjdk-devel -y > /tmp/2000 2>&1
+sudo yum install java-1.8.0-openjdk-devel -y > /tmp/2000 2>&1
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/2010 2>&1
 
 ##
