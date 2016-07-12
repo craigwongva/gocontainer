@@ -47,7 +47,9 @@
      [
 "#!/bin/bash -ex\n",
 "yum install git -y > /tmp/one 2>&1\n",
+"echo hi > /tmp/onex\n",
 "sudo -u ec2-user bash -c 'cd /home/ec2-user; git clone https://github.com/craigwongva/gocontainer.git > /tmp/two 2>&1'\n",
+"echo him > /tmp/oney\n",
 "sudo -u ec2-user bash -c '/home/ec2-user/gocontainer/userdata-ansible > /tmp/three 2>&1'\n"
      ]
     ]}}
