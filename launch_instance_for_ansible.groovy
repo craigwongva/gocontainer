@@ -13,7 +13,7 @@ def writeAnsibleInventoryFile(confFile, ip) {
 }
 def createTargetEC2Instance() {
 
- def awscmd2 = 'aws cloudformation create-stack --stack-name ansible3 --template-url https://s3.amazonaws.com/redf4rth-ansible/cf-ansible.json --region us-west-2'
+ def awscmd2 = 'aws cloudformation create-stack --stack-name ansible3 --template-url https://s3.amazonaws.com//venicegeo-devops-dev-gocontainer-project/cf-ansible.json --region us-west-2'
  //s/m: here add logic to see error messages, not just .text
  def awscmdtext2 = awscmd2.execute().text
  def slurper2 = new JsonSlurper()
