@@ -23,7 +23,7 @@ cd /
 git clone https://github.com/venicegeo/pzsvc-hello.git
 mkdir /src/pzhello
 cp pzsvc-hello/main.go src/pzhello
-go get github.com/venicegeo/pz-gocommon
+go get github.com/venicegeo/pz-gocommon/gocommon
 go get github.com/gin-gonic/gin
 go install pzhello
 #/bin/pzhello
