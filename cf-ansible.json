@@ -34,7 +34,7 @@
       "EC2RegionMap", {
        "Ref": "AWS::Region"
       },
-      "craiggoami"
+      "craigansibleami"
      ]
     },
     "InstanceType": "t2.medium",
