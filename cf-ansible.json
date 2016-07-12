@@ -12,7 +12,6 @@
    "Type": "AWS::EC2::SecurityGroup",
    "Properties": {
     "GroupDescription": "craigansible security group",
-    "VpcId": "vpc-a0383dc5",
     "SecurityGroupIngress": [
     {
      "CidrIp": "0.0.0.0/0",
@@ -39,11 +38,11 @@
      ]
     },
     "InstanceType": "t2.micro",
-    "KeyName":  "oregonansiblegeneric" ,
+    "KeyName":  "craigradiantblueoregon" ,
     "SecurityGroupIds": [{
      "Ref": "SecurityGroup"
     }],
-    "IamInstanceProfile": "oregonansiblegeneric",
+    "IamInstanceProfile": "craigtest",
     "UserData": {"Fn::Base64": {"Fn::Join": ["",
      [
 "#!/bin/bash -ex\n",

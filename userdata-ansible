@@ -5,7 +5,7 @@ export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/2010 2>&1
 # Install Groovy.
 ##
 
-aws s3 cp s3://redf4rth-ansible/dotsdkman.zip / > /tmp/2020 2>&1
+aws s3 cp s3://venicegeo-devops-dev-gocontainer-project/dotsdkman.zip / > /tmp/2020 2>&1
 unzip dotsdkman.zip > /tmp/2030 2>&1
 
 ##
