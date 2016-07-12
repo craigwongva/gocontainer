@@ -1,23 +1,36 @@
 {
 "AWSTemplateFormatVersion": "2010-09-09",
-"Description": "uses Amazon Marketplace 'Ansible-Demo' AMI (ami-e1173ed1)",
+"Description": "uses vanilla Amazon Linux AMI (ami-7172b611)",
 
 "Mappings": {
   "EC2RegionMap": {
-   "us-west-2": {"craigansibleami": "ami-e1173ed1"}
+   "us-west-2": {"craiggoami": "ami-7172b611"}
   }
 },
 "Resources": {
   "SecurityGroup": {
    "Type": "AWS::EC2::SecurityGroup",
    "Properties": {
-    "GroupDescription": "craigansible security group",
+    "GroupDescription": "craiggo security group",
+    "VpcId": "vpc-4e33072b",
     "SecurityGroupIngress": [
     {
      "CidrIp": "0.0.0.0/0",
      "FromPort": 22,
      "IpProtocol": "tcp",
      "ToPort": 22
+    },
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 8080,
+     "IpProtocol": "tcp",
+     "ToPort": 8080
+    },
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 8081,
+     "IpProtocol": "tcp",
+     "ToPort": 8081
     }
     ]
    }
@@ -26,18 +39,18 @@
    "Type": "AWS::EC2::Instance",
    "Properties": {
     "Tags" : [{
-     "Key":"craig-ansible-component",
-     "Value":"craig-ansible"
+     "Key":"craig-go-component",
+     "Value":"craig-go"
     }],
     "ImageId": {
      "Fn::FindInMap": [
       "EC2RegionMap", {
        "Ref": "AWS::Region"
       },
-      "craigansibleami"
+      "craiggoami"
      ]
     },
-    "InstanceType": "t2.micro",
+    "InstanceType": "t2.medium",
     "KeyName":  "craigradiantblueoregon" ,
     "SecurityGroupIds": [{
      "Ref": "SecurityGroup"
@@ -50,7 +63,6 @@
 "yum install git -y\n",
 "sudo -u ec2-user bash -c 'cd /home/ec2-user; git clone https://github.com/craigwongva/gocontainer.git > /tmp/two 2>&1 '\n"
      ]
-
     ]}}
    }
   }
