@@ -33,6 +33,8 @@ cp target/piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar conf > /tmp/3200 2>&1
 ####
 ## Run pz-servicecontroller & 
 ####
-cd /home/ec2-user/pz-servicecontroller/mainServiceController/conf > /tmp/3300 2>&1
-$JAVA_HOME/bin/java -jar piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar & > /tmp/3400 2>&1
+#cd /home/ec2-user/pz-servicecontroller/mainServiceController/conf > /tmp/3300 2>&1
+#$JAVA_HOME/bin/java -jar piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar & > /tmp/3400 2>&1
 
+#POPULATE THE NEXUS REPO
+curl --user 'admin:admin123' --upload-file piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar http://localhost:8081/repository/myrawrepo/piazzaServiceController-1.0.0.BUILD-SNAPSHOT-NEXUSSED.jar
