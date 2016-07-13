@@ -10,7 +10,7 @@ sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_servicec
 sudo docker login --username venicegeodev --password demo1024 > /tmp/4510 2>&1
 sudo docker push venicegeodev/container_servicecontroller > /tmp/4520 2>&1
 sudo docker pull venicegeodev/container_servicecontroller> /tmp/4530 2>&1
-sudo docker run -d -p 8088:8088 venicegeodev/container_servicecontroller > /tmp/4600 2>&1
+sudo docker run -d -p 8888:8088 venicegeodev/container_servicecontroller > /tmp/4600 2>&1
 
 
 
