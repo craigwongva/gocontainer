@@ -64,7 +64,7 @@
 "sudo -u ec2-user bash -c 'cd /home/ec2-user; git clone https://github.com/craigwongva/gocontainer.git > /tmp/two 2>&1 '\n",
 "sudo -u ec2-user bash -c '/home/ec2-user/gocontainer/userdata-nexus-only > /tmp/three 2>&1'\n",
 "sudo -u ec2-user bash -c '/home/ec2-user/gocontainer/userdata-nexus-first_webapp `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/four 2>&1'\n",
-"sudo -u ec2-user bash -c '/home/ec2-user/gocontainer/userdata-servicecontroller `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/five 2>&1'\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-servicecontroller > /tmp/five 2>&1'\n",
 "sudo -u ec2-user bash -c 'whoami > /tmp/six'\n"
      ]
     ]}}
