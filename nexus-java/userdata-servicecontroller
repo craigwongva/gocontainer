@@ -1,0 +1,38 @@
+sudo yum install git -y
+
+####
+## Install Maven
+####
+cd /home/ec2-user
+wget http://mirror.olnevhost.net/pub/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz
+tar xvf apache-maven-3.0.5-bin.tar.gz
+sudo mv apache-maven-3.0.5 /usr/local/apache-maven
+export M2_HOME=/usr/local/apache-maven
+export M2=$M2_HOME/bin 
+export PATH=$M2:$PATH
+
+####
+## Build pz-jobcommon
+####
+cd /home/ec2-user
+sudo yum install java-1.8.0-openjdk-devel -y > /tmp/2000 2>&1
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/2010 2>&1
+git clone https://github.com/venicegeo/pz-jobcommon
+cd pz-jobcommon
+mvn clean install
+
+####
+## Build pz-servicecontroller
+####
+cd /home/ec2-user
+git clone https://github.com/venicegeo/pz-servicecontroller
+cd pz-servicecontroller/mainServiceController
+mvn clean install
+cp target/piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar conf
+
+####
+## Run pz-servicecontroller &
+####
+cd /home/ec2-user/pz-servicecontroller/mainServiceController/conf
+$JAVA_HOME/bin/java -jar piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar &
+
