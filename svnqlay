@@ -46,18 +46,18 @@
     environment:
        JAVA_HOME: /usr/lib/jvm/java
 
-  - name: Avoid collision with pulled-from-svn content (1 of 3).
-    command: chdir=/home/ec2-user/.sdkman/candidates/grails/current/rudm rm -rf grails-app
-
-  - name: Avoid collision with pulled-from-svn content (2 of 3).
-    command: chdir=/home/ec2-user/.sdkman/candidates/grails/current/rudm rm -rf lib
-
-  - name: Avoid collision with pulled-from-svn content (3 of 3).
-    command: chdir=/home/ec2-user/.sdkman/candidates/grails/current/rudm rm -rf web-app
-
-  - name: Pull from svn.
-    command: chdir=/home/ec2-user/.sdkman/candidates/grails/current/rudm /usr/bin/svn --username abcd --password abcd checkout svn://a.b.c.d/home/ec2-user/trac-1.0.9-1/apps/trac/trac_repositories/repository/trianglerepos/lex/ .
-
+##  - name: Avoid collision with pulled-from-svn content (1 of 3).
+##    command: chdir=/home/ec2-user/.sdkman/candidates/grails/current/rudm rm -rf grails-app
+##
+##  - name: Avoid collision with pulled-from-svn content (2 of 3).
+##    command: chdir=/home/ec2-user/.sdkman/candidates/grails/current/rudm rm -rf lib
+##
+##  - name: Avoid collision with pulled-from-svn content (3 of 3).
+##    command: chdir=/home/ec2-user/.sdkman/candidates/grails/current/rudm rm -rf web-app
+##
+##  - name: Pull from svn.
+##    command: chdir=/home/ec2-user/.sdkman/candidates/grails/current/rudm /usr/bin/svn --username abcd --password abcd checkout svn://a.b.c.d/home/ec2-user/trac-1.0.9-1/apps/trac/trac_repositories/repository/trianglerepos/lex/ .
+##
 ##  - name: grails run-app
 ##    command: chdir=/home/ec2-user/.sdkman/candidates/grails/current/rudm /home/ec2-user/.sdkman/candidates/grails/current/bin/grails run-app
 ##    async: 1000
