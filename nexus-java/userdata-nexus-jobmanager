@@ -1,16 +1,17 @@
-sudo yum install docker -y > /tmp/4100 2>&1
-sudo service docker start > /tmp/4200 2>&1
+#sudo yum install docker -y > /tmp/6100 2>&1
+#sudo service docker start > /tmp/6200 2>&1
+
 #The following is necessary if working interactively as ec2-user:
 # sudo usermod -a -G docker ec2-user
 
-cd /home/ec2-user/gocontainer/nexus-java > /tmp/4300 2>&1
+cd /home/ec2-user/gocontainer/nexus-java > /tmp/6300 2>&1
 #sudo cp Dockerfile-first_webapp Dockerfile #this starts 8080 for test purposes but isn't central to docker+nexus issue
-sudo cp Dockerfile-nexus-servicecontroller Dockerfile > /tmp/4400 2>&1
-sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_servicecontroller . > /tmp/4500 2>&1
-sudo docker login --username venicegeodev --password demo1024 > /tmp/4510 2>&1
-sudo docker push venicegeodev/container_servicecontroller > /tmp/4520 2>&1
-sudo docker pull venicegeodev/container_servicecontroller> /tmp/4530 2>&1
-sudo docker run -d -p 8088:8088 venicegeodev/container_servicecontroller > /tmp/4600 2>&1
+sudo cp Dockerfile-nexus-jobmanager Dockerfile > /tmp/6400 2>&1
+sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_jobmanager . > /tmp/6500 2>&1
+sudo docker login --username venicegeodev --password demo1024 > /tmp/6510 2>&1
+sudo docker push venicegeodev/container_jobmanager > /tmp/6520 2>&1
+sudo docker pull venicegeodev/container_jobmanager > /tmp/6530 2>&1
+sudo docker run -d -p 8083:8083 venicegeodev/container_jobmanager > /tmp/6600 2>&1
 
 
 
