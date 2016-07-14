@@ -1,0 +1,19 @@
+FROM centos
+MAINTAINER cwong@radiantblue.com
+
+#Test this script:
+# vi Dockerfile
+# docker build -t mycontainer:0.1 .
+# docker run -p 8080:8080 <sha of image produced by the docker build>
+
+
+
+
+#I'm not sure why/how, but the Nexus repo by default is publicly viewable.
+#This seems to cause an error if the file doesn't exist: RUN rm /first_webapp_from_nexus
+ARG WHEREISNEXUS
+RUN yum install wget -y
+RUN wget http://$WHEREISNEXUS:8081/repository/myrawrepo/piazza-gateway-0.1.0-NEXUSSED.jar
+RUN yum install java-1.8.0-openjdk-devel -y
+CMD ["/usr/lib/jvm/java-1.8.0-openjdk/bin/java", "-jar", "piazza-gateway-0.1.0-NEXUSSED.jar"]
+

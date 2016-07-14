@@ -1,0 +1,39 @@
+sudo yum install git -y > /tmp/8000 2>&1
+
+####
+## Install Maven
+####
+#cd /home/ec2-user > /tmp/8010 2>&1
+#wget http://mirror.olnevhost.net/pub/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz > /tmp/8020 2>&1
+#tar xvf apache-maven-3.0.5-bin.tar.gz > /tmp/8030 2>&1
+#sudo mv apache-maven-3.0.5 /usr/local/apache-maven > /tmp/8040 2>&1
+export M2_HOME=/usr/local/apache-maven > /tmp/8050 2>&1
+export M2=$M2_HOME/bin  > /tmp/8060 2>&1
+export PATH=$M2:$PATH > /tmp/8070 2>&1
+
+#### 
+## Build pz-jobcommon
+####
+cd /home/ec2-user > /tmp/8100 2>&1
+sudo yum install java-1.8.0-openjdk-devel -y > /tmp/8110 2>&1
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/8120 2>&1 
+git clone https://github.com/venicegeo/pz-jobcommon > /tmp/8130 2>&1
+cd pz-jobcommon > /tmp/8140 2>&1
+mvn clean install > /tmp/8150 2>&1
+
+####
+## Build pz-gateway
+####
+cd /home/ec2-user > /tmp/8160 2>&1
+git clone https://github.com/venicegeo/pz-gateway > /tmp/8170 2>&1
+cd pz-gateway > /tmp/8180 2>&1
+mvn clean install > /tmp/8190 2>&1
+
+####
+## Run pz-gateway & 
+####
+cd /home/ec2-user/pz-gateway > /tmp/8300 2>&1
+#$JAVA_HOME/bin/java -jar piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar & > /tmp/8400 2>&1
+
+#POPULATE THE NEXUS REPO
+curl --user 'admin:admin123' --upload-file target/piazza-gateway-0.1.0.jar http://localhost:8081/repository/myrawrepo/piazza-gateway-0.1.0-NEXUSSED.jar > /tmp/8400 2>&1
