@@ -1,0 +1,9 @@
+sudo docker pull venicegeodev/container_gateway
+sudo docker pull venicegeodev/container_jobmanager
+sudo docker run -d -p 8081:8081 --add-host="pz-jobmanager.localdomain:$1" venicegeodev/container_gateway
+sudo docker run -d -p 8083:8083 --add-host="jobdb.dev:$2" venicegeodev/container_jobmanager
+sudo apt-get install -y awscli
+aws s3 cp s3://venicegeo-devops-dev-gocontainer-project/terrametrics.tif . --region us-west-2
+curl -S -s -X POST -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" -F "data={\"type\":\"ingest\",\"host\":true,\"data\":{\"dataType\":{\"type\":\"raster\"},\"metadata\":{\"name\":\"terrametrics\",\"description\":\"geotiff_test\"}}}" -F "file=@./terrametrics.tif" localhost:8081/data/file > /tmp/test01 2>&1
+curl -S -s -X GET  localhost:8081/job/insertjobidhere > /tmp/test02 2>&1
+
