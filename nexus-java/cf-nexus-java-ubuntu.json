@@ -1,0 +1,73 @@
+{
+"AWSTemplateFormatVersion": "2010-09-09",
+"Description": "uses vanilla Amazon Linux AMI (ami-d732f0b7)",
+
+"Mappings": {
+  "EC2RegionMap": {
+   "us-west-2": {"craiggoami": "ami-d732f0b7"}
+  }
+},
+"Resources": {
+  "SecurityGroup": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "craiggo security group",
+    "VpcId": "vpc-4e33072b",
+    "SecurityGroupIngress": [
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 22,
+     "IpProtocol": "tcp",
+     "ToPort": 22
+    },
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 8081,
+     "IpProtocol": "tcp",
+     "ToPort": 8081
+    },
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 8083,
+     "IpProtocol": "tcp",
+     "ToPort": 8083
+    }
+    ]
+   }
+  },
+  "Server": {
+   "Type": "AWS::EC2::Instance",
+   "Properties": {
+    "Tags" : [{
+     "Key":"craig-go-component",
+     "Value":"craig-go"
+    }],
+    "ImageId": {
+     "Fn::FindInMap": [
+      "EC2RegionMap", {
+       "Ref": "AWS::Region"
+      },
+      "craiggoami"
+     ]
+    },
+    "InstanceType": "t2.medium",
+    "KeyName":  "craigradiantblueoregon" ,
+    "SecurityGroupIds": [{
+     "Ref": "SecurityGroup"
+    }],
+    "IamInstanceProfile": "craigtest",
+    "UserData": {"Fn::Base64": {"Fn::Join": ["",
+     [
+"#!/bin/bash -ex\n",
+"echo `whoami` > /tmp/u01\n",
+"apt-get install git -y > /tmp/u02 2>&1\n",
+"git clone https://github.com/craigwongva/gocontainer > /tmp/u03 2>&1\n",
+"echo cd gocontainer/nexus-java > /tmp/u04 2>&1\n",
+"echo ./userdata-ubuntu-docker > /tmp/u05 2>&1\n",
+"echo ./userdata-ubuntu-applications `curl http://169.254.169.254/latest/meta-data/public-ipv4` 52.27.235.89 > /tmp/u06 2>&1\n"
+     ]
+    ]}}
+   }
+  }
+}
+}
