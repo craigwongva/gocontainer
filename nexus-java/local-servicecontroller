@@ -1,0 +1,40 @@
+#sudo yum install git -y > /tmp/3000 2>&1
+
+####
+## Install Maven
+####
+#cd /home/ec2-user > /tmp/3010 2>&1
+#wget http://mirror.olnevhost.net/pub/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz > /tmp/3020 2>&1
+#tar xvf apache-maven-3.0.5-bin.tar.gz > /tmp/3030 2>&1
+#sudo mv apache-maven-3.0.5 /usr/local/apache-maven > /tmp/3040 2>&1
+export M2_HOME=/usr/local/apache-maven
+export M2=$M2_HOME/bin
+export PATH=$M2:$PATH
+
+#### 
+## Build pz-jobcommon
+####
+#cd /home/ec2-user > /tmp/3100 2>&1
+#sudo yum install java-1.8.0-openjdk-devel -y > /tmp/3110 2>&1
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
+#git clone https://github.com/venicegeo/pz-jobcommon > /tmp/3130 2>&1
+#cd pz-jobcommon > /tmp/3140 2>&1
+#mvn clean install > /tmp/3150 2>&1
+
+####
+## Build pz-servicecontroller
+####
+cd /home/ec2-user
+#git clone https://github.com/venicegeo/pz-servicecontroller
+cd pz-servicecontroller/mainServiceController
+mvn clean install
+cp target/piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar conf
+
+####
+## Run pz-servicecontroller & 
+####
+cd /home/ec2-user/pz-servicecontroller/mainServiceController/conf
+#$JAVA_HOME/bin/java -jar piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar & > /tmp/3400 2>&1
+
+#POPULATE THE NEXUS REPO
+curl --user 'admin:admin123' --upload-file piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar http://localhost:8081/repository/myrawrepo/piazzaServiceController-1.0.0.BUILD-SNAPSHOT-NEXUSSED.jar > /tmp/3400 2>&1

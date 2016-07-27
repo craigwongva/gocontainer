@@ -36,4 +36,4 @@ cd /home/ec2-user/pz-jobmanager > /tmp/5300 2>&1
 #$JAVA_HOME/bin/java -jar piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar & > /tmp/5400 2>&1
 
 #POPULATE THE NEXUS REPO
-curl --user 'admin:admin123' --upload-file target/piazza-jobmanager-0.1.0.jar http://localhost:8081/repository/myrawrepo/piazza-jobmanager-0.1.0-NEXUSSED.jar > /tmp/5400 2>&1
+curl --user 'admin:admin123' --upload-file target/piazza-jobmanager-0.1.0.jar http://localhost:8079/repository/myrawrepo/piazza-jobmanager-0.1.0-NEXUSSED.jar > /tmp/5400 2>&1

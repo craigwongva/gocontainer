@@ -12,6 +12,8 @@ rm -rf nexus-3.0.0-03
 tar -xvf craig-nexus-3.0.0-03-unix.tar > /tmp/240 2>&1
 echo `ls` > /tmp/300
 
+sed -i '2s/application-port=8081/application-port=8079/' /home/ec2-user/gocontainer/nexus-3.0.0-03/etc/org.sonatype.nexus.cfg
+
 cd /home/ec2-user/gocontainer/nexus-3.0.0-03/bin
 echo `pwd` > /tmp/400
 
@@ -39,10 +41,10 @@ sed -i '1,$s/SINGLEQUOTE/\x27/g'                                                
 touch /tmp/800
 
 #idempotent?:
-curl -XDELETE -u admin:admin123 'http://localhost:8081/service/siesta/rest/v1/script/maven' > /tmp/810 2>&1
-curl -XPOST -u admin:admin123 --header "Content-Type: application/json" 'http://localhost:8081/service/siesta/rest/v1/script' -d @createrawrepo.json > /tmp/820 2>&1
-curl -XGET -u admin:admin123 'http://localhost:8081/service/siesta/rest/v1/script' > /tmp/830 2>&1
-curl -XPOST -u admin:admin123 --header "Content-Type: text/plain" 'http://localhost:8081/service/siesta/rest/v1/script/rawcmd/run' > /tmp/840 2>&1
+curl -XDELETE -u admin:admin123 'http://localhost:8079/service/siesta/rest/v1/script/maven' > /tmp/810 2>&1
+curl -XPOST -u admin:admin123 --header "Content-Type: application/json" 'http://localhost:8079/service/siesta/rest/v1/script' -d @createrawrepo.json > /tmp/820 2>&1
+curl -XGET -u admin:admin123 'http://localhost:8079/service/siesta/rest/v1/script' > /tmp/830 2>&1
+curl -XPOST -u admin:admin123 --header "Content-Type: text/plain" 'http://localhost:8079/service/siesta/rest/v1/script/rawcmd/run' > /tmp/840 2>&1
 
 #CREATE AN ARTIFACT FOR NEXUS REPO'S CONSUMPTION
 
@@ -65,4 +67,4 @@ touch /tmp/900
 
 
 #POPULATE THE NEXUS REPO
-curl --user 'admin:admin123' --upload-file bin/first_webapp http://localhost:8081/repository/myrawrepo/first_webapp_from_nexus
+curl --user 'admin:admin123' --upload-file bin/first_webapp http://localhost:8079/repository/myrawrepo/first_webapp_from_nexus

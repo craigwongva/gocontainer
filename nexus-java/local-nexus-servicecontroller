@@ -1,0 +1,13 @@
+#sudo yum install docker -y > /tmp/4100 2>&1
+#sudo service docker start > /tmp/4200 2>&1
+#The following is necessary if working interactively as ec2-user:
+# sudo usermod -a -G docker ec2-user
+
+cd /home/ec2-user/gocontainer/nexus-java
+#sudo cp Dockerfile-first_webapp Dockerfile #this starts 8080 for test purposes but isn't central to docker+nexus issue
+sudo cp Dockerfile-nexus-servicecontroller Dockerfile
+sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_servicecontroller .
+sudo docker login --username venicegeodev --password demo1024
+sudo docker push venicegeodev/container_servicecontroller
+sudo docker pull venicegeodev/container_servicecontroller
+sudo docker run -d -p 8088:8088 --add-host="jobdb.dev:$1" --add-host="kafka.dev:52.42.143.18" venicegeodev/container_servicecontroller
