@@ -1,0 +1,5 @@
+wget http://apache.mivzakim.net/kafka/0.9.0.0/kafka_2.10-0.9.0.0.tgz > /tmp/kafka1000 2>&1
+tar -zxvf kafka_2.10-0.9.0.0.tgz > /tmp/kafka1100 *
+cd kafka_2.10-0.9.0.0 > /tmp/kafka1200 *
+bin/zookeeper-server-start.sh config/zookeeper.properties > /tmp/kafka1300 2>&1 &
+bin/kafka-server-start.sh config/server.properties > /tmp/kafka1400 2>&1 &
