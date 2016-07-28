@@ -74,7 +74,7 @@
       "craiggoami"
      ]
     },
-    "InstanceType": "t2.medium",
+    "InstanceType": "t2.large",
     "KeyName":  "craigradiantblueoregon" ,
     "SecurityGroupIds": [{
      "Ref": "SecurityGroup"
