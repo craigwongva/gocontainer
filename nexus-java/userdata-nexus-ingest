@@ -1,0 +1,19 @@
+#sudo yum install docker -y > /tmp/ingest6100 2>&1
+#sudo service docker start > /tmp/ingest6200 2>&1
+
+#The following is necessary if working interactively as ec2-user:
+# sudo usermod -a -G docker ec2-user
+
+cd /home/ec2-user/gocontainer/nexus-java > /tmp/ingest6300 2>&1
+#sudo cp Dockerfile-first_webapp Dockerfile #this starts 8080 for test purposes but isn't central to docker+nexus issue
+sudo cp Dockerfile-nexus-ingest Dockerfile > /tmp/ingest6400 2>&1
+sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_ingest . > /tmp/ingest6500 2>&1
+sudo docker login --username venicegeodev --password demo1024 > /tmp/ingest6510 2>&1
+sudo docker push venicegeodev/container_ingest > /tmp/ingest6520 2>&1
+sudo docker pull venicegeodev/container_ingest > /tmp/ingest6530 2>&1
+sudo docker run -d -p 8084:8084 --add-host="jobdb.dev:$1" --add-host="kafka.dev:$1" venicegeodev/container_ingest > /tmp/ingest6600 2>&1
+
+
+
+
+

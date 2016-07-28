@@ -1,0 +1,39 @@
+sudo yum install git -y > /tmp/ingest5000 2>&1
+
+####
+## Install Maven
+####
+#cd /home/ec2-user > /tmp/ingest5010 2>&1
+#wget http://mirror.olnevhost.net/pub/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz > /tmp/ingest5020 2>&1
+#tar xvf apache-maven-3.0.5-bin.tar.gz > /tmp/ingest5030 2>&1
+#sudo mv apache-maven-3.0.5 /usr/local/apache-maven > /tmp/ingest5040 2>&1
+export M2_HOME=/usr/local/apache-maven > /tmp/ingest5050 2>&1
+export M2=$M2_HOME/bin  > /tmp/ingest5060 2>&1
+export PATH=$M2:$PATH > /tmp/ingest5070 2>&1
+
+#### 
+## Build pz-jobcommon
+####
+cd /home/ec2-user > /tmp/ingest5100 2>&1
+sudo yum install java-1.8.0-openjdk-devel -y > /tmp/ingest5110 2>&1
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/ingest5120 2>&1 
+git clone https://github.com/venicegeo/pz-jobcommon > /tmp/ingest5130 2>&1
+cd pz-jobcommon > /tmp/ingest5140 2>&1
+mvn clean install > /tmp/ingest5150 2>&1
+
+####
+## Build pz-ingest
+####
+cd /home/ec2-user > /tmp/ingest5160 2>&1
+git clone https://github.com/venicegeo/pz-ingest > /tmp/ingest5170 2>&1
+cd pz-ingest > /tmp/ingest5180 2>&1
+mvn clean install > /tmp/ingest5190 2>&1
+
+####
+## Run pz-ingest & 
+####
+cd /home/ec2-user/pz-ingest > /tmp/ingest5300 2>&1
+#$JAVA_HOME/bin/java -jar piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar & > /tmp/ingest5400 2>&1
+
+#POPULATE THE NEXUS REPO
+curl --user 'admin:admin123' --upload-file target/piazza-ingest-0.1.0.jar http://localhost:8079/repository/myrawrepo/piazza-ingest-0.1.0-NEXUSSED.jar > /tmp/ingest5400 2>&1
