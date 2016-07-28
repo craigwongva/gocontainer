@@ -11,7 +11,7 @@ sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_jobmanag
 sudo docker login --username venicegeodev --password demo1024 > /tmp/6510 2>&1
 sudo docker push venicegeodev/container_jobmanager > /tmp/6520 2>&1
 sudo docker pull venicegeodev/container_jobmanager > /tmp/6530 2>&1
-sudo docker run -d -p 8083:8083 --add-host="jobdb.dev:$1" --add-host="kafka.dev:52.42.143.18" venicegeodev/container_jobmanager > /tmp/6600 2>&1
+sudo docker run -d -p 8083:8083 --add-host="jobdb.dev:$1" --add-host="kafka.dev:$1" venicegeodev/container_jobmanager > /tmp/6600 2>&1
 
 
 
