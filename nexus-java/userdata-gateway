@@ -1,39 +1,39 @@
-sudo yum install git -y > /tmp/7000 2>&1
+sudo yum install git -y > /tmp/userdata-gateway-7000 2>&1
 
 ####
 ## Install Maven
 ####
-#cd /home/ec2-user > /tmp/7010 2>&1
-#wget http://mirror.olnevhost.net/pub/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz > /tmp/7020 2>&1
-#tar xvf apache-maven-3.0.5-bin.tar.gz > /tmp/7030 2>&1
-#sudo mv apache-maven-3.0.5 /usr/local/apache-maven > /tmp/7040 2>&1
-export M2_HOME=/usr/local/apache-maven > /tmp/7050 2>&1
-export M2=$M2_HOME/bin  > /tmp/7060 2>&1
-export PATH=$M2:$PATH > /tmp/7070 2>&1
+#cd /home/ec2-user > /tmp/userdata-gateway-7010 2>&1
+#wget http://mirror.olnevhost.net/pub/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz > /tmp/userdata-gateway-7020 2>&1
+#tar xvf apache-maven-3.0.5-bin.tar.gz > /tmp/userdata-gateway-7030 2>&1
+#sudo mv apache-maven-3.0.5 /usr/local/apache-maven > /tmp/userdata-gateway-7040 2>&1
+export M2_HOME=/usr/local/apache-maven > /tmp/userdata-gateway-7050 2>&1
+export M2=$M2_HOME/bin  > /tmp/userdata-gateway-7060 2>&1
+export PATH=$M2:$PATH > /tmp/userdata-gateway-7070 2>&1
 
 #### 
 ## Build pz-jobcommon
 ####
-cd /home/ec2-user > /tmp/7100 2>&1
-sudo yum install java-1.8.0-openjdk-devel -y > /tmp/7110 2>&1
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/7120 2>&1 
-git clone https://github.com/venicegeo/pz-jobcommon > /tmp/7130 2>&1
-cd pz-jobcommon > /tmp/7140 2>&1
-mvn clean install > /tmp/7150 2>&1
+cd /home/ec2-user > /tmp/userdata-gateway-7100 2>&1
+sudo yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-gateway-7110 2>&1
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/userdata-gateway-7120 2>&1 
+git clone https://github.com/venicegeo/pz-jobcommon > /tmp/userdata-gateway-7130 2>&1
+cd pz-jobcommon > /tmp/userdata-gateway-7140 2>&1
+mvn clean install > /tmp/userdata-gateway-7150 2>&1
 
 ####
 ## Build pz-gateway
 ####
-cd /home/ec2-user > /tmp/7160 2>&1
-git clone https://github.com/venicegeo/pz-gateway > /tmp/7170 2>&1
-cd pz-gateway > /tmp/7180 2>&1
-mvn clean install > /tmp/7190 2>&1
+cd /home/ec2-user > /tmp/userdata-gateway-7160 2>&1
+git clone https://github.com/venicegeo/pz-gateway > /tmp/userdata-gateway-7170 2>&1
+cd pz-gateway > /tmp/userdata-gateway-7180 2>&1
+mvn clean install > /tmp/userdata-gateway-7190 2>&1
 
 ####
 ## Run pz-gateway & 
 ####
-cd /home/ec2-user/pz-gateway > /tmp/7300 2>&1
-#$JAVA_HOME/bin/java -jar piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar & > /tmp/7400 2>&1
+cd /home/ec2-user/pz-gateway > /tmp/userdata-gateway-7300 2>&1
+#$JAVA_HOME/bin/java -jar piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar & > /tmp/userdata-gateway-7400 2>&1
 
 #POPULATE THE NEXUS REPO
-curl --user 'admin:admin123' --upload-file target/piazza-gateway-0.1.0.jar http://localhost:8079/repository/myrawrepo/piazza-gateway-0.1.0-NEXUSSED.jar > /tmp/7400 2>&1
+curl --user 'admin:admin123' --upload-file target/piazza-gateway-0.1.0.jar http://localhost:8079/repository/myrawrepo/piazza-gateway-0.1.0-NEXUSSED.jar > /tmp/userdata-gateway-7999 2>&1
