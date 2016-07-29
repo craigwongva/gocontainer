@@ -22,6 +22,12 @@
     },
     {
      "CidrIp": "0.0.0.0/0",
+     "FromPort": 8079,
+     "IpProtocol": "tcp",
+     "ToPort": 8079
+    },
+    {
+     "CidrIp": "0.0.0.0/0",
      "FromPort": 8080,
      "IpProtocol": "tcp",
      "ToPort": 8080
