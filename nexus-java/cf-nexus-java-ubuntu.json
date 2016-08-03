@@ -60,7 +60,7 @@
      [
 "#!/bin/bash -ex\n",
 "echo `whoami` > /tmp/u01\n",
-"sudo -u ubuntu bash -c 'apt-get install git -y > /tmp/u02 2>&1'\n",
+"apt-get install git -y > /tmp/u02 2>&1\n",
 "sudo -u ubuntu bash -c 'git clone https://github.com/craigwongva/gocontainer > /tmp/u03 2>&1'\n",
 "sudo -u ubuntu bash -c 'cd gocontainer/nexus-java > /tmp/u04 2>&1'\n",
 "sudo -u ubuntu bash -c './userdata-ubuntu-docker > /tmp/u05 2>&1'\n",
