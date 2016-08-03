@@ -62,9 +62,9 @@
 "echo `whoami` > /tmp/u01\n",
 "apt-get install git -y > /tmp/u02 2>&1\n",
 "git clone https://github.com/craigwongva/gocontainer > /tmp/u03 2>&1\n",
-"echo cd gocontainer/nexus-java > /tmp/u04 2>&1\n",
-"echo ./userdata-ubuntu-docker > /tmp/u05 2>&1\n",
-"echo ./userdata-ubuntu-applications `curl http://169.254.169.254/latest/meta-data/public-ipv4` 52.27.235.89 > /tmp/u06 2>&1\n"
+"cd gocontainer/nexus-java > /tmp/u04 2>&1\n",
+"./userdata-ubuntu-docker > /tmp/u05 2>&1\n",
+"./userdata-ubuntu-applications `curl http://169.254.169.254/latest/meta-data/public-ipv4` 52.42.114.223 > /tmp/u06 2>&1\n"
      ]
     ]}}
    }
