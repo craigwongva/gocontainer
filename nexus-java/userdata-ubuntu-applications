@@ -9,10 +9,10 @@ curl -S -s -X POST -H "Content-Type: multipart/form-data; boundary=----WebKitFor
 curl -S -s -X GET  localhost:8081/job/insertjobidhere > /tmp/userdata-ubuntu-applications-1700 2>&1
 
 sudo docker pull venicegeodev/container_ingest > /tmp/userdata-ubuntu-applications-1800 2>&1
-sudo docker run -d -p 8084:8084 --add-host="jobdb.dev:$1" --add-host="kafka.dev:$1" venicegeodev/container_ingest > /tmp/userdata-ubuntu-applications-1900 2>&1
+sudo docker run -d -p 8084:8084 --add-host="jobdb.dev:$2" --add-host="kafka.dev:$1" venicegeodev/container_ingest > /tmp/userdata-ubuntu-applications-1900 2>&1
 
 sudo docker pull venicegeodev/container_access > /tmp/userdata-nexus-access-2000 2>&1
-sudo docker run -d -p 8085:8085 --add-host="jobdb.dev:$1" --add-host="kafka.dev:$1" venicegeodev/container_access > /tmp/userdata-nexus-access-2100 2>&1
+sudo docker run -d -p 8085:8085 --add-host="jobdb.dev:$2" --add-host="kafka.dev:$1" venicegeodev/container_access > /tmp/userdata-nexus-access-2100 2>&1
 
 sudo docker pull venicegeodev/container_servicecontroller> /tmp/userdata-nexus-servicecontroller-2200 2>&1
-sudo docker run -d -p 8088:8088 --add-host="jobdb.dev:$1" --add-host="kafka.dev:$1" venicegeodev/container_servicecontroller > /tmp/userdata-nexus-servicecontroller-9999 2>&1
+sudo docker run -d -p 8088:8088 --add-host="jobdb.dev:$2" --add-host="kafka.dev:$1" venicegeodev/container_servicecontroller > /tmp/userdata-nexus-servicecontroller-9999 2>&1
