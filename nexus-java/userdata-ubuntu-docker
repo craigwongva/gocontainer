@@ -10,5 +10,5 @@ sudo apt-get update
 sudo apt-get install -y linux-image-extra-$(uname -r)
 sudo apt-get update
 sudo apt-get install -y docker-engine
-sudo service docker start
+#Apparently Docker starts during the above docker-engine install, and this line causes a non-zero return code: sudo service docker start
 
