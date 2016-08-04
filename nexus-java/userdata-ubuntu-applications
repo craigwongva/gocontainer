@@ -1,8 +1,9 @@
 sudo docker pull venicegeodev/container_gateway > /tmp/userdata-ubuntu-applications-1000 2>&1
 sudo docker pull venicegeodev/container_jobmanager > /tmp/userdata-ubuntu-applications-1100 2>&1
-sudo docker run -d -p 8081:8081 --add-host="pz-jobmanager.localdomain:$1" venicegeodev/container_gateway > /tmp/userdata-ubuntu-applications-1200 2>&1
-sudo docker run -d -p 8083:8083 --add-host="jobdb.dev:$2" venicegeodev/container_jobmanager > /tmp/userdata-ubuntu-applications-1300 2>&1
+sudo docker run -d -p 8081:8081 --add-host="pz-jobmanager.localdomain:$1" --add-host="pz-servicecontroller.localdomain:$1" --add-host="pz-access.localdomain:$1" venicegeodev/container_gateway > /tmp/userdata-ubuntu-applications-1200 2>&1
+sudo docker run -d -p 8083:8083 --add-host="jobdb.dev:$2" --add-host="kafka.dev:$1" venicegeodev/container_jobmanager > /tmp/userdata-ubuntu-applications-1300 2>&1
 sudo apt-get install -y awscli > /tmp/userdata-ubuntu-applications-1400 2>&1
+
 aws s3 cp s3://venicegeo-devops-dev-gocontainer-project/terrametrics.tif . --region us-west-2 > /tmp/userdata-ubuntu-applications-1500 2>&1
 sleep 15 #let Docker pz applications get started
 curl -S -s -X POST -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" -F "data={\"type\":\"ingest\",\"host\":true,\"data\":{\"dataType\":{\"type\":\"raster\"},\"metadata\":{\"name\":\"terrametrics\",\"description\":\"geotiff_test\"}}}" -F "file=@./terrametrics.tif" localhost:8081/data/file > /tmp/userdata-ubuntu-applications-1600 2>&1
