@@ -81,7 +81,7 @@
 "apt-get install git -y > /tmp/u02 2>&1\n",
 "sudo -u ubuntu bash -c 'cd /home/ubuntu; git clone https://github.com/craigwongva/gocontainer > /tmp/u03 2>&1'\n",
 "sudo -u ubuntu bash -c 'cd /home/ubuntu/gocontainer/nexus-java; ./userdata-ubuntu-docker > /tmp/u04 2>&1'\n",
-"sudo -u ubuntu bash -c 'cd /home/ubuntu/gocontainer/nexus-java; ./userdata-ubuntu-applications `curl http://169.254.169.254/latest/meta-data/public-ipv4` 52.42.114.223 > /tmp/u05 2>&1'\n"
+"sudo -u ubuntu bash -c 'cd /home/ubuntu/gocontainer/nexus-java; ./userdata-ubuntu-applications `curl http://169.254.169.254/latest/meta-data/public-ipv4` prime.piazzageo.io > /tmp/u05 2>&1'\n"
      ]
     ]}}
    }
