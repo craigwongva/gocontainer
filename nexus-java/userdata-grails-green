@@ -1,0 +1,15 @@
+sudo yum install java-1.7.0-openjdk-devel -y
+export JAVA_HOME=/usr/lib/jvm/java
+cd /home/ec2-user
+wget http://get.sdkman.io -O installsdkman
+chmod 440 installsdkman 
+/bin/bash installsdkman 
+sed -i -e 's/sdkman_auto_answer=false/sdkman_auto_answer=true/' /home/ec2-user/.sdkman/etc/config
+chmod 744 /home/ec2-user/.sdkman/bin/sdkman-init.sh
+. .sdkman/bin/sdkman-init.sh
+sdk install grails 2.4.0 
+cd .sdkman/candidates/grails/2.4.0
+sudo yum install git -y
+git clone https://github.com/craigwongva/green
+cd green
+grails -Dserver.port=8078 run-app &
