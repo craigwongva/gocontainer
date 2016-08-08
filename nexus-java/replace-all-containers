@@ -1,0 +1,18 @@
+myIP=`curl -s http://169.254.169.254/latest/meta-data/public-ipv4`
+backingIP=$myIP
+[ -z "$1" ] || backingIP=$2
+
+echo replacing gateway
+./replace-a-container gateway $1
+
+echo replacing jobmanager
+./replace-a-container jobmanager $1
+
+echo replacing ingest
+./replace-a-container ingest $1
+
+echo replacing access
+./replace-a-container access $1
+
+echo replacing servicecontroller
+./replace-a-container servicecontroller $1
