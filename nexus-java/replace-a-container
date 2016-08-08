@@ -18,7 +18,7 @@ echo backingIP is $backingIP
 
 if [ $1 == 'gateway' ]
 then
- echo gateway
+ echo gateway myIP=$myIP
  sudo docker stop `sudo docker ps -a | grep gateway | cut -c1-6`
  sudo docker rm `sudo docker ps -a | grep gateway | cut -c1-6`
  sudo docker run -d -p 8081:8081 --add-host="pz-jobmanager.localdomain: $myIP" --add-host="pz-servicecontroller.localdomain:$myIP" --add-host="pz-access.localdomain:$myIP" venicegeodev/container_gateway
@@ -27,7 +27,7 @@ fi
 
 if [ $1 == 'jobmanager' ]
 then
- echo gateway
+ echo jobmanager backingIP=$backingIP
  sudo docker stop `sudo docker ps -a | grep jobmanager | cut -c1-6`
  sudo docker rm `sudo docker ps -a | grep jobmanager | cut -c1-6`
  sudo docker run -d -p 8083:8083 --add-host="jobdb.dev:$backingIP" --add-host="kafka.dev:$backingIP" venicegeodev/container_jobmanager
@@ -36,7 +36,7 @@ fi
 
 if [ $1 == 'ingest' ]
 then
- echo gateway
+ echo ingest backingIP=$backingIP
  sudo docker stop `sudo docker ps -a | grep ingest | cut -c1-6`
  sudo docker rm `sudo docker ps -a | grep ingest | cut -c1-6`
  sudo docker run -d -p 8084:8084 --add-host="jobdb.dev:$backingIP" --add-host="kafka.dev:$backingIP" venicegeodev/container_ingest
@@ -45,7 +45,7 @@ fi
 
 if [ $1 == 'access' ]
 then
- echo gateway
+ echo access backingIP=$backingIP
  sudo docker stop `sudo docker ps -a | grep access | cut -c1-6`
  sudo docker rm `sudo docker ps -a | grep access | cut -c1-6`
  sudo docker run -d -p 8085:8085 --add-host="jobdb.dev:$backingIP" --add-host="kafka.dev:$backingIP" venicegeodev/container_access
@@ -54,7 +54,7 @@ fi
 
 if [ $1 == 'servicecontroller' ]
 then
- echo gateway
+ echo servicecontroller backingIP=$backingIP
  sudo docker stop `sudo docker ps -a | grep servicecontroller | cut -c1-6`
  sudo docker rm `sudo docker ps -a | grep servicecontroller | cut -c1-6`
  sudo docker run -d -p 8088:8088 --add-host="jobdb.dev:$backingIP" --add-host="kafka.dev:$backingIP" venicegeodev/container_servicecontroller
