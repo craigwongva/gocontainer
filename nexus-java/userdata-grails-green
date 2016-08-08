@@ -1,15 +1,15 @@
-sudo yum install java-1.7.0-openjdk-devel -y
-export JAVA_HOME=/usr/lib/jvm/java
-cd /home/ec2-user
-wget http://get.sdkman.io -O installsdkman
-chmod 440 installsdkman 
-/bin/bash installsdkman 
-sed -i -e 's/sdkman_auto_answer=false/sdkman_auto_answer=true/' /home/ec2-user/.sdkman/etc/config
-chmod 744 /home/ec2-user/.sdkman/bin/sdkman-init.sh
-. .sdkman/bin/sdkman-init.sh
-sdk install grails 2.4.0 
-cd .sdkman/candidates/grails/2.4.0
-sudo yum install git -y
-git clone https://github.com/craigwongva/green
-cd green
-grails -Dserver.port=8078 run-app &
+sudo yum install java-1.7.0-openjdk-devel -y > /tmp/userdata-grails-green-1000 2>&1
+export JAVA_HOME=/usr/lib/jvm/java > /tmp/userdata-grails-green-1100 2>&1
+cd /home/ec2-user > /tmp/userdata-grails-green-1200 2>&1
+wget http://get.sdkman.io -O installsdkman > /tmp/userdata-grails-green-1300 2>&1
+chmod 440 installsdkman > /tmp/userdata-grails-green-1400 2>&1
+/bin/bash installsdkman > /tmp/userdata-grails-green-1500 2>&1 
+sed -i -e 's/sdkman_auto_answer=false/sdkman_auto_answer=true/' /home/ec2-user/.sdkman/etc/config > /tmp/userdata-grails-green-1600 2>&1
+chmod 744 /home/ec2-user/.sdkman/bin/sdkman-init.sh > /tmp/userdata-grails-green-1700 2>&1
+. .sdkman/bin/sdkman-init.sh > /tmp/userdata-grails-green-1800 2>&1
+sdk install grails 2.4.0 > /tmp/userdata-grails-green-1900 2>&1 
+cd .sdkman/candidates/grails/2.4.0 > /tmp/userdata-grails-green-2000 2>&1
+sudo yum install git -y > /tmp/userdata-grails-green-2100 2>&1
+git clone https://github.com/craigwongva/green > /tmp/userdata-grails-green-2200 2>&1
+cd green > /tmp/userdata-grails-green-2300 2>&1
+grails -Dserver.port=8078 run-app &  > /tmp/userdata-grails-green-2400 2>&1

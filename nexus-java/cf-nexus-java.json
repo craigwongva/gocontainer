@@ -1,6 +1,6 @@
 {
 "AWSTemplateFormatVersion": "2010-09-09",
-"Description": "uses vanilla Amazon Linux AMI (ami-7172b611)",
+"Description": "venicegeo-devops-dev-gocontainer-project, uses vanilla Amazon Linux AMI (ami-7172b611)",
 
 "Mappings": {
   "EC2RegionMap": {
