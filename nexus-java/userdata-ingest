@@ -39,5 +39,5 @@ cd /home/ec2-user/pz-ingest > /tmp/userdata-ingest-5300 2>&1
 curl --user 'admin:admin123' --upload-file target/piazza-ingest-0.1.0.jar http://localhost:8079/repository/myrawrepo/piazza-ingest-0.1.0-NEXUSSED.jar > /tmp/userdata-ingest-5500 2>&1
 
 #These two lines used to be in cf-nexus-java.json.
-cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-ingest-5600 2>&1
-./userdata-nexus-ingest `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/userdata-ingest-5999 2>&1
+#cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-ingest-5600 2>&1
+#./userdata-nexus-ingest `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/userdata-ingest-5999 2>&1
