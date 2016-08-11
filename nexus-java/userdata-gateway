@@ -36,8 +36,4 @@ cd /home/ec2-user/pz-gateway > /tmp/userdata-gateway-7300 2>&1
 #$JAVA_HOME/bin/java -jar piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar & > /tmp/userdata-gateway-7400 2>&1
 
 #POPULATE THE NEXUS REPO
-curl --user 'admin:admin123' --upload-file target/piazza-gateway-0.1.0.jar http://localhost:8079/repository/myrawrepo/piazza-gateway-0.1.0-NEXUSSED.jar > /tmp/userdata-gateway-7500 2>&1
-
-#These two lines used to be in cf-nexus-java.json.
-cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-gateway-7600 2>&1
-./userdata-nexus-gateway `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/userdata-gateway-7999 2>&1
+curl --user 'admin:admin123' --upload-file target/piazza-gateway-0.1.0.jar http://localhost:8079/repository/myrawrepo/piazza-gateway-0.1.0-NEXUSSED.jar > /tmp/userdata-gateway-7999 2>&1
