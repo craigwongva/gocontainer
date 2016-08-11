@@ -36,7 +36,4 @@ cd /home/ec2-user/pz-jobmanager > /tmp/userdata-jobmanager-5300 2>&1
 #$JAVA_HOME/bin/java -jar piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar & > /tmp/userdata-jobmanager-5400 2>&1
 
 #POPULATE THE NEXUS REPO
-curl --user 'admin:admin123' --upload-file target/piazza-jobmanager-0.1.0.jar http://localhost:8079/repository/myrawrepo/piazza-jobmanager-0.1.0-NEXUSSED.jar > /tmp/userdata-jobmanager-5500 2>&1
-
-cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-jobmanager-5600 2>&1
-./userdata-nexus-jobmanager `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/userdata-jobmanager-5999 2>&1
+curl --user 'admin:admin123' --upload-file target/piazza-jobmanager-0.1.0.jar http://localhost:8079/repository/myrawrepo/piazza-jobmanager-0.1.0-NEXUSSED.jar > /tmp/userdata-jobmanager-5999 2>&1

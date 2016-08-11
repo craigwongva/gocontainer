@@ -37,7 +37,4 @@ cd /home/ec2-user/pz-servicecontroller/mainServiceController/conf > /tmp/userdat
 #$JAVA_HOME/bin/java -jar piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar & > /tmp/userdata-servicecontroller-3400 2>&1
 
 #POPULATE THE NEXUS REPO
-curl --user 'admin:admin123' --upload-file piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar http://localhost:8079/repository/myrawrepo/piazzaServiceController-1.0.0.BUILD-SNAPSHOT-NEXUSSED.jar > /tmp/userdata-servicecontroller-3400 2>&1
-
-cd /home/ec2-user/gocontainer/nexus-java
-./userdata-nexus-servicecontroller `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/userdata-servicecontroller-3999 2>&1
+curl --user 'admin:admin123' --upload-file piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar http://localhost:8079/repository/myrawrepo/piazzaServiceController-1.0.0.BUILD-SNAPSHOT-NEXUSSED.jar > /tmp/userdata-servicecontroller-3999 2>&1
