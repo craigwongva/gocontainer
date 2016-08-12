@@ -1,0 +1,16 @@
+rm -rf /home/ec2-user/gocontainer > /tmp/ami-restart-1000 2>&1
+cd /home/ec2-user > /tmp/ami-restart-1100 2>&1
+git clone https://github.com/craigwongva/gocontainer.git > /tmp/ami-restart-1150 2>&1
+cd gocontainer /tmp/ami-restart-1170 2>&1
+#kafka/zook:
+cd kafka_2.10-0.9.0.0 > /tmp/ami-restart-1200 2>&1
+bin/zookeeper-server-start.sh config/zookeeper.properties > /tmp/ami-restart-1300 2>&1 &
+bin/kafka-server-start.sh config/server.properties > /tmp/ami-restart-1400 2>&1 &
+#grails:
+cd ~/.sdkman/candidates/grails/2.4.0/green > /tmp/ami-restart-2000 2>&1
+( nohup grails -Dserver.port=8078 run-app --non-interactive 2>&1 > /dev/null & ) > /tmp/ami-restart-2100 2>&1
+#nexus:
+cd gocontainer/nexus-3.0.0-03/bin > /tmp/ami-restart-3000 2>&1
+./nexus start > /tmp/ami-restart-3100 2>&1
+sleep 90 > /tmp/ami-restart-3200 2>&1
+#mongod: restarts automatically

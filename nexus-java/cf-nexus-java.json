@@ -4,7 +4,7 @@
 
 "Mappings": {
   "EC2RegionMap": {
-   "us-west-2": {"craiggoami": "ami-7172b611"}
+   "us-west-2": {"craiggoami": "ami-da64afba"}
   }
 },
 "Resources": {
@@ -110,21 +110,22 @@
 "yum install git -y\n",
 "sudo -u ec2-user bash -c 'rm -rf /home/ec2-user/gocontainer > /tmp/u00 2>&1'\n",
 "sudo -u ec2-user bash -c 'cd /home/ec2-user; git clone https://github.com/craigwongva/gocontainer.git > /tmp/u01 2>&1 '\n",
-"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-grails-green > /tmp/u03c 2>&1'\n",
-"sudo -u ec2-user bash -c '/home/ec2-user/gocontainer/userdata-nexus-only > /tmp/u02 2>&1'\n",
-"sudo -u ec2-user bash -c '/home/ec2-user/gocontainer/userdata-nexus-first_webapp `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u03 2>&1'\n",
-"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-mongo `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u03a 2>&1'\n",
-"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-kafka `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u03b 2>&1'\n",
-"#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-servicecontroller `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u04 2>&1'\n",
-"#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-servicecontroller `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u05 2>&1'\n",
-"#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-jobmanager `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u06 2>&1'\n",
-"#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-jobmanager `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u07 2>&1'\n",
-"#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-gateway `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u08 2>&1'\n",
-"#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-gateway `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u09 2>&1'\n",
-"#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-access `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u10 2>&1'\n",
-"#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-access `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u11 2>&1'\n",
-"#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-ingest `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u12 2>&1'\n",
-"#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-ingest `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u13 2>&1'\n"
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer; ./ami-restart > /tmp/u01a 2>&1'\n",
+"#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-grails-green > /tmp/u02c 2>&1'\n",
+"#sudo -u ec2-user bash -c '/home/ec2-user/gocontainer/userdata-nexus-only > /tmp/u02d 2>&1'\n",
+"#sudo -u ec2-user bash -c '/home/ec2-user/gocontainer/userdata-nexus-first_webapp `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u03 2>&1'\n",
+"#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-mongo `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u03a 2>&1'\n",
+"#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-kafka `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u03b 2>&1'\n",
+"##sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-servicecontroller `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u04 2>&1'\n",
+"##sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-servicecontroller `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u05 2>&1'\n",
+"##sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-jobmanager `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u06 2>&1'\n",
+"##sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-jobmanager `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u07 2>&1'\n",
+"##sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-gateway `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u08 2>&1'\n",
+"##sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-gateway `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u09 2>&1'\n",
+"##sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-access `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u10 2>&1'\n",
+"##sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-access `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u11 2>&1'\n",
+"##sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-ingest `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u12 2>&1'\n",
+"##sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-ingest `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u13 2>&1'\n"
      ]
     ]}}
    }
