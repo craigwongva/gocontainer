@@ -1,10 +1,10 @@
 {
 "AWSTemplateFormatVersion": "2010-09-09",
-"Description": "venicegeo-devops-dev-gocontainer-project, uses vanilla Amazon Linux AMI (ami-7172b611)",
+"Description": "ami-3867ac58 is pz-prime-backing-serv (s3 venicegeo-devops-dev-gocontainer-project), uses vanilla Amazon Linux AMI (ami-7172b611)",
 
 "Mappings": {
   "EC2RegionMap": {
-   "us-west-2": {"craiggoami": "ami-7172b611"}
+   "us-west-2": {"craiggoami": "ami-3867ac58"}
   }
 },
 "Resources": {
