@@ -1,0 +1,3 @@
+aws s3 cp s3://venicegeo-devops-dev-gocontainer-project/cf-nexus-java.json compiles
+aws s3 cp cf-nexus-java.json s3://venicegeo-devops-dev-gocontainer-project
+aws cloudformation validate-template --template-url https://s3.amazonaws.com/venicegeo-devops-dev-gocontainer-project/cf-nexus-java.json --region us-west-2
