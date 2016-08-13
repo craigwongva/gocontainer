@@ -4,7 +4,7 @@
 
 "Mappings": {
   "EC2RegionMap": {
-   "us-west-2": {"craiggoami": "ami-da64afba"}
+   "us-west-2": {"craiggoami": "ami-7172b611"}
   }
 },
 "Resources": {
