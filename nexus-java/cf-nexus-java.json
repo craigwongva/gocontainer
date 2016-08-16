@@ -98,7 +98,7 @@
       "craiggoami"
      ]
     },
-    "InstanceType": "t2.large",
+    "InstanceType": "m4.xlarge",
     "KeyName":  "craigradiantblueoregon" ,
     "SecurityGroupIds": [{
      "Ref": "SecurityGroup"
