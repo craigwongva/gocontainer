@@ -7,6 +7,7 @@
 cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-nexus-ingest-6300 2>&1
 #sudo cp Dockerfile-first_webapp Dockerfile #this starts 8080 for test purposes but isn't central to docker+nexus issue
 sudo cp Dockerfile-nexus-ingest Dockerfile > /tmp/userdata-nexus-ingest-6400 2>&1
+sudo echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Dlogger.protocol=http\", \"-Dlogger.port=`cat pz-logger-port-number`\", \"-jar\", \"piazza-ingest-0.1.0-NEXUSSED.jar\"] >> Dockerfile
 sudo docker build --build-arg WHEREISNEXUS=$1 --build-arg PZLOGGERPORT=$2 -t venicegeodev/container_ingest . > /tmp/userdata-nexus-ingest-6500 2>&1
 #See Craig before uncommenting the following three lines:
 #sudo docker login --username venicegeodev --password demo1024 > /tmp/userdata-nexus-ingest-6510 2>&1
