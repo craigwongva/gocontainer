@@ -8,6 +8,7 @@ ENV GOROOT /usr/local/go
 ENV GOPATH /
 ENV PATH $PATH:$GOROOT/bin
 RUN cd /
+RUN yum install git -y
 RUN git clone https://github.com/venicegeo/pz-logger
 RUN mkdir /src
 RUN mkdir /src/pz-logger
@@ -16,4 +17,5 @@ RUN go get github.com/venicegeo/pz-gocommon/gocommon
 RUN go get github.com/venicegeo/pz-logger/logger
 RUN go install pz-logger
 
-CMD ["/bin/pz-logger", ">", "/tmp/pz-logger-port-number-line"]
+#doesn't work: CMD "/bin/pz-logger > /tmp/pz-logger-port-number-line 2>&1"
+CMD ["/bin/sh", "-c", "/bin/pz-logger > /tmp/pz-logger-port-number-line 2>&1"]
