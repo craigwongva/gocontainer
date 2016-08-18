@@ -15,6 +15,6 @@ ARG WHEREISNEXUS
 RUN yum install wget -y
 RUN wget http://$WHEREISNEXUS:8079/repository/myrawrepo/piazza-access-0.1.0-NEXUSSED.jar
 RUN yum install java-1.8.0-openjdk-devel -y
-ENV vcap.services.pz-blobstore.credentials.access_key_id AKIA
-ENV vcap.services.pz-blobstore.credentials.secret_access_key BPkA
+ENV vcap.services.pz-blobstore.credentials.access_key_id mykeyid
+ENV vcap.services.pz-blobstore.credentials.secret_access_key myaccesskey
 CMD ["/usr/lib/jvm/java-1.8.0-openjdk/bin/java", "-Dlogger.protocol=http", "-Dlogger.port=37435", "-jar", "piazza-access-0.1.0-NEXUSSED.jar"]
