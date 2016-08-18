@@ -119,6 +119,7 @@
 "sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-kafka `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u03b 2>&1'\n",
 "sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-elasticsearch > /tmp/u03d 2>&1'\n",
 "sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-logger > /tmp/u03e 2>&1'\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-uuidgen > /tmp/u03f 2>&1'\n",
 "sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-servicecontroller `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u04 2>&1'\n",
 "sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-servicecontroller `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u05 2>&1'\n",
 "sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-jobmanager `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u06 2>&1'\n",
