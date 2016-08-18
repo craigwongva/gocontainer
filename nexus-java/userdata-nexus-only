@@ -1,6 +1,9 @@
 #INSTALL NEXUS
+echo A1000 > /tmp/filea1000
 sudo yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-nexus-only-080 2>&1
+echo A1100 > /tmp/filea1100
 echo $JAVA_HOME > /tmp/userdata-nexus-only-090 2>&1
+echo A1200 > /tmp/filea1200
 
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
 echo $JAVA_HOME > /tmp/userdata-nexus-only-100 2>&1
