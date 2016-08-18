@@ -6,6 +6,11 @@
 
 cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-nexus-gateway-8300 2>&1
 #sudo cp Dockerfile-first_webapp Dockerfile #this starts 8080 for test purposes but isn't central to docker+nexus issue
+
+
+sed -i -e '/CMD/d' Dockerfile-nexus-gateway
+echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Dlogger.protocol=http\", \"-Dlogger.port=`cat pz-logger-port-number`\", \"-jar\", \"piazza-gateway-0.1.0-NEXUSSED.jar\"] >> Dockerfile-nexus-gateway
+
 sudo cp Dockerfile-nexus-gateway Dockerfile > /tmp/userdata-nexus-gateway-8400 2>&1
 sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_gateway . > /tmp/userdata-nexus-gateway-8500 2>&1
 sudo docker login --username venicegeodev --password demo1024 > /tmp/userdata-nexus-gateway-8510 2>&1
@@ -13,4 +18,6 @@ sudo docker push venicegeodev/container_gateway > /tmp/userdata-nexus-gateway-85
 sudo docker pull venicegeodev/container_gateway > /tmp/userdata-nexus-gateway-8530 2>&1
 #The following is necessary only for pz-gateway, which by default uses :8081 like Nexus:
 #/home/ec2-user/gocontainer/nexus-3.0.0-03/bin/nexus stop > /tmp/userdata-nexus-gateway-8540 2>&1
-sudo docker run -d -p 8081:8081 --add-host="pz-jobmanager.localdomain:$1" --add-host="pz-servicecontroller.localdomain:$1" --add-host="pz-access.localdomain:$1" venicegeodev/container_gateway > /tmp/userdata-nexus-gateway-8999 2>&1
+
+#sudo docker run -d --add-host="pz-jobmanager.localdomain:$1" --add-host="pz-servicecontroller.localdomain:$1" --add-host="pz-access.localdomain:$1" venicegeodev/container_gateway > /tmp/userdata-nexus-gateway-8999 2>&1
+sudo docker run -d --net="host" venicegeodev/container_gateway > /tmp/userdata-nexus-gateway-8999 2>&1

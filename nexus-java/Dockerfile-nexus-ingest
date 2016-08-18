@@ -12,11 +12,10 @@ MAINTAINER cwong@radiantblue.com
 #I'm not sure why/how, but the Nexus repo by default is publicly viewable.
 #This seems to cause an error if the file doesn't exist: RUN rm /first_webapp_from_nexus
 ARG WHEREISNEXUS
-ARG PZLOGGERPORT
 RUN yum install wget -y
 RUN wget http://$WHEREISNEXUS:8079/repository/myrawrepo/piazza-ingest-0.1.0-NEXUSSED.jar
 RUN yum install java-1.8.0-openjdk-devel -y
 ENV vcap.services.pz-blobstore.credentials.access_key_id AKIA
 ENV vcap.services.pz-blobstore.credentials.secret_access_key BPkA
 
-#CMD ["/usr/lib/jvm/java-1.8.0-openjdk/bin/java", "-Dlogger.protocol=http", "-Dlogger.port=$PZLOGGERPORT", "-jar", "piazza-ingest-0.1.0-NEXUSSED.jar"]
+CMD ["/usr/lib/jvm/java-1.8.0-openjdk/bin/java", "-Dlogger.protocol=http", "-Dlogger.port=37435", "-jar", "piazza-ingest-0.1.0-NEXUSSED.jar"]

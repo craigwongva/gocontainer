@@ -15,5 +15,5 @@ ARG WHEREISNEXUS
 RUN yum install wget -y
 RUN wget http://$WHEREISNEXUS:8079/repository/myrawrepo/piazza-gateway-0.1.0-NEXUSSED.jar
 RUN yum install java-1.8.0-openjdk-devel -y
-CMD ["/usr/lib/jvm/java-1.8.0-openjdk/bin/java", "-jar", "piazza-gateway-0.1.0-NEXUSSED.jar"]
 
+CMD ["/usr/lib/jvm/java-1.8.0-openjdk/bin/java", "-Dlogger.protocol=http", "-Dlogger.port=37435", "-jar", "piazza-gateway-0.1.0-NEXUSSED.jar"]
