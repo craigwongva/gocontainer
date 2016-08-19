@@ -28,3 +28,13 @@ Here is the specific code from userdata-nexus-gateway that uses the extracted pz
 sed -i -e '/CMD/d' Dockerfile-nexus-gateway
 echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Duuid.protocol=http\", \"-Duuid.port=`cat pz-uuidgen-port-number`\", \"-Dlogger.protocol=http\", \"-Dlogger.port=`cat pz-logger-port-number`\", \"-jar\", \"piazza-gateway-0.1.0-NEXUSSED.jar\"] >> Dockerfile-nexus-gateway
 ```
+
+## About networking ##
+
+pz-logger is not accessible externally even if the AWS firewall for pz-logger's port is open.
+
+Therefore the networking strategy from the master branch won't work for pz-logger and pz-logger's consumers (i.e. all other Piazza Prime application services).
+
+Therefore the go branch uses `--net="host"` networking:
+* All containers are run with the `--net="host"` option. Therefore each container uses the host's /etc/hosts definitions. The most important definition is the localhost definition. Each container finds each other container on localhost, e.g. localhost:8081 for pz-gateway, localhost:8083 for pz-jobmanager, ..., localhost:8088 for pz-servicecontroller.
+* At the customer meeting we demoed the use of external backing services, i.e. backing services like Mongo which lived on an EC2 instance separate from the Piazza Prime application services. In the master branch, this was accomplished automatically via `--add-host` parameters in the `docker build` command (e.g. `--add-host="jobdb.dev:$1"` in userdata-nexus-manager in the master branch). In the go branch, external backing service locations must be defined in the host /etc/hosts like this: `52.43.236.86 jobdb.dev"`. (This isn't automated yet.)
