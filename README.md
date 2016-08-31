@@ -50,3 +50,46 @@ Therefore the networking strategy from the master branch won't work for pz-logge
 Therefore the go branch uses `--net="host"` networking:
 * All containers are run with the `--net="host"` option. Therefore each container uses the host's /etc/hosts definitions. The most important definition is the localhost definition. Each container finds each other container on localhost, e.g. localhost:8081 for pz-gateway, localhost:8083 for pz-jobmanager, ..., localhost:8088 for pz-servicecontroller.
 * At the customer meeting we demoed the use of external backing services, i.e. backing services like Mongo which lived on an EC2 instance separate from the Piazza Prime application services. In the master branch, this was accomplished automatically via `--add-host` parameters in the `docker build` command (e.g. `--add-host="jobdb.dev:$1"` in userdata-nexus-manager in the master branch). In the go branch, external backing service locations must be defined in the host /etc/hosts like this: `52.43.236.86 jobdb.dev"`. (This isn't automated yet.)
+
+Here are the new service registration pointers using "docker run --net" networking:
+* gateway:           --net="host" 
+* jobmanager:        --net="host" 
+* ingest:            --net="host" 
+* access:            --net="host" 
+* servicecontroller: --net="host" 
+* logger:            --net="host" 
+* uuidgen:           --net="host" 
+
+For historical reference, here are the old service registration pointers using "docker run --add-host" networking:
+* gateway:          --add-host="pz-jobmanager.localdomain:$1" --add-host="pz-servicecontroller.localdomain:$1" --add-host="pz-access.localdomain:$1"
+* jobmanager:       --add-host="jobdb.dev:$1" --add-host="kafka.dev:$1"
+* ingest:           --add-host="jobdb.dev:$1" --add-host="kafka.dev:$1" 
+* access:           --add-host="jobdb.dev:$1" --add-host="kafka.dev:$1"
+* servicecontroller:--add-host="jobdb.dev:$1" --add-host="kafka.dev:$1"
+
+## About overridden environment variables ##
+Here are the overridden environment variables for all the Java component Dockerfiles' CMD lines:
+
+```"-Duuid.protocol=http", "-Duuid.port=REPLACEME1", "-Dlogger.protocol=http", "-Dlogger.port=REPLACEME2"```
+
+That's for gateway, jobmanager, ingest, access, servicecontroller.
+
+
+Note that at Docker container creation time:
+* the text REPLACEME1 is dynamically replaced with the actual dynamic pz-uuidgen port.
+* the text REPLACEME2 is dynamically replaced with the actual dynamic pz-logger port.
+
+Here are the overridden environment variables for the Go component Dockerfiles' CMD lines:
+* logger:  none (someday soon: port forwarding for :9200 will be implemented)
+* uuidgen: none
+
+## Using external backing services from Piazza Java services ##
+If your backing services are on the same host as your Piazza Prime containerized services, then you don't need to change your host /etc/hosts.
+However if your external backing service locations are external (e.g. 52.43.236.86), then you must change your host /etc/hosts like this: 
+```
+52.43.236.86 jobdb.dev
+52.43.236.86 kafka.dev
+52.43.236.86 pz-jobmanager.localdomain
+52.43.236.86 pz-access.localdomain
+52.43.236.86 pz-servicecontroller.localdomain
+```
