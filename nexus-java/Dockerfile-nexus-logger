@@ -2,8 +2,8 @@ FROM centos
 MAINTAINER cwong@radiantblue.com
 
 RUN yum install wget -y
-RUN wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz
-RUN tar -xzf go1.4.2.linux-amd64.tar.gz -C /usr/local
+RUN wget https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz
+RUN tar -xzf go1.5.linux-amd64.tar.gz -C /usr/local
 ENV GOROOT /usr/local/go
 ENV GOPATH /
 ENV PATH $PATH:$GOROOT/bin
