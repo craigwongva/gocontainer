@@ -1,3 +1,15 @@
+## About Piazza service builds ##
+This blurb describes how Piazza services are built. (Someday there will be a separate description for how backing services are built.)
+
+On a single EC2 instance (created via a Cloud Formation script), for each Piazza service:
+* build it via maven,
+* upload its Java .war to Nexus (this is not yet implemented for Go),
+* download its .war from Nexus,
+* build its Docker image,
+* upload its Docker image to Dockerhub,
+* download its Docker image from Dockerhub,
+* create Docker container
+
 ## About dynamic ports ##
 This blurb discusses two Go modules, pz-logger and pz-uuidgen. The blurb mentions pz-logger specifically, but the same logic applies to pz-uuidgen.
 
