@@ -1,0 +1,4 @@
+cd /home/ec2-user/gocontainer/nexus-java
+cp settingsxml /home/ec2-user/.m2/settings.xml
+sed -i "s/USERNAME/$1/" /home/ec2-user/.m2/settings.xml
+sed -i "s/PASSWORD/$2/" /home/ec2-user/.m2/settings.xml
