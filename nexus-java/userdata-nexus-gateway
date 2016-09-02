@@ -13,9 +13,9 @@ echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Duuid.protocol=http\"
 
 sudo cp Dockerfile-nexus-gateway Dockerfile > /tmp/userdata-nexus-gateway-8400 2>&1
 sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_gateway . > /tmp/userdata-nexus-gateway-8500 2>&1
-sudo docker login --username venicegeodev --password demo1024 > /tmp/userdata-nexus-gateway-8510 2>&1
-sudo docker push venicegeodev/container_gateway > /tmp/userdata-nexus-gateway-8520 2>&1
-sudo docker pull venicegeodev/container_gateway > /tmp/userdata-nexus-gateway-8530 2>&1
+#sudo docker login --username venicegeodev --password demo1024 > /tmp/userdata-nexus-gateway-8510 2>&1
+#sudo docker push venicegeodev/container_gateway > /tmp/userdata-nexus-gateway-8520 2>&1
+#sudo docker pull venicegeodev/container_gateway > /tmp/userdata-nexus-gateway-8530 2>&1
 #The following is necessary only for pz-gateway, which by default uses :8081 like Nexus:
 #/home/ec2-user/gocontainer/nexus-3.0.0-03/bin/nexus stop > /tmp/userdata-nexus-gateway-8540 2>&1
 

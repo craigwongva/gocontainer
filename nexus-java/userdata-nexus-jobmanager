@@ -12,9 +12,9 @@ echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Duuid.protocol=http\"
 sudo cp Dockerfile-nexus-jobmanager Dockerfile > /tmp/userdata-nexus-jobmanager-6400 2>&1
 
 sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_jobmanager . > /tmp/userdata-nexus-jobmanager-6500 2>&1
-sudo docker login --username venicegeodev --password demo1024 > /tmp/userdata-nexus-jobmanager-6510 2>&1
-sudo docker push venicegeodev/container_jobmanager > /tmp/userdata-nexus-jobmanager-6520 2>&1
-sudo docker pull venicegeodev/container_jobmanager > /tmp/userdata-nexus-jobmanager-6530 2>&1
+#sudo docker login --username venicegeodev --password demo1024 > /tmp/userdata-nexus-jobmanager-6510 2>&1
+#sudo docker push venicegeodev/container_jobmanager > /tmp/userdata-nexus-jobmanager-6520 2>&1
+#sudo docker pull venicegeodev/container_jobmanager > /tmp/userdata-nexus-jobmanager-6530 2>&1
 
 #sudo docker run -d -p 8083:8083 --add-host="jobdb.dev:$1" --add-host="kafka.dev:$1" venicegeodev/container_jobmanager > /tmp/userdata-nexus-jobmanager-6999 2>&1
 sudo docker run -d --net="host" venicegeodev/container_jobmanager > /tmp/userdata-nexus-jobmanager-6999 2>&1

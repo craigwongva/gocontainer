@@ -12,9 +12,9 @@ echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Duuid.protocol=http\"
 sudo cp Dockerfile-nexus-access Dockerfile > /tmp/userdata-nexus-access-6400 2>&1
 sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_access . > /tmp/userdata-nexus-access-6500 2>&1
 
-sudo docker login --username venicegeodev --password demo1024 > /tmp/userdata-nexus-access-6510 2>&1
-sudo docker push venicegeodev/container_access > /tmp/userdata-nexus-access-6520 2>&1
-sudo docker pull venicegeodev/container_access > /tmp/userdata-nexus-access-6530 2>&1
+#sudo docker login --username venicegeodev --password demo1024 > /tmp/userdata-nexus-access-6510 2>&1
+#sudo docker push venicegeodev/container_access > /tmp/userdata-nexus-access-6520 2>&1
+#sudo docker pull venicegeodev/container_access > /tmp/userdata-nexus-access-6530 2>&1
 
 #sudo docker run -d -p 8085:8085 --add-host="jobdb.dev:$1" --add-host="kafka.dev:$1" venicegeodev/container_access > /tmp/userdata-nexus-access-6999 2>&1
 sudo docker run -d --net="host" venicegeodev/container_access > /tmp/userdata-nexus-access-6999 2>&1

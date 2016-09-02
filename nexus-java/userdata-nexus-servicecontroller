@@ -11,9 +11,9 @@ echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Duuid.protocol=http\"
 sudo cp Dockerfile-nexus-servicecontroller Dockerfile > /tmp/userdata-nexus-servicecontroller-4400 2>&1
 
 sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_servicecontroller . > /tmp/userdata-nexus-servicecontroller-4500 2>&1
-sudo docker login --username venicegeodev --password demo1024 > /tmp/userdata-nexus-servicecontroller-4510 2>&1
-sudo docker push venicegeodev/container_servicecontroller > /tmp/userdata-nexus-servicecontroller-4520 2>&1
-sudo docker pull venicegeodev/container_servicecontroller> /tmp/userdata-nexus-servicecontroller-4530 2>&1
+#sudo docker login --username venicegeodev --password demo1024 > /tmp/userdata-nexus-servicecontroller-4510 2>&1
+#sudo docker push venicegeodev/container_servicecontroller > /tmp/userdata-nexus-servicecontroller-4520 2>&1
+#sudo docker pull venicegeodev/container_servicecontroller> /tmp/userdata-nexus-servicecontroller-4530 2>&1
 
 #sudo docker run -d -p 8088:8088 --add-host="jobdb.dev:$1" --add-host="kafka.dev:$1" venicegeodev/container_servicecontroller > /tmp/userdata-nexus-servicecontroller-4999 2>&1
 sudo docker run -d --net="host" venicegeodev/container_servicecontroller > /tmp/userdata-nexus-servicecontroller-4999 2>&1

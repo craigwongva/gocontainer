@@ -13,9 +13,9 @@ sudo cp Dockerfile-nexus-ingest Dockerfile > /tmp/userdata-nexus-ingest-6400 2>&
 
 sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_ingest . > /tmp/userdata-nexus-ingest-6500 2>&1
 
-sudo docker login --username venicegeodev --password demo1024 > /tmp/userdata-nexus-ingest-6510 2>&1
-sudo docker push venicegeodev/container_ingest > /tmp/userdata-nexus-ingest-6520 2>&1
-sudo docker pull venicegeodev/container_ingest > /tmp/userdata-nexus-ingest-6530 2>&1
+#sudo docker login --username venicegeodev --password demo1024 > /tmp/userdata-nexus-ingest-6510 2>&1
+#sudo docker push venicegeodev/container_ingest > /tmp/userdata-nexus-ingest-6520 2>&1
+#sudo docker pull venicegeodev/container_ingest > /tmp/userdata-nexus-ingest-6530 2>&1
 # Tuesday 8/16 I'm replacing "-p 8084:8084" with '--net="host"'
 sudo docker run -d --net="host" venicegeodev/container_ingest > /tmp/userdata-nexus-ingest-6999 2>&1
 
