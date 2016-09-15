@@ -29,8 +29,8 @@ sudo service docker start
 
 
 
-
-aws cp s3://venicegeo-devops-dev-gocontainer-project/eus . #someday build this locally instead of downloading it
+cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-nexus-swarm2-8200 2>&1
+aws s3 cp s3://venicegeo-devops-dev-gocontainer-project/eus . > /tmp/userdata-nexus-swarm2-8300 2>&1 #someday build this locally instead of downloading it
 sudo cp Dockerfile-nexus-eus Dockerfile > /tmp/userdata-nexus-swarm2-8400 2>&1
 sudo docker build -t venicegeodev/container_eus . > /tmp/userdata-nexus-swarm2-8500 2>&1
 #sudo docker login --username venicegeodev --password demo1024
