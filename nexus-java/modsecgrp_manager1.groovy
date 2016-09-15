@@ -73,11 +73,11 @@ def authorizeSecurityGroupIngress(comment, groupID, cidr, port) {
 * Update AWS security groups
 **/
 
-def manager1IPs                      = getInstanceIPAddresses('swarm2')
-def manager1SecurityGroupID          = getSecurityGroupID('swarm2-SecurityGroup')
+def manager1IPs                      = getInstanceIPAddresses('manager1')
+def manager1SecurityGroupID          = getSecurityGroupID('manager1-SecurityGroup')
 
-def consulIPs                        = getInstanceIPAddresses('swarm1')
-def consulSecurityGroupID            = getSecurityGroupID('swarm1-SecurityGroup')
+def consulIPs                        = getInstanceIPAddresses('consul')
+def consulSecurityGroupID            = getSecurityGroupID('consul-SecurityGroup')
 
 authorizeSecurityGroupIngress(
  'allow manager1 to receive from consul on 4000', 
