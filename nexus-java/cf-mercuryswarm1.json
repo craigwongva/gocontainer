@@ -27,9 +27,13 @@
    "Type": "AWS::EC2::Instance",
    "Properties": {
     "Tags" : [{
-     "Key":"craig-go-component",
-     "Value":"craig-go"
-    }],
+     "Key":"craig-swarm-component",
+     "Value":"swarm1"
+    }, {
+     "Key":"Name",
+     "Value":"swarm1"
+    }
+    ],
     "ImageId": {
      "Fn::FindInMap": [
       "EC2RegionMap", {
