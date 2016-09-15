@@ -1,0 +1,4 @@
+FROM centos
+MAINTAINER cwong@radiantblue.com
+COPY eus .
+CMD ["./eus"]
