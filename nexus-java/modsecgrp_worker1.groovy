@@ -91,6 +91,18 @@ if (args[0] == 'option1') {
   consulSecurityGroupID, 
   worker1IPs.publicIpAddress, 
   '2375')
+
+ authorizeSecurityGroupIngress(
+  'allow worker1 to receive from consul on 8500', 
+  worker1SecurityGroupID, 
+  consulIPs.publicIpAddress, 
+  '8500')
+
+ authorizeSecurityGroupIngress(
+  'allow consul to receive from worker1 on 8500', 
+  consulSecurityGroupID, 
+  worker1IPs.publicIpAddress, 
+  '8500')
 }
 
 if (args[0] == 'option2') {

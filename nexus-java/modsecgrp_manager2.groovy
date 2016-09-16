@@ -91,6 +91,18 @@ if (args[0] == 'option1') {
   consulSecurityGroupID, 
   manager2IPs.publicIpAddress, 
   '4000')
+
+ authorizeSecurityGroupIngress(
+  'allow manager2 to receive from consul on 4000', 
+  manager2SecurityGroupID, 
+  consulIPs.publicIpAddress, 
+  '8500')
+
+ authorizeSecurityGroupIngress(
+  'allow consul to receive from manager2 on 4000', 
+  consulSecurityGroupID, 
+  manager2IPs.publicIpAddress, 
+  '8500')
 }
 
 if (args[0] == 'option2') {
