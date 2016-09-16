@@ -28,6 +28,8 @@ sudo docker build -t venicegeodev/container_eus . > /tmp/userdata-nexus-swarmman
 ## Install Groovy.
 ###
 
+yum install java-1.8.0-openjdk-devel -y
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
 cd /home/ec2-user > /tmp/userdata-nexus-swarmmanager2-8300 2>&1
 aws s3 cp s3://venicegeo-devops-dev-logstashforwarder-project/dotsdkman.zip . > /tmp/userdata-nexus-swarmmanager2-8400 2>&1
 unzip dotsdkman.zip > /tmp/userdata-nexus-swarmmanager2-8500 2>&1

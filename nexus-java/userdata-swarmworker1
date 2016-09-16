@@ -25,6 +25,8 @@ sudo usermod -aG docker ec2-user
 ### Install Groovy.
 ####
 
+sudo yum install java-1.8.0-openjdk-devel -y
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
 cd /home/ec2-user > /tmp/userdata-nexus-swarmworker1-8300 2>&1
 aws s3 cp s3://venicegeo-devops-dev-logstashforwarder-project/dotsdkman.zip . > /tmp/userdata-nexus-swarmworker1-8400 2>&1
 unzip dotsdkman.zip > /tmp/userdata-nexus-swarmworker1-8500 2>&1
