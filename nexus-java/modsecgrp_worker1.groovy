@@ -99,7 +99,7 @@ if (args[0] == 'option1') {
  authorizeSecurityGroupIngress(
   'worker1 opens 2375 to consul',
   consulSecurityGroupID, 
-  workerIPs.publicIpAddress, 
+  worker1IPs.publicIpAddress, 
   '2375')
 
  authorizeSecurityGroupIngress(
