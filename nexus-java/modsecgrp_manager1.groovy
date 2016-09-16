@@ -82,27 +82,33 @@ def consulSecurityGroupID            = getSecurityGroupID('consul-SecurityGroup'
 if (args[0] == 'option1') {
  authorizeSecurityGroupIngress(
   'consul opens 4000 to manager1', 
-  manager1SecurityGroupID, 
-  consulIPs.publicIpAddress, 
+  consulSecurityGroupID, 
+  manager1IPs.publicIpAddress, 
   '4000')
 
  authorizeSecurityGroupIngress(
   'consul opens 8500 to manager1', 
+  consulSecurityGroupID, 
+  manager1IPs.publicIpAddress, 
+  '8500')
+
+ authorizeSecurityGroupIngress(
+  'manager1 opens 4000 to consul', 
+  manager1SecurityGroupID, 
+  consulIPs.publicIpAddress, 
+  '4000')
+
+ authorizeSecurityGroupIngress(
+  'manager1 opens 8500 to consul', 
   manager1SecurityGroupID, 
   consulIPs.publicIpAddress, 
   '8500')
 
  authorizeSecurityGroupIngress(
-  'manager1 opens 4000 to consul', 
-  consulSecurityGroupID, 
-  manager1IPs.publicIpAddress, 
+  'manager1 opens 4000 to ALL', //allow Green Dots to query for worker nodes
+  manager1SecurityGroupID, 
+  '0.0.0.0',
   '4000')
-
- authorizeSecurityGroupIngress(
-  'manager1 opens 8500 to consul', 
-  consulSecurityGroupID, 
-  manager1IPs.publicIpAddress, 
-  '8500')
 }
 
 if (args[0] == 'option2') {
