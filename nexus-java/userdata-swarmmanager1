@@ -6,8 +6,6 @@ sudo service docker start > /tmp/userdata-nexus-swarmmanager1/7100 2>&1
 ##open consul server to receive traffic from this manager
 ##open this manager server to receive :4000 from ?
 
-#do this later 9/15/16
-#docker run -d -p 4000:4000 swarm manage -H :4000 --replication --advertise `curl http://169.254.169.254/latest/meta-data/public-ipv4`:4000 consul://52.41.212.136:8500
 
 
 
@@ -42,4 +40,6 @@ cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-nexus-swarmmanager1-860
 cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-2.4.7.jar . > /tmp/userdata-nexus-swarmmanager1-8700 2>&1
 cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-json-2.4.7.jar . > /tmp/userdata-nexus-swarmmanager1-8800 2>&1
 /home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_manager1.groovy > /tmp/userdata-nexus-manager1-8900 2>&1
-java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar modsecgrp_manager1 > /tmp/userdata-nexus-manager1-9000 2>&1
+java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar modsecgrp_manager1 option1 > /tmp/userdata-nexus-manager1-9000 2>&1
+
+docker run -d -p 4000:4000 swarm manage -H :4000 --replication --advertise `curl http://169.254.169.254/latest/meta-data/public-ipv4`:4000 consul://`/home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_manager1.groovy option2`:8500 > /tmp/userdata-nexus-manager1-9100
