@@ -94,5 +94,5 @@ if (args[0] == 'option1') {
 }
 
 if (args[0] == 'option2') {
- println consulIPs
+ println consulIPs.publicIpAddress
 }
