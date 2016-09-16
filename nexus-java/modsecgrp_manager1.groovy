@@ -81,27 +81,27 @@ def consulSecurityGroupID            = getSecurityGroupID('consul-SecurityGroup'
 
 if (args[0] == 'option1') {
  authorizeSecurityGroupIngress(
-  'allow manager1 to receive from consul on 4000', 
-  manager1SecurityGroupID, 
+  'consul opens 4000 to manager1', 
   consulIPs.publicIpAddress, 
+  manager1SecurityGroupID, 
   '4000')
 
  authorizeSecurityGroupIngress(
-  'allow consul to receive from manager1 on 4000', 
-  consulSecurityGroupID, 
-  manager1IPs.publicIpAddress, 
-  '4000')
-
- authorizeSecurityGroupIngress(
-  'allow manager1 to receive from consul on 4000', 
-  manager1SecurityGroupID, 
+  'consul opens 8500 to manager1', 
   consulIPs.publicIpAddress, 
+  manager1SecurityGroupID, 
   '8500')
 
  authorizeSecurityGroupIngress(
-  'allow consul to receive from manager1 on 4000', 
-  consulSecurityGroupID, 
+  'manager1 opens 4000 to consul', 
   manager1IPs.publicIpAddress, 
+  consulSecurityGroupID, 
+  '4000')
+
+ authorizeSecurityGroupIngress(
+  'manager1 opens 8500 to consul', 
+  manager1IPs.publicIpAddress, 
+  consulSecurityGroupID, 
   '8500')
 }
 

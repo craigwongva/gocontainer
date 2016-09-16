@@ -73,35 +73,45 @@ def authorizeSecurityGroupIngress(comment, groupID, cidr, port) {
 * Update AWS security groups
 **/
 
-def worker1IPs                      = getInstanceIPAddresses('worker1')
-def worker1SecurityGroupID          = getSecurityGroupID('worker1-SecurityGroup')
-
 def consulIPs                        = getInstanceIPAddresses('consul')
 def consulSecurityGroupID            = getSecurityGroupID('consul-SecurityGroup')
 
+def manager1IPs                      = getInstanceIPAddresses('manager1')
+def manager1SecurityGroupID          = getSecurityGroupID('manager1-SecurityGroup')
+
+def worker1IPs                      = getInstanceIPAddresses('worker1')
+def worker1SecurityGroupID          = getSecurityGroupID('worker1-SecurityGroup')
+
+
 if (args[0] == 'option1') {
  authorizeSecurityGroupIngress(
-  'allow worker1 to receive from consul on 2375', 
-  worker1SecurityGroupID, 
+  'consul opens 8500 to worker1',
   consulIPs.publicIpAddress, 
-  '2375')
-
- authorizeSecurityGroupIngress(
-  'allow consul to receive from worker1 on 2375', 
-  consulSecurityGroupID, 
-  worker1IPs.publicIpAddress, 
-  '2375')
-
- authorizeSecurityGroupIngress(
-  'allow worker1 to receive from consul on 8500', 
   worker1SecurityGroupID, 
-  consulIPs.publicIpAddress, 
   '8500')
 
  authorizeSecurityGroupIngress(
-  'allow consul to receive from worker1 on 8500', 
+  'manager1 opens ALL to worker1',
+  manager1IPs.publicIpAddress, 
+  worker1SecurityGroupID, 
+  '0-65535')
+
+ authorizeSecurityGroupIngress(
+  'worker1 opens 2375 to consul',
+  workerIPs.publicIpAddress, 
   consulSecurityGroupID, 
+  '2375')
+
+ authorizeSecurityGroupIngress(
+  'worker1 opens 8500 to consul',
   worker1IPs.publicIpAddress, 
+  consulSecurityGroupID, 
+  '8500')
+
+ authorizeSecurityGroupIngress(
+  'worker1 opens 2375 to manager1',
+  worker1IPs.publicIpAddress, 
+  manager1SecurityGroupID, 
   '8500')
 }
 
