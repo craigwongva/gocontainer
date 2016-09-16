@@ -1,5 +1,5 @@
 sudo yum install docker -y > /tmp/userdata-nexus-swarmmanager1-7000 2>&1
-sudo service docker start > /tmp/userdata-nexus-swarmmanager1/7100 2>&1
+sudo service docker start > /tmp/userdata-nexus-swarmmanager1-7100 2>&1
 
 #I had to use external IPs, i.e. internal IPs didn't seem to work.
 
