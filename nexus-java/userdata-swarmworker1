@@ -1,13 +1,14 @@
-sudo yum install docker –y
+sudo yum install docker –y > /tmp/userdata-swarmworker1-7100 2>&1
 
 #yes this start/stop is necessary
-sudo docker service start
-sudo docker service stop
+sudo docker service start> /tmp/userdata-swarmworker1-7200 2>&1
+sudo docker service stop> /tmp/userdata-swarmworker1-7300 2>&1
 
 sudo docker daemon -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock &
 
 #not sure whether this usermod is necessary
-sudo usermod -aG docker ec2-user
+sudo usermod -aG docker ec2-user > /tmp/userdata-swarmworker1-7500 2>&1
+
 
 
 
@@ -25,20 +26,20 @@ sudo usermod -aG docker ec2-user
 ### Install Groovy.
 ####
 
-sudo yum install java-1.8.0-openjdk-devel -y
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
-cd /home/ec2-user > /tmp/userdata-nexus-swarmworker1-8300 2>&1
-aws s3 cp s3://venicegeo-devops-dev-logstashforwarder-project/dotsdkman.zip . > /tmp/userdata-nexus-swarmworker1-8400 2>&1
-unzip dotsdkman.zip > /tmp/userdata-nexus-swarmworker1-8500 2>&1
+sudo yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-swarmworker1-7600 2>&1
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/userdata-swarmworker1-7700 2>&1
+cd /home/ec2-user > /tmp/userdata-swarmworker1-8300 2>&1
+aws s3 cp s3://venicegeo-devops-dev-logstashforwarder-project/dotsdkman.zip . > /tmp/userdata-swarmworker1-8400 2>&1
+unzip dotsdkman.zip > /tmp/userdata-swarmworker1-8500 2>&1
 
 ####
 ### Modify security groups that allow Manager to talk to Consul.
 ####
 
-cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-nexus-swarmworker1-8600 2>&1
-cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-2.4.7.jar . > /tmp/userdata-nexus-swarmworker1-8700 2>&1
-cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-json-2.4.7.jar . > /tmp/userdata-nexus-swarmworker1-8800 2>&1
-/home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_worker1.groovy > /tmp/userdata-nexus-worker1-8900 2>&1
-java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar modsecgrp_worker1 option1 > /tmp/userdata-nexus-worker1-9000 2>&1
+cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-swarmworker1-8600 2>&1
+cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-2.4.7.jar . > /tmp/userdata-swarmworker1-8700 2>&1
+cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-json-2.4.7.jar . > /tmp/userdata-swarmworker1-8800 2>&1
+/home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_worker1.groovy > /tmp/userdata-worker1-8900 2>&1
+java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar modsecgrp_worker1 option1 > /tmp/userdata-worker1-9000 2>&1
 
-sudo docker run -d swarm join --advertise=`curl http://169.254.169.254/latest/meta-data/public-ipv4`:2375 consul://`/home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_worker1.groovy option2`:8500 > /tmp/userdata-nexus-worker1-9100 2>&1
+sudo docker run -d swarm join --advertise=`curl http://169.254.169.254/latest/meta-data/public-ipv4`:2375 consul://`/home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_worker1.groovy option2`:8500 > /tmp/userdata-worker1-9100 2>&1
