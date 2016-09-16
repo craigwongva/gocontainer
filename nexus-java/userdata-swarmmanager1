@@ -1,5 +1,5 @@
-sudo yum install docker -y > /tmp/userdata-nexus-swarmmanager1-7000 2>&1
-sudo service docker start > /tmp/userdata-nexus-swarmmanager1-7100 2>&1
+sudo yum install docker -y > /tmp/userdata-swarmmanager1-7000 2>&1
+sudo service docker start > /tmp/userdata-swarmmanager1-7100 2>&1
 
 #I had to use external IPs, i.e. internal IPs didn't seem to work.
 
@@ -9,10 +9,10 @@ sudo service docker start > /tmp/userdata-nexus-swarmmanager1-7100 2>&1
 
 
 
-cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-nexus-swarmmanager1-8000 2>&1
-aws s3 cp s3://venicegeo-devops-dev-gocontainer-project/eus . > /tmp/userdata-nexus-swarmmanager1-8100 2>&1 #someday build this locally instead of downloading it
-sudo cp Dockerfile-nexus-eus Dockerfile > /tmp/userdata-nexus-swarmmanager1-8200 2>&1
-sudo docker build -t venicegeodev/container_eus . > /tmp/userdata-nexus-swarmmanager1-8300 2>&1
+cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-swarmmanager1-8000 2>&1
+aws s3 cp s3://venicegeo-devops-dev-gocontainer-project/eus . > /tmp/userdata-swarmmanager1-8100 2>&1 #someday build this locally instead of downloading it
+sudo cp Dockerfile-eus Dockerfile > /tmp/userdata-swarmmanager1-8200 2>&1
+sudo docker build -t venicegeodev/container_eus . > /tmp/userdata-swarmmanager1-8300 2>&1
 #sudo docker login --username venicegeodev --password demo1024
 #sudo docker push venicegeodev/container_eus
 #sudo docker pull venicegeodev/container_eus
@@ -28,20 +28,20 @@ sudo docker build -t venicegeodev/container_eus . > /tmp/userdata-nexus-swarmman
 ## Install Groovy.
 ###
 
-yum install java-1.8.0-openjdk-devel -y
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
-cd /home/ec2-user > /tmp/userdata-nexus-swarmmanager1-8300 2>&1
-aws s3 cp s3://venicegeo-devops-dev-logstashforwarder-project/dotsdkman.zip . > /tmp/userdata-nexus-swarmmanager1-8400 2>&1
-unzip dotsdkman.zip > /tmp/userdata-nexus-swarmmanager1-8500 2>&1
+sudo yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-swarmmanager1-8320 2>&1
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/userdata-swarmmanager1-8330 2>&1
+cd /home/ec2-user > /tmp/userdata-swarmmanager1-8340 2>&1
+aws s3 cp s3://venicegeo-devops-dev-logstashforwarder-project/dotsdkman.zip . > /tmp/userdata-swarmmanager1-8400 2>&1
+unzip dotsdkman.zip > /tmp/userdata-swarmmanager1-8500 2>&1
 
 ###
 ## Modify security groups that allow Manager to talk to Consul.
 ###
 
-cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-nexus-swarmmanager1-8600 2>&1
-cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-2.4.7.jar . > /tmp/userdata-nexus-swarmmanager1-8700 2>&1
-cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-json-2.4.7.jar . > /tmp/userdata-nexus-swarmmanager1-8800 2>&1
-/home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_manager1.groovy > /tmp/userdata-nexus-manager1-8900 2>&1
-java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar modsecgrp_manager1 option1 > /tmp/userdata-nexus-manager1-9000 2>&1
+cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-swarmmanager1-8600 2>&1
+cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-2.4.7.jar . > /tmp/userdata-swarmmanager1-8700 2>&1
+cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-json-2.4.7.jar . > /tmp/userdata-swarmmanager1-8800 2>&1
+/home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_manager1.groovy > /tmp/userdata-manager1-8900 2>&1
+java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar modsecgrp_manager1 option1 > /tmp/userdata-manager1-9000 2>&1
 
-sudo docker run -d -p 4000:4000 swarm manage -H :4000 --replication --advertise `curl http://169.254.169.254/latest/meta-data/public-ipv4`:4000 consul://`/home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_manager1.groovy option2`:8500 > /tmp/userdata-nexus-manager1-9100
+sudo docker run -d -p 4000:4000 swarm manage -H :4000 --replication --advertise `curl http://169.254.169.254/latest/meta-data/public-ipv4`:4000 consul://`/home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_manager1.groovy option2`:8500 > /tmp/userdata-manager1-9100
