@@ -42,4 +42,4 @@ cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-json-2.4.7.jar . > 
 /home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_manager2.groovy > /tmp/userdata-nexus-manager2-8900 2>&1
 java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar modsecgrp_manager2 option1 > /tmp/userdata-nexus-manager2-9000 2>&1
 
-docker run -d -p 4000:4000 swarm manage -H :4000 --replication --advertise `curl http://169.254.169.254/latest/meta-data/public-ipv4`:4000 consul://`/home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_manager2.groovy option2`:8500 > /tmp/userdata-nexus-manager2-9100
+sudo docker run -d -p 4000:4000 swarm manage -H :4000 --replication --advertise `curl http://169.254.169.254/latest/meta-data/public-ipv4`:4000 consul://`/home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_manager2.groovy option2`:8500 > /tmp/userdata-nexus-manager2-9100
