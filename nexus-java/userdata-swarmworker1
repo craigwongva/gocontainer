@@ -3,31 +3,21 @@ sudo yum install docker -y > /tmp/userdata-swarmworker1-7000 2>&1
 #yes this start/stop is necessary
 sudo service docker start > /tmp/userdata-swarmworker1-7100 2>&1
 sudo service docker stop > /tmp/userdata-swarmworker1-7300 2>&1
-sleep 120 > /tmp/userdata-swarmworker1-7350 2>&1
+sleep 30 > /tmp/userdata-swarmworker1-7350 2>&1
 sudo docker daemon -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock & > /tmp/userdata-swarmworker1-7400 2>&1
 
+sleep 30 > /tmp/userdata-swarmworker1-7450 2>&1
+sudo service docker stop > /tmp/userdata-swarmworker1-7500 2>&1
+sudo docker daemon -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock & > /tmp/userdata-swarmworker1-7600 2>&1
 #not sure whether this usermod is necessary
-sudo usermod -aG docker ec2-user > /tmp/userdata-swarmworker1-7500 2>&1
-
-
-
-
-
-
-
-
-
-
-
-
-
+sudo usermod -aG docker ec2-user > /tmp/userdata-swarmworker1-7700 2>&1
 
 ##
 ### Install Groovy.
 ####
 
-sudo yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-swarmworker1-7600 2>&1
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/userdata-swarmworker1-7700 2>&1
+sudo yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-swarmworker1-7800 2>&1
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/userdata-swarmworker1-7900 2>&1
 cd /home/ec2-user > /tmp/userdata-swarmworker1-8300 2>&1
 aws s3 cp s3://venicegeo-devops-dev-logstashforwarder-project/dotsdkman.zip . > /tmp/userdata-swarmworker1-8400 2>&1
 unzip dotsdkman.zip > /tmp/userdata-swarmworker1-8500 2>&1
