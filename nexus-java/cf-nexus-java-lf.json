@@ -1,0 +1,144 @@
+{
+"AWSTemplateFormatVersion": "2010-09-09",
+"Description": "venicegeo-devops-dev-gocontainer-project, uses ami-1aa86f77 LF AMI)",
+
+"Mappings": {
+  "EC2RegionMap": {
+   "us-east-1": {"craiggoami": "ami-1aa86f77"}
+  }
+},
+"Resources": {
+  "SecurityGroup": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "craiggo security group formerly us-west-2 vpc-4e33072b",
+    "VpcId": "vpc-0cef7968",
+    "SecurityGroupIngress": [
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 22,
+     "IpProtocol": "tcp",
+     "ToPort": 22
+    },
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 8078,
+     "IpProtocol": "tcp",
+     "ToPort": 8078
+    },
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 8079,
+     "IpProtocol": "tcp",
+     "ToPort": 8079
+    },
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 8080,
+     "IpProtocol": "tcp",
+     "ToPort": 8080
+    },
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 8081,
+     "IpProtocol": "tcp",
+     "ToPort": 8081
+    },
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 8083,
+     "IpProtocol": "tcp",
+     "ToPort": 8083
+    },
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 8084,
+     "IpProtocol": "tcp",
+     "ToPort": 8084
+    },
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 8085,
+     "IpProtocol": "tcp",
+     "ToPort": 8085
+    },
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 8088,
+     "IpProtocol": "tcp",
+     "ToPort": 8088
+    },
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 9092,
+     "IpProtocol": "tcp",
+     "ToPort": 9092
+    },
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 27017,
+     "IpProtocol": "tcp",
+     "ToPort": 27017
+    }
+    ]
+   }
+  },
+  "Server": {
+   "Type": "AWS::EC2::Instance",
+   "Properties": {
+    "Tags" : [{
+     "Key":"craig-go-component",
+     "Value":"craig-go"
+    }],
+    "ImageId": {
+     "Fn::FindInMap": [
+      "EC2RegionMap", {
+       "Ref": "AWS::Region"
+      },
+      "craiggoami"
+     ]
+    },
+    "InstanceType": "m4.xlarge",
+    "KeyName":  "kraig-vpc-2" ,
+    "SecurityGroupIds": [{
+     "Ref": "SecurityGroup"
+    }],
+    "IamInstanceProfile": "craigelk",
+    "UserData": {"Fn::Base64": {"Fn::Join": ["",
+     [
+"#!/bin/bash -ex\n",
+"yum install git -y\n",
+"yum install curl -y\n",
+"git clone https://github.com/craigwongva/3deploy.git\n",
+"cp 3deploy/userdata-logstashforwarder .\n",
+"sudo -u ec2-user bash -c '/userdata-logstashforwarder > /tmp/u00 2>&1 '\n",
+
+"sudo -u ec2-user bash -c 'cd /home/ec2-user; git clone https://github.com/craigwongva/gocontainer.git > /tmp/u01 2>&1 '\n",
+"sudo -u ec2-user bash -c '/home/ec2-user/gocontainer/userdata-nexus-only > /tmp/u02 2>&1'\n",
+"sudo -u ec2-user bash -c '/home/ec2-user/gocontainer/userdata-nexus-first_webapp `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u03 2>&1'\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-mongo `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u03a 2>&1'\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-kafka `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u03b 2>&1'\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-grails-green > /tmp/u03c 2>&1'\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-servicecontroller `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u04 2>&1'\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-servicecontroller `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u05 2>&1'\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-jobmanager `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u06 2>&1'\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-jobmanager `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u07 2>&1'\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-gateway `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u08 2>&1'\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-gateway `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u09 2>&1'\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-access `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u10 2>&1'\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-access `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u11 2>&1'\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-ingest `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u12 2>&1'\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-ingest `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u13 2>&1'\n"
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-groovy-lf > /tmp/u14 2>&1'\n"
+     ]
+    ]}}
+   }
+  }
+},
+"Outputs" : {
+  "InstanceID" : {
+    "Description": "The Instance ID",  
+    "Value" : { "Fn::GetAtt" : [ "Server" , "PublicIp" ] }
+  }
+}
+}
