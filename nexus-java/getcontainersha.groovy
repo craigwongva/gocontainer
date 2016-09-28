@@ -2,11 +2,11 @@ import groovy.json.JsonSlurper
 
 /************
 usage:
-   cp ~/.sdkman/candidates/groovy/2.4.7/lib/groovy-2.4.7.jar .
-   cp ~/.sdkman/candidates/groovy/2.4.7/lib/groovy-json-2.4.7.jar .
+   cp /.sdkman/candidates/groovy/2.4.7/lib/groovy-2.4.7.jar .
+   cp /.sdkman/candidates/groovy/2.4.7/lib/groovy-json-2.4.7.jar .
    vi getcontainersha.groovy
-   ~/.sdkman/candidates/groovy/2.4.7/bin/groovyc getcontainersha.groovy
-   java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar getcontainersha
+   /.sdkman/candidates/groovy/2.4.7/bin/groovyc getcontainersha.groovy
+   java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar getcontainersha /etc/logstash-forwarder.conf
 ************/
 
 String getContainerSha() {
