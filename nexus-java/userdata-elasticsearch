@@ -1,3 +1,4 @@
+cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-elasticsearch-840 2>&1
 sudo yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-elasticsearch-1000 2>&1
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/userdata-elasticsearch-1100 2>&1
 sudo service elasticsearch start > /tmp/userdata-elasticsearch-1200 2>&1
