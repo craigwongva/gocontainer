@@ -51,6 +51,7 @@
     "UserData": {"Fn::Base64": {"Fn::Join": ["",
      [
 "#!/bin/bash -ex\n",
+"cd /home/ec2-user\n",
 "git clone -b go https://github.com/craigwongva/gocontainer.git\n",
 "sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-elasticsearch > /tmp/u16 2>&1'\n"
      ]
