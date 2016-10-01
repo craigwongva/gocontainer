@@ -4,7 +4,7 @@
 
 "Mappings": {
   "EC2RegionMap": {
-   "us-east-1": {"craigLgami": "ami-0f2ef06f"}
+   "us-west-2": {"craigLgami": "ami-0f2ef06f"}
   }
 },
 "Resources": {
