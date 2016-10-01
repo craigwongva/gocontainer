@@ -8,8 +8,8 @@ cd /etc/pki/tls > /tmp/userdata-logstash-1300 2>&1
 openssl req -config /etc/pki/tls/openssl.cnf -x509 -days 3650 -batch -nodes -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt > /tmp/userdata-logstash-1400 2>&1
 aws s3 cp /etc/pki/tls/certs/logstash-forwarder.crt s3://venicegeo-devops-dev-logstashforwarder-project > /tmp/userdata-logstash-1500 2>&1
 
-cd / > /tmp/userdata-logstash-1600 2>&1
 mkdir /opt/logstash/conf.d > /tmp/userdata-logstash-1700 2>&1
+cd /gocontainer/nexus-java > /tmp/userdata-logstash-1600 2>&1
 cp 01-lumberjack-input.conf /opt/logstash/conf.d > /tmp/userdata-logstash-1800 2>&1
 cp 10-syslog.conf /opt/logstash/conf.d > /tmp/userdata-logstash-1900 2>&1
 cp 30-lumberjack-output.conf /opt/logstash/conf.d > /tmp/userdata-logstash-2000 2>&1
