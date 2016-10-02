@@ -1,18 +1,19 @@
 {
 "AWSTemplateFormatVersion": "2010-09-09",
-"Description": "uses my Elasticsearch AMI (craigES ami-0c30ee6c)",
+"Description": "uses my Logstash AMI (craigLg ami-0f2ef06f)",
 
 "Mappings": {
   "EC2RegionMap": {
-   "us-west-2": {"craigESami": "ami-0c30ee6c"}
+   "us-west-2": {"craigLgami": "ami-0f2ef06f"}
   }
 },
 "Resources": {
   "SecurityGroup": {
    "Type": "AWS::EC2::SecurityGroup",
    "Properties": {
-    "GroupDescription": "craigES security group",
+    "GroupDescription": "craigLg security group",
     "VpcId": "vpc-4e33072b",
+
     "SecurityGroupIngress": [
     {
      "CidrIp": "0.0.0.0/0",
@@ -28,18 +29,18 @@
    "Properties": {
     "Tags" : [{
      "Key":"craig-elk-component",
-     "Value":"elasticsearch2"
-    }, {
-    "Key":"Name",
-    "Value":"craigES"
-    }
-    ],
+     "Value":"logstash"
+     }, {
+     "Key":"Name",
+     "Value":"craigLg"
+     }
+     ],
     "ImageId": {
      "Fn::FindInMap": [
       "EC2RegionMap", {
        "Ref": "AWS::Region"
       },
-      "craigESami"
+      "craigLgami"
      ]
     },
     "InstanceType": "t2.medium",
@@ -51,11 +52,14 @@
     "UserData": {"Fn::Base64": {"Fn::Join": ["",
      [
 "#!/bin/bash -ex\n",
-"git clone -b go https://github.com/craigwongva/gocontainer.git > /tmp/u15\n",
-"/gocontainer/nexus-java/userdata-elasticsearch > /tmp/u16 2>&1\n"
+"yum install git -y\n",
+"yum install curl -y\n",
+"git clone -b go https://github.com/craigwongva/gocontainer.git > /tmp/u15 2>&1\n",
+"/gocontainer/nexus-java/userdata-logstash > /tmp/u16 2>&1\n"
      ]
     ]}}
    }
   }
 }
 }
+

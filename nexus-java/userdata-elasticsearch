@@ -1,3 +1,6 @@
-yum install java-1.8.0-openjdk-devel -y
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
-service elasticsearch start
+#Avoid sudo because we're running straight from CF userdata,
+#not as "sudo -u ec2-user", which oddly isn't working for ES
+
+yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-elasticsearch-1000 2>&1
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/userdata-elasticsearch-1100 2>&1
+service elasticsearch start > /tmp/userdata-elasticsearch-1200 2>&1
