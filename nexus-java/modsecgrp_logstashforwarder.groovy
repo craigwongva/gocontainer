@@ -9,7 +9,7 @@ usage:
 
 //def getSecurityGroupID(keyvalue) {
 def getSecurityGroupID(keyvalue, region) {
- def awscmd = 'aws ec2 describe-security-groups --region ' + region //us-east-1'
+ def awscmd = 'aws ec2 describe-security-groups --region ' + region //us-west-2'
  def awscmdtext = awscmd.execute().text
  def slurper = new JsonSlurper()
  def result = slurper.parseText(awscmdtext)
@@ -30,7 +30,7 @@ def getSecurityGroupID(keyvalue, region) {
 }
 
 def getInstanceIPAddresses(keyvalue, region) {
- def awscmd = 'aws ec2 describe-instances --region ' + region + //'us-east-1' +
+ def awscmd = 'aws ec2 describe-instances --region ' + region + //'us-west-2' +
               ' --filters Name=instance-state-name,Values=running'
  def awscmdtext = awscmd.execute().text
  def returnResult = [:]
@@ -41,7 +41,7 @@ def getInstanceIPAddresses(keyvalue, region) {
   def found = i.Tags[0].grep {
 //   (it.Key == 'Name') && (it.Value == keyvalue)
    ((region == 'us-west-2') && (it.Key == 'craig-go-component') && (it.Value == keyvalue)) ||
-   ((region == 'us-east-1') && (it.Key == 'Name')               && (it.Value == keyvalue))
+   ((region == 'us-west-2') && (it.Key == 'Name')               && (it.Value == keyvalue))
   }  
   if (found.size() > 0) {
    returnResult.privateIpAddress = i[0].PrivateIpAddress
@@ -62,7 +62,7 @@ def authorizeSecurityGroupIngress(comment, groupID, cidr, port, region) {
        " --cidr $cidr/32" +
        " --port $port " +
        " --protocol tcp " +
-//       " --region us-east-1 " 
+//       " --region us-west-2 " 
        " --region $region " 
  proc = cmd.execute()
  sb = new StringBuffer()
@@ -89,9 +89,9 @@ println "87: logstashForwarderIPs=$logstashForwarderIPs"
 //def logstashForwarderSecurityGroupID = getSecurityGroupID('craigLF-SecurityGroup')
 def logstashForwarderSecurityGroupID = getSecurityGroupID('mercury-lf2-SecurityGroup', 'us-west-2')
 
-def logstashIPs                      = getInstanceIPAddresses('craigLg','us-east-1')
+def logstashIPs                      = getInstanceIPAddresses('craigLg','us-west-2')
 println "92: logstashIPs=$logstashIPs"
-def logstashSecurityGroupID          = getSecurityGroupID('craigLg-SecurityGroup','us-east-1')
+def logstashSecurityGroupID          = getSecurityGroupID('craigLg-SecurityGroup','us-west-2')
 
 authorizeSecurityGroupIngress(
  'allow LF to receive from Lg on 5043', 
@@ -105,7 +105,7 @@ authorizeSecurityGroupIngress(
  logstashSecurityGroupID, 
  logstashForwarderIPs.privateIpAddress, 
 // '5043')
- '5043', 'us-east-1')
+ '5043', 'us-west-2')
 
 /**
 * Update /etc/logstash-forwarder.conf
