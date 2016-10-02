@@ -20,6 +20,7 @@ cp /gocontainer/nexus-java/30-lumberjack-output.conf /opt/logstash/conf.d > /tmp
 # Install Groovy.
 ##
 
+cd / > /tmp/userdata-logstash-2190 2>&1
 aws s3 cp s3://venicegeo-devops-dev-logstashforwarder-project/dotsdkman.zip / > /tmp/userdata-logstash-2200 2>&1
 unzip dotsdkman.zip > /tmp/userdata-logstash-2300 2>&1
 
