@@ -10,10 +10,11 @@ aws s3 cp /etc/pki/tls/certs/logstash-forwarder.crt s3://venicegeo-devops-dev-lo
 
 mkdir /opt/logstash/conf.d > /tmp/userdata-logstash-1700 2>&1
 cd /gocontainer/nexus-java > /tmp/userdata-logstash-1600 2>&1
-cp 01-lumberjack-input.conf /opt/logstash/conf.d > /tmp/userdata-logstash-1800 2>&1
-cp 10-syslog.conf /opt/logstash/conf.d > /tmp/userdata-logstash-1900 2>&1
-cp 30-lumberjack-output.conf /opt/logstash/conf.d > /tmp/userdata-logstash-2000 2>&1
-cp modsecgrp_logstash.groovy . > /tmp/userdata-logstash-2100 2>&1
+echo my directory is `pwd` > /tmp/userdata-logstash-1610 2>&1
+cp /gocontainer/nexus-java/01-lumberjack-input.conf /opt/logstash/conf.d > /tmp/userdata-logstash-1800 2>&1
+cp /gocontainer/nexus-java/10-syslog.conf /opt/logstash/conf.d > /tmp/userdata-logstash-1900 2>&1
+cp /gocontainer/nexus-java/30-lumberjack-output.conf /opt/logstash/conf.d > /tmp/userdata-logstash-2000 2>&1
+#cp /gocontainer/nexus-java/modsecgrp_logstash.groovy . > /tmp/userdata-logstash-2100 2>&1
 
 ##
 # Install Groovy.
