@@ -3,6 +3,7 @@
 
 yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-elasticsearch-1000 2>&1
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/userdata-elasticsearch-1100 2>&1
+export ES_HEAP_SIZE=8g > /tmp/userdata-elasticsearch-1120 2>&1
 service elasticsearch start > /tmp/userdata-elasticsearch-1200 2>&1
 cd /usr/local/elasticsearch-1.6.0/bin > /tmp/userdata-elasticsearch-1300 2>&1
 ./plugin -install mobz/elasticsearch-head/1.6 > /tmp/userdata-elasticsearch-1400 2>&1
