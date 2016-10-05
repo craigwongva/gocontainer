@@ -43,7 +43,7 @@
       "craigLgami"
      ]
     },
-    "InstanceType": "t2.medium",
+    "InstanceType": "m4.xlarge",
     "KeyName":  "craigradiantblueoregon" ,
     "SecurityGroupIds": [{
      "Ref": "SecurityGroup"
