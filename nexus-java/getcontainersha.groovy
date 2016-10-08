@@ -9,19 +9,22 @@ usage:
    java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar getcontainersha /etc/logstash-forwarder.conf
 ************/
 
-String getContainerSha() {
- def containerName = 'gateway'
+String getContainerSha(containerName) {
+ //def containerName = 'gateway'
  //Using a vbar in the cmd doesn't work, so below use a loop with grep
  def dockercmd = "sudo docker ps --no-trunc" //--no-trunc"
  def dockercmdtext = dockercmd.execute().text
- def grepped = dockercmdtext.split('\n').grep{(it =~ /gateway/) && (it =~ /Up/)}
+ def grepped = dockercmdtext.split('\n').grep{(it =~ containerName) && (it =~ /Up/)}
  assert grepped.size() == 1
  def containersha = grepped[0].split()[0]
 }
 
-def updateLogstashForwarderConfFilePaths(confFile, containersha) {
+def updateLogstashForwarderConfFilePaths(confFile, containersha1, containersha2) {
  def f = new File(confFile)
- f.write(f.text.replaceAll('/var/log/messages', "/var/lib/docker/containers/$containersha/$containersha-json.log"))
+ f.write(f.text
+  .replaceAll('/var/log/messages1', "/var/lib/docker/containers/$containersha1/$containersha1-json.log")
+  .replaceAll('/var/log/messages2', "/var/lib/docker/containers/$containersha2/$containersha2-json.log")
+ )
 }
 
 def getSecurityGroupID(keyvalue) {
@@ -122,9 +125,10 @@ assert confFile == '/etc/logstash-forwarder.conf'
 updateLogstashForwarderConfFileLocalhost(confFile, logstashIPs.privateIpAddress)
 */
 
-def containersha = getContainerSha() 
+def containersha1 = getContainerSha('gateway')
+def containersha2 = getContainerSha('servicecontroller') 
 def confFile = args[0]
 assert confFile == '/etc/logstash-forwarder.conf'
 //assert confFile == '/tmp/logstash-forwarder.conf'
 
-updateLogstashForwarderConfFilePaths(confFile, containersha)
+updateLogstashForwarderConfFilePaths(confFile, containersha1, containersha2)
