@@ -27,7 +27,7 @@ fi
 
 if [ $1 == 'jobmanager' ]
 then
- echo gateway
+ echo jobmanager
  sudo docker stop `sudo docker ps -a | grep jobmanager | cut -c1-6`
  sudo docker rm `sudo docker ps -a | grep jobmanager | cut -c1-6`
  sudo docker run -d --net="host" venicegeodev/container_jobmanager
@@ -36,7 +36,7 @@ fi
 
 if [ $1 == 'ingest' ]
 then
- echo gateway
+ echo ingest
  sudo docker stop `sudo docker ps -a | grep ingest | cut -c1-6`
  sudo docker rm `sudo docker ps -a | grep ingest | cut -c1-6`
  sudo docker run -d --net="host" venicegeodev/container_ingest
@@ -45,7 +45,7 @@ fi
 
 if [ $1 == 'access' ]
 then
- echo gateway
+ echo access
  sudo docker stop `sudo docker ps -a | grep access | cut -c1-6`
  sudo docker rm `sudo docker ps -a | grep access | cut -c1-6`
  sudo docker run -d --net="host" venicegeodev/container_access
@@ -54,7 +54,7 @@ fi
 
 if [ $1 == 'servicecontroller' ]
 then
- echo gateway
+ echo servicecontroller
  sudo docker stop `sudo docker ps -a | grep servicecontroller | cut -c1-6`
  sudo docker rm `sudo docker ps -a | grep servicecontroller | cut -c1-6`
  sudo docker run -d --net="host" venicegeodev/container_servicecontroller
