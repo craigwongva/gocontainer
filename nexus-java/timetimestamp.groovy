@@ -17,11 +17,11 @@ def timetimestamp(attimestamp, time) {
   def xtimestamp = attimestamp //result2AsJson.hits.hits[0]._source."@timestamp"
   def xtimestamp2 = xtimestamp[0..18]+"Z"
   def xtimestamp3 = sdf.parse(xtimestamp2)
-  println xtimestamp3
+  //println xtimestamp3
   def xtime = time //result2AsJson.hits.hits[0]._source.time
   def xtime2 = xtime[0..18]+"Z"
   def xtime3 = sdf.parse(xtime2)
-  println xtime3
+  //println xtime3
   def totalSeconds
   use(groovy.time.TimeCategory) {
     def duration = xtimestamp3 - xtime3
@@ -53,20 +53,17 @@ def timetimestamp(attimestamp, time) {
   def myprocess2 = [ 'bash', '-c', "curl -v -k -X POST -H \"Content-Type: application/json\" -d '${body2}' http://52.37.229.115:9200/logstash-2016.10.08/_search" ].execute()
   myprocess2.waitFor()
   String myprocess2AsText =  myprocess2.text
-  println myprocess2AsText
 
   def result2AsJson = new JsonSlurper().parseText(myprocess2AsText)
   def id = result2AsJson.hits.hits._id
   def attimestamp = result2AsJson.hits.hits._source."@timestamp"
   def time = result2AsJson.hits.hits._source.time
-  //println "_id is $id"
-  //println "attimestamp is $attimestamp"
-  //println "time is $time"
+
 //  def fetchMoreData = true
 //  for (def from = 0; fetchMoreData; from += SIZE) {
   for (def i = 0; i < id.size(); i++) {
-   def t = timetimestamp(result2AsJson.hits.hits[i]._source."@timestamp", result2AsJson.hits.hits[i]._source.time) 
-   println t
+   def t = timetimestamp(attimestamp[i], time[i])
+   println "${id[i]} $t"
   }
   println "--end of test 2--"
 /*
