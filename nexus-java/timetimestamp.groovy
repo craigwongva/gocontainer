@@ -68,40 +68,11 @@ curl http://52.37.229.115:9200#/logstash-2016.10.08/_search?from=23 -d '{"size":
    for (def i = 0; i < id.size(); i++) {
     def t = timetimestamp(attimestamp[i], time[i])
     println "${id[i]} $t"
+    println "{\"id\":\"${id[i]}\", \"time\":${time[i][0..18]+"Z"}, \"seconds\": $t}"
    }
    fetchMoreData = (id.size() == SIZE)
   }
   println "--end of test 2--"
 /*
- def SIZE = 2
- def CSV = 'c:/grails-3.0.9/test1/elasticsearch.txt' 
-   
- def csvWriter = new File(CSV).newWriter() 
- csvWriter << 'animal, animalReversed, animalLength\n'
- 
- def fetchMoreData = true
- for (def from = 0; fetchMoreData; from += SIZE) {
-  def resultAsText = [
-   CURL, "-XGET", 
-   "$ES/$ES_IX/_search?from=$from&size=$SIZE",
-  ].execute().text
-
-  def resultAsJson = new JsonSlurper().parseText(resultAsText)
-
-  def animals = resultAsJson.hits.hits._source.title
-
-  def transformations = 
-   animals.collect {[
-     animal:it, 
-     animalReversed:it.reverse(), 
-     animalLength:it.length()
-   ]}
-   
-  transformations.each {
-   println "${it.animal},${it.animalReversed},${it.animalLength}"
-   csvWriter <<
-    "${it.animal},${it.animalReversed},${it.animalLength}\n"
-  } 
-  fetchMoreData = (transformations.size() == SIZE)
- }
+ curl -XPUT http://52.37.229.115:9200/seconds-2016.10.08/mytype/AVelsxTHYmEacSoOqezI -d '{"time":"2016-10-08T19:08:58Z", "seconds": 20}'
 */
