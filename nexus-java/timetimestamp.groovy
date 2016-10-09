@@ -45,25 +45,31 @@ def timetimestamp(attimestamp, time) {
 
   println result2AsJson
   println "--end of test 1--"
+curl http://52.37.229.115:9200#/logstash-2016.10.08/_search?from=23 -d '{"size":2,"query":{"match_all":{}}}'
 */
 
   println "--start of test 2--"
-  def body2 = '{"size":4,"query":{"match_all":{}}}'
+  def SIZE = 10
+  def body2 = '{"query":{"match_all":{}}}'
 
-  def myprocess2 = [ 'bash', '-c', "curl -v -k -X POST -H \"Content-Type: application/json\" -d '${body2}' http://52.37.229.115:9200/logstash-2016.10.08/_search" ].execute()
-  myprocess2.waitFor()
-  String myprocess2AsText =  myprocess2.text
+  def fetchMoreData = true
+  for (def from = 0; fetchMoreData; from += SIZE) {
+   String url = "http://52.37.229.115:9200/logstash-2016.10.08/_search?from=$from\\&size=$SIZE"
+   println "url $url"
+   def myprocess2 = [ 'bash', '-c', "curl -v -k -X POST -H \"Content-Type: application/json\" -d '${body2}' $url"].execute()
+   myprocess2.waitFor()
+   String myprocess2AsText = myprocess2.text
+   //println "xxx\n$myprocess2AsText\nyyy"
+   def result2AsJson = new JsonSlurper().parseText(myprocess2AsText)
+   def id = result2AsJson.hits.hits._id
+   def attimestamp = result2AsJson.hits.hits._source."@timestamp"
+   def time = result2AsJson.hits.hits._source.time
 
-  def result2AsJson = new JsonSlurper().parseText(myprocess2AsText)
-  def id = result2AsJson.hits.hits._id
-  def attimestamp = result2AsJson.hits.hits._source."@timestamp"
-  def time = result2AsJson.hits.hits._source.time
-
-//  def fetchMoreData = true
-//  for (def from = 0; fetchMoreData; from += SIZE) {
-  for (def i = 0; i < id.size(); i++) {
-   def t = timetimestamp(attimestamp[i], time[i])
-   println "${id[i]} $t"
+   for (def i = 0; i < id.size(); i++) {
+    def t = timetimestamp(attimestamp[i], time[i])
+    println "${id[i]} $t"
+   }
+   fetchMoreData = (id.size() == SIZE)
   }
   println "--end of test 2--"
 /*
