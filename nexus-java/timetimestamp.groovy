@@ -68,7 +68,9 @@ curl http://52.37.229.115:9200#/logstash-2016.10.08/_search?from=23 -d '{"size":
    for (def i = 0; i < id.size(); i++) {
     def t = timetimestamp(attimestamp[i], time[i])
     println "${id[i]} $t"
-    println "{\"id\":\"${id[i]}\", \"time\":${time[i][0..18]+"Z"}, \"seconds\": $t}"
+    //def body = "{\"id\":\"${id[i]}\", \"time\":${time[i][0..18]+"Z"}, \"seconds\": $t}"
+    def body = "{\"time\":${time[i][0..18]+"Z"}, \"seconds\": $t}"
+    isrt(id[i], time[i][0..18]+"Z", t)
    }
    fetchMoreData = (id.size() == SIZE)
   }
@@ -76,3 +78,16 @@ curl http://52.37.229.115:9200#/logstash-2016.10.08/_search?from=23 -d '{"size":
 /*
  curl -XPUT http://52.37.229.115:9200/seconds-2016.10.08/mytype/AVelsxTHYmEacSoOqezI -d '{"time":"2016-10-08T19:08:58Z", "seconds": 20}'
 */
+ def isrt(id, timexx, secs) {
+   println id
+   String url2 = "http://52.37.229.115:9200/seconds-2016.10.08/mytype/$id "
+   println "url2 $url2"
+
+   //def myprocessa = [ 'bash', '-c', "curl -v -k -X POST  -d '{\"seconds\":44, \"lime\":33, \"motali\":\"2016-10-08T19:08:58Z\"}' $url2"]
+   def myprocessa = [ 'bash', '-c', "curl -v -k -X POST  -d '{\"seconds\":$secs, \"lime\":33, \"motali\":\"$timexx\"}' $url2"]
+   def myprocess3 = myprocessa.execute()
+   myprocess3.waitFor()
+   String myprocess3AsText = myprocess3.text
+   println myprocess3AsText
+  }
+ 
