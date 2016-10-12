@@ -11,11 +11,11 @@ import groovy.json.*
 import java.sql.*
 import java.text.*
 
- def computeAverage() {
+ def computeAverage(yyyydotmmdotdd) {
   def body4 = "{\"size\": 0, \"aggs\": { \"avg_grade\": { \"avg\": { \"field\": \"seconds\"}}}}"
 
-  String url4 = "http://52.37.229.115:9200/seconds-2016.10.08/_search"
-  println "url $url4"
+  String url4 = "http://52.37.229.115:9200/seconds-$yyyydotmmdotdd/_search"
+  //println "url $url4"
   def myprocess4 = [ 'bash', '-c', "curl -v -k -X POST -H \"Content-Type: application/json\" -d '${body4}' $url4"].execute()
   myprocess4.waitFor()
   String myprocess4AsText = myprocess4.text
@@ -28,14 +28,15 @@ import java.text.*
  Read from logstash-2016.10.08 and
  write to seconds-2016.10.08
 */
- def readThenWrite(logstashname) { //ixname logstash-2016.10.08
-  def SIZE = 10
+ def readThenWrite(yyyydotmmdotdd) { //ixname logstash-2016.10.08
+  def SIZE = 60
   def body2 = '{"query":{"match_all":{}}}'
 
   def fetchMoreData = true
   for (def from = 0; fetchMoreData; from += SIZE) {
-   String url = "http://52.37.229.115:9200/$logstashname/_search?from=$from\\&size=$SIZE"
-   println "url $url"
+   String url = "http://52.37.229.115:9200/logstash-$yyyydotmmdotdd/_search?from=$from\\&size=$SIZE"
+   //println "url $url"
+   println "from $from"
    def myprocess2 = [ 'bash', '-c', "curl -v -k -X POST -H \"Content-Type: application/json\" -d '${body2}' $url"].execute()
    myprocess2.waitFor()
    String myprocess2AsText = myprocess2.text
@@ -47,24 +48,24 @@ import java.text.*
 
    for (def i = 0; i < id.size(); i++) {
     def t = timetimestamp(attimestamp[i], time[i])
-    println "${id[i]} $t"
+    //println "${id[i]} $t"
     def body = "{\"time\":${time[i][0..18]+"Z"}, \"seconds\": $t}"
-    isrt(id[i], time[i][0..18]+"Z", t)
+    isrt(yyyydotmmdotdd, id[i], time[i][0..18]+"Z", t)
    }
    fetchMoreData = (id.size() == SIZE)
   }
  }
 
- def isrt(id, timexx, secs) {
-   println id
-   String url2 = "http://52.37.229.115:9200/seconds-2016.10.08/mytype/$id "
-   println "url2 $url2"
+ def isrt(yyyydotmmdotdd, id, timexx, secs) {
+   //println id
+   String url2 = "http://52.37.229.115:9200/seconds-$yyyydotmmdotdd/mytype/$id "
+   //println "url2 $url2"
 
    def myprocessa = [ 'bash', '-c', "curl -v -k -X POST  -d '{\"seconds\":$secs, \"lime\":33, \"motali\":\"$timexx\"}' $url2"]
    def myprocess3 = myprocessa.execute()
    myprocess3.waitFor()
    String myprocess3AsText = myprocess3.text
-   println myprocess3AsText
+   //println myprocess3AsText
   }
 
  def timetimestamp(attimestamp, time) {
@@ -86,5 +87,5 @@ import java.text.*
   totalSeconds
  }
 
- readThenWrite("logstash-2016.10.08")
- println computeAverage() 
+ readThenWrite("2016.10.12")
+ println computeAverage("2016.10.12") 
