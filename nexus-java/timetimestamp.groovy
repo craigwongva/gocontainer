@@ -30,11 +30,11 @@ import groovy.time.*
  write to seconds-2016.10.08
 */
  def readThenWrite(ES2, yyyydotmmdotdd) { //ixname logstash-2016.10.08
+  def HEADER = "\"xtime\", \"xtimestamp\", \"relative\", \"xseconds\""
   def SIZE = 60
-  //def body2 = '{"query":{"match_all":{}}}'
   def body2 = '{"query":{"match_all":{}},"sort":[{"time":{"order":"asc"}}]}'
 
-  println "\"xtime\", \"xtimestamp\", \"xseconds\""
+  println HEADER
   def fetchMoreData = true
   for (def from = 0; fetchMoreData; from += SIZE) {
    String url = "http://$ES2:9200/logstash-$yyyydotmmdotdd/_search?from=$from\\&size=$SIZE"
@@ -49,6 +49,9 @@ import groovy.time.*
 
    for (def i = 0; i < id.size(); i++) {
     def t = timetimestamp(attimestamp[i], time[i])
+    def firstTime = "2016-10-15T21:21:05.63360619Z" //s/m: automate this
+    def relative = timetimestamp(time[i], firstTime)
+    println "\"${time[i]}\", \"${attimestamp[i]}\", $relative, $t"
     //println "${id[i]} $t"
     def body = "{\"time\":${time[i][0..18]+"Z"}, \"seconds\": $t}"
     isrt(ES2, yyyydotmmdotdd, id[i], time[i][0..18]+"Z", t)
@@ -84,7 +87,7 @@ import groovy.time.*
   def start = Date.parse("yyy-MM-dd'T'HH:mm:ss.SSSZ",xtime4)
   def end   = Date.parse("yyy-MM-dd'T'HH:mm:ss.SSSZ",xtimestamp4)
   TimeDuration durationx = TimeCategory.minus(end, start)
-  println "\"$time\", \"$attimestamp\", ${1000*durationx.seconds+durationx.millis}"
+  60*1000*durationx.minutes+1000*durationx.seconds+durationx.millis
  }
- readThenWrite("52.37.169.141", "2016.10.13")
+ readThenWrite("52.37.169.141", "2016.10.15")
  //println computeAverage("52.37.169.141", "2016.10.13") 
