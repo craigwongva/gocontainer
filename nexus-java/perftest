@@ -1,0 +1,7 @@
+curl -XDELETE http://$1:9200/logstash-2016.10.16
+curl -XDELETE http://$1:9200/seconds-2016.10.16
+cd ~/gocontainer/nexus-java
+./replace-a-container gateway
+./replace-a-container servicecontroller
+./userdata-groovy-lf
+#sudo /opt/logstash-forwarder/bin/logstash-forwarder -config /etc/logstash-forwarder.conf
