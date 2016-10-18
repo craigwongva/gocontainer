@@ -9,7 +9,7 @@ cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-nexus-gateway-8300 2>&1
 
 
 sed -i -e '/CMD/d' Dockerfile-nexus-gateway
-echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Duuid.protocol=http\", \"-Duuid.port=`cat pz-uuidgen-port-number`\", \"-Dlogger.protocol=http\", \"-Dlogger.port=`cat pz-logger-port-number`\", \"-jar\", \"piazza-gateway-0.1.0-NEXUSSED.jar\"] >> Dockerfile-nexus-gateway
+echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Duuid.protocol=http\", \"-Duuid.port=`cat pz-uuidgen-port-number`\", \"-Dlogger.protocol=http\", \"-Dlogger.port=`cat pz-logger-port-number`\", \"-jar\", \"piazza-gateway-1.0.0-NEXUSSED.jar\"] >> Dockerfile-nexus-gateway
 
 sudo cp Dockerfile-nexus-gateway Dockerfile > /tmp/userdata-nexus-gateway-8400 2>&1
 sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_gateway . > /tmp/userdata-nexus-gateway-8500 2>&1

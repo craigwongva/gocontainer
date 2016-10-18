@@ -8,7 +8,7 @@ cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-nexus-access-6300 2>&1
 #sudo cp Dockerfile-first_webapp Dockerfile #this starts 8080 for test purposes but isn't central to docker+nexus issue
 
 sed -i -e '/CMD/d' Dockerfile-nexus-access
-echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Duuid.protocol=http\", \"-Duuid.port=`cat pz-uuidgen-port-number`\", \"-Dlogger.protocol=http\", \"-Dlogger.port=`cat pz-logger-port-number`\", \"-jar\", \"piazza-access-0.1.0-NEXUSSED.jar\"] >> Dockerfile-nexus-access
+echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Duuid.protocol=http\", \"-Duuid.port=`cat pz-uuidgen-port-number`\", \"-Dlogger.protocol=http\", \"-Dlogger.port=`cat pz-logger-port-number`\", \"-jar\", \"piazza-access-1.0.0-NEXUSSED.jar\"] >> Dockerfile-nexus-access
 sudo cp Dockerfile-nexus-access Dockerfile > /tmp/userdata-nexus-access-6400 2>&1
 sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_access . > /tmp/userdata-nexus-access-6500 2>&1
 
