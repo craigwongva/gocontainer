@@ -25,7 +25,8 @@ mvn clean install > /tmp/userdata-servicecontroller-3150 2>&1
 ## Build pz-servicecontroller
 ####
 cd /home/ec2-user > /tmp/userdata-servicecontroller-3160 2>&1
-git clone https://github.com/venicegeo/pz-servicecontroller > /tmp/userdata-servicecontroller-3170 2>&1
+#git clone https://github.com/venicegeo/pz-servicecontroller > /tmp/userdata-servicecontroller-3170 2>&1
+git clone https://github.com/craigwongva/pz-servicecontroller > /tmp/userdata-servicecontroller-3170 2>&1
 cd pz-servicecontroller/mainServiceController > /tmp/userdata-servicecontroller-3180 2>&1
 mvn clean install > /tmp/userdata-servicecontroller-3190 2>&1
 cp target/piazzaServiceController-1.0.0.jar conf > /tmp/userdata-servicecontroller-3200 2>&1
