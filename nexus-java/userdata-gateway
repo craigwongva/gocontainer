@@ -25,7 +25,7 @@ mvn clean install > /tmp/userdata-gateway-7150 2>&1
 ## Build pz-gateway
 ####
 cd /home/ec2-user > /tmp/userdata-gateway-7160 2>&1
-git clone https://github.com/venicegeo/pz-gateway > /tmp/userdata-gateway-7170 2>&1
+git clone https://github.com/craigwongva/pz-gateway > /tmp/userdata-gateway-7170 2>&1
 cd pz-gateway > /tmp/userdata-gateway-7180 2>&1
 mvn clean install > /tmp/userdata-gateway-7190 2>&1
 
