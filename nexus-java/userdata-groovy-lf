@@ -1,7 +1,7 @@
 cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-groovy-lf-1000 2>&1
-#sudo rpm --import http://packages.elastic.co/GPG-KEY-elasticsearch > /tmp/userdata-groovy-lf-1010 2>&1
-#sudo cp logstash-forwarder.repo /etc/yum.repos.d > /tmp/userdata-groovy-lf-1020 2>&1
-#sudo yum -y install logstash-forwarder > /tmp/userdata-groovy-lf-1030 2>&1
+sudo rpm --import http://packages.elastic.co/GPG-KEY-elasticsearch > /tmp/userdata-groovy-lf-1010 2>&1
+sudo cp logstash-forwarder.repo /etc/yum.repos.d > /tmp/userdata-groovy-lf-1020 2>&1
+sudo yum -y install logstash-forwarder > /tmp/userdata-groovy-lf-1030 2>&1
 
 ##
 ## Get the Logstash host-generated certificate that allows Logstash Forwarder to talk to Logstash.
@@ -17,45 +17,20 @@ sudo mv logstash-forwarder.crt /etc/pki/tls/certs > /tmp/userdata-groovy-lf-1034
 aws s3 cp s3://venicegeo-devops-dev-gocontainer-project/logstash-forwarder.conf .  > /tmp/userdata-groovy-lf-1100 2>&1
 sudo cp logstash-forwarder.conf /etc  > /tmp/userdata-groovy-lf-1200 2>&1
 
-###
-## Customize the template Logstash Forwarder conf file.
-##  Note: Since the Logstash internal IP can't be determined by this shell script,
-##        it is updated not by sed here, but by the Groovy script below.
-###
-#9/29/16: I don't think the following is necessary, so I'm commenting them out.
-#sed -i '4s/ca-bundle.crt/logstash-forwarder.crt/'                                              /etc/logstash-forwarder.conf
+cd /home/ec2-user/.sdkman/bin > /tmp/userdata-groovy-lf-1600 2>&1
+. sdkman-init.sh > /tmp/userdata-groovy-lf-1610 2>&1
+sed -i -e 's/sdkman_auto_answer=false/sdkman_auto_answer=true/g' ~/.sdkman/etc/config > /tmp/userdata-groovy-lf-1700 2>&1
+sdk install groovy > /tmp/userdata-groovy-lf-1800 2>&1
 
-#sed -i '8d'                                                                                    /etc/logstash-forwarder.conf
-#sed -i '8iENSURE-LEADING-WHITESPACE  "files": ['                                               /etc/logstash-forwarder.conf
-#sed -i '8aENSURE-LEADING-WHITESPACE    {       '                                               /etc/logstash-forwarder.conf
-#sed -i '9aENSURE-LEADING-WHITESPACE      "paths": ['                                           /etc/logstash-forwarder.conf
-#sed -i '10aENSURE-LEADING-WHITESPACE        "/var/log/messages" '                              /etc/logstash-forwarder.conf
-#sed -i '11aENSURE-LEADING-WHITESPACE        "/var/log/secure"'                                 /etc/logstash-forwarder.conf
-#sed -i '12aENSURE-LEADING-WHITESPACE      ],'                                                  /etc/logstash-forwarder.conf
-#sed -i '13aENSURE-LEADING-WHITESPACE      "fields": { "type": "syslog" }'                      /etc/logstash-forwarder.conf
-#sed -i '14aENSURE-LEADING-WHITESPACE    }'                                                     /etc/logstash-forwarder.conf
-#sed -i '15aENSURE-LEADING-WHITESPACE  ]'                                                       /etc/logstash-forwarder.conf
-#sed -i '8,$s/^ENSURE-LEADING-WHITESPACE//'                                                     /etc/logstash-forwarder.conf
-
-#cd /home/ec2-user > /tmp/userdata-groovy-lf-1300 2>&1
-#git clone https://github.com/craigwongva/3deploy > /tmp/userdata-groovy-lf-1400 2>&1
-#cp /home/ec2-user/3deploy/modsecgrp_logstashforwarder.groovy /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-groovy-lf-1500 2>&1
-
-#cd /home/ec2-user/.sdkman/bin > /tmp/userdata-groovy-lf-1600 2>&1
-#. sdkman-init.sh > /tmp/userdata-groovy-lf-1610 2>&1
-#sed -i -e 's/sdkman_auto_answer=false/sdkman_auto_answer=true/g' ~/.sdkman/etc/config > /tmp/userdata-groovy-lf-1700 2>&1
-#sdk install groovy > /tmp/userdata-groovy-lf-1800 2>&1
-
-#cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-groovy-lf-1810 2>&1
-#cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-2.4.7.jar . > /tmp/userdata-groovy-lf-1820 2>&1
-#cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-json-2.4.7.jar . > /tmp/userdata-groovy-lf-1830 2>&1
+cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-groovy-lf-1810 2>&1
+cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-2.4.7.jar . > /tmp/userdata-groovy-lf-1820 2>&1
+cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-json-2.4.7.jar . > /tmp/userdata-groovy-lf-1830 2>&1
 
 /home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_logstashforwarder.groovy > /tmp/userdata-groovy-lf-1900 2>&1
 java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar modsecgrp_logstashforwarder /etc/logstash-forwarder.conf > /tmp/userdata-groovy-lf-2000 2>&1
 
 /home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc getcontainersha.groovy > /tmp/userdata-groovy-lf-2100 2>&1
 sudo java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar getcontainersha /etc/logstash-forwarder.conf > /tmp/userdata-groovy-lf-2200 2>&1
-#I tested the above successfully. craig 7:30am
 
 ##
 ## Start Logstash Forwarder.
