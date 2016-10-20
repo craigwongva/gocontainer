@@ -17,7 +17,7 @@ export PATH=$M2:$PATH > /tmp/userdata-access-5070 2>&1
 cd /home/ec2-user > /tmp/userdata-access-5100 2>&1
 sudo yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-access-5110 2>&1
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/userdata-access-5120 2>&1 
-git clone https://github.com/venicegeo/pz-jobcommon > /tmp/userdata-access-5130 2>&1
+git clone https://github.com/craigwongva/pz-jobcommon > /tmp/userdata-access-5130 2>&1
 cd pz-jobcommon > /tmp/userdata-access-5140 2>&1
 mvn clean install > /tmp/userdata-access-5150 2>&1
 
@@ -36,4 +36,4 @@ cd /home/ec2-user/pz-access > /tmp/userdata-access-5300 2>&1
 #$JAVA_HOME/bin/java -jar piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar & > /tmp/userdata-access-5400 2>&1
 
 #POPULATE THE NEXUS REPO
-curl --user 'admin:admin123' --upload-file target/piazza-access-0.1.0.jar http://localhost:8079/repository/myrawrepo/piazza-access-0.1.0-NEXUSSED.jar > /tmp/userdata-access-5999 2>&1
+curl --user 'admin:admin123' --upload-file target/piazza-access-1.0.0.jar http://localhost:8079/repository/myrawrepo/piazza-access-1.0.0-NEXUSSED.jar > /tmp/userdata-access-5999 2>&1

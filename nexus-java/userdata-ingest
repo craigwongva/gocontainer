@@ -17,7 +17,7 @@ export PATH=$M2:$PATH > /tmp/userdata-ingest-5070 2>&1
 cd /home/ec2-user > /tmp/userdata-ingest-5100 2>&1
 sudo yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-ingest-5110 2>&1
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/userdata-ingest-5120 2>&1 
-git clone https://github.com/venicegeo/pz-jobcommon > /tmp/userdata-ingest-5130 2>&1
+git clone https://github.com/craigwongva/pz-jobcommon > /tmp/userdata-ingest-5130 2>&1
 cd pz-jobcommon > /tmp/userdata-ingest-5140 2>&1
 mvn clean install > /tmp/userdata-ingest-5150 2>&1
 
@@ -36,4 +36,4 @@ cd /home/ec2-user/pz-ingest > /tmp/userdata-ingest-5300 2>&1
 #$JAVA_HOME/bin/java -jar piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar & > /tmp/userdata-ingest-5400 2>&1
 
 #POPULATE THE NEXUS REPO
-curl --user 'admin:admin123' --upload-file target/piazza-ingest-0.1.0.jar http://localhost:8079/repository/myrawrepo/piazza-ingest-0.1.0-NEXUSSED.jar > /tmp/userdata-ingest-5999 2>&1
+curl --user 'admin:admin123' --upload-file target/piazza-ingest-1.0.0.jar http://localhost:8079/repository/myrawrepo/piazza-ingest-1.0.0-NEXUSSED.jar > /tmp/userdata-ingest-5999 2>&1

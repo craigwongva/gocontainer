@@ -25,7 +25,7 @@ mvn clean install > /tmp/userdata-jobmanager-5150 2>&1
 ## Build pz-jobmanager
 ####
 cd /home/ec2-user > /tmp/userdata-jobmanager-5160 2>&1
-git clone https://github.com/venicegeo/pz-jobmanager > /tmp/userdata-jobmanager-5170 2>&1
+git clone https://github.com/craigwongva/pz-jobmanager > /tmp/userdata-jobmanager-5170 2>&1
 cd pz-jobmanager > /tmp/userdata-jobmanager-5180 2>&1
 mvn clean install > /tmp/userdata-jobmanager-5190 2>&1
 
