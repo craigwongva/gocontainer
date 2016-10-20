@@ -103,8 +103,8 @@
    "Type": "AWS::EC2::Instance",
    "Properties": {
     "Tags" : [{
-     "Key":"craig-go-component",
-     "Value":"craig-go"
+     "Key":"Name",
+     "Value":"craigLF"
     }],
     "ImageId": {
      "Fn::FindInMap": [

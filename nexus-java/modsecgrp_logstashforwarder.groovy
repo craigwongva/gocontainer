@@ -40,7 +40,7 @@ def getInstanceIPAddresses(keyvalue, region) {
  result.Reservations.Instances.each { i ->
   def found = i.Tags[0].grep {
 //   (it.Key == 'Name') && (it.Value == keyvalue)
-   ((region == 'us-west-2') && (it.Key == 'craig-go-component') && (it.Value == keyvalue)) ||
+//   ((region == 'us-west-2') && (it.Key == 'craig-go-component') && (it.Value == keyvalue)) ||
    ((region == 'us-west-2') && (it.Key == 'Name')               && (it.Value == keyvalue))
   }  
   if (found.size() > 0) {
