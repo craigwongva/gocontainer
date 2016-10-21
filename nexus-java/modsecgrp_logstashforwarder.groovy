@@ -83,11 +83,9 @@ def updateLogstashForwarderConfFileLocalhost(confFile, ip) {
 * Update AWS security groups
 **/
 
-//def logstashForwarderIPs             = getInstanceIPAddresses('craigLF')
-def logstashForwarderIPs             = getInstanceIPAddresses('craig-go','us-west-2')
+def logstashForwarderIPs             = getInstanceIPAddresses('craigLF','us-west-2')
 println "87: logstashForwarderIPs=$logstashForwarderIPs"
-//def logstashForwarderSecurityGroupID = getSecurityGroupID('craigLF-SecurityGroup')
-def logstashForwarderSecurityGroupID = getSecurityGroupID('mercury-lf2-SecurityGroup', 'us-west-2')
+def logstashForwarderSecurityGroupID = getSecurityGroupID('craigLF-SecurityGroup', 'us-west-2')
 
 def logstashIPs                      = getInstanceIPAddresses('craigLg','us-west-2')
 println "92: logstashIPs=$logstashIPs"
@@ -97,14 +95,12 @@ authorizeSecurityGroupIngress(
  'allow LF to receive from Lg on 5043', 
  logstashForwarderSecurityGroupID, 
  logstashIPs.privateIpAddress, 
-// '5043')
  '5043', 'us-west-2')
 
 authorizeSecurityGroupIngress(
  'allow Lg to receive from LF on 5043', 
  logstashSecurityGroupID, 
  logstashForwarderIPs.privateIpAddress, 
-// '5043')
  '5043', 'us-west-2')
 
 /**

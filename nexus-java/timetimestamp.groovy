@@ -49,7 +49,7 @@ import groovy.time.*
 
    for (def i = 0; i < id.size(); i++) {
     def t = timetimestamp(attimestamp[i], time[i])
-    def firstTime = "2016-10-15T21:21:05.63360619Z" //s/m: automate this
+    def firstTime = "2016-10-20T23:58:10.658192516Z" //s/m: automate this
     def relative = timetimestamp(time[i], firstTime)
     println "\"${time[i]}\", \"${attimestamp[i]}\", $relative, $t"
     //println "${id[i]} $t"
@@ -89,5 +89,6 @@ import groovy.time.*
   TimeDuration durationx = TimeCategory.minus(end, start)
   60*1000*durationx.minutes+1000*durationx.seconds+durationx.millis
  }
- readThenWrite("52.37.169.141", "2016.10.15")
+ def ES = '52.37.169.141'
+ readThenWrite(ES, "2016.10.20")
  //println computeAverage("52.37.169.141", "2016.10.13") 

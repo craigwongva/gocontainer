@@ -7,6 +7,11 @@
    "us-west-2": {"craigESami": "ami-0c30ee6c"}
   }
 },
+"Parameters" : {
+ "instancetype" : {
+  "Type" : "String"
+ }
+},
 "Resources": {
   "SecurityGroup": {
    "Type": "AWS::EC2::SecurityGroup",
@@ -42,7 +47,7 @@
       "craigESami"
      ]
     },
-    "InstanceType": "m4.xlarge",
+    "InstanceType": {"Ref" : "instancetype"},
     "KeyName":  "craigradiantblueoregon" ,
     "SecurityGroupIds": [{
      "Ref": "SecurityGroup"
