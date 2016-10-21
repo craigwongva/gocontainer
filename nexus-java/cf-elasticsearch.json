@@ -52,7 +52,7 @@
      [
 "#!/bin/bash -ex\n",
 "git clone -b go https://github.com/craigwongva/gocontainer.git > /tmp/u15\n",
-"/gocontainer/nexus-java/userdata-elasticsearch > /tmp/u16 2>&1\n"
+"#/gocontainer/nexus-java/userdata-elasticsearch > /tmp/u16 2>&1\n"
      ]
     ]}}
    }
