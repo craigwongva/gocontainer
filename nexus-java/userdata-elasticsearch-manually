@@ -1,0 +1,17 @@
+#Avoid sudo because we're running straight from CF userdata,
+#not as "sudo -u ec2-user", which oddly isn't working for ES
+
+#No, add sudo back in. I'm not sure what the above comment
+#is all about.
+sudo yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-elasticsearch-1000 2>&1
+sudo rpm --import http://packages.elastic.co/GPG-KEY-elasticsearch > /tmp/userdata-elasticsearch-1020 2>&1
+sudo cp /gocontainer/nexus-java/elasticsearch.repo /etc/yum.repos.d > /tmp/userdata-elasticsearch-1030 2>&1
+sudo yum install elasticsearch -y > /tmp/userdata-elasticsearch-1040 2>&1
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/userdata-elasticsearch-1100 2>&1
+export ES_HEAP_SIZE=8g > /tmp/userdata-elasticsearch-1120 2>&1
+sudo service elasticsearch start > /tmp/userdata-elasticsearch-1200 2>&1
+#This dir seems outdated:
+#cd /usr/local/elasticsearch-1.6.0/bin > /tmp/userdata-elasticsearch-1300 2>&1
+cd /usr/share/elasticsearch/bin > /tmp/userdata-elasticsearch-1300 2>&1
+sudo ./plugin -install mobz/elasticsearch-head/1.6 > /tmp/userdata-elasticsearch-1400 2>&1
+
