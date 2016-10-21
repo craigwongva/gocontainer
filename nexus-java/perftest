@@ -1,5 +1,6 @@
-curl -XDELETE http://52.37.169.141:9200/logstash-2016.10.20
-#curl -XDELETE http://$1:9200/seconds-2016.10.16
+echo parm1 (ES IP) is $1
+echo parm2 (YYYY.MM.DD) is $2
+curl -XDELETE http://$1:9200/logstash-$2
 cd ~/gocontainer/nexus-java
 rm -f .logstash-forwarder
 ./replace-a-container gateway

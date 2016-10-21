@@ -36,6 +36,7 @@ import groovy.time.*
 
   println HEADER
   def fetchMoreData = true
+  String firstTime = 'not yet known'
   for (def from = 0; fetchMoreData; from += SIZE) {
    String url = "http://$ES2:9200/logstash-$yyyydotmmdotdd/_search?from=$from\\&size=$SIZE"
    def myprocess2 = [ 'bash', '-c', "curl -v -k -X POST -H \"Content-Type: application/json\" -d '${body2}' $url"].execute()
@@ -49,7 +50,9 @@ import groovy.time.*
 
    for (def i = 0; i < id.size(); i++) {
     def t = timetimestamp(attimestamp[i], time[i])
-    def firstTime = "2016-10-20T23:58:10.658192516Z" //s/m: automate this
+    if (firstTime == 'not yet known') {
+     firstTime = time[i] //"2016-10-20T23:58:10.658192516Z" //s/m: automate this
+    }
     def relative = timetimestamp(time[i], firstTime)
     println "\"${time[i]}\", \"${attimestamp[i]}\", $relative, $t"
     //println "${id[i]} $t"
@@ -89,6 +92,6 @@ import groovy.time.*
   TimeDuration durationx = TimeCategory.minus(end, start)
   60*1000*durationx.minutes+1000*durationx.seconds+durationx.millis
  }
- def ES = '52.37.169.141'
- readThenWrite(ES, "2016.10.20")
+ def ES = '35.161.8.107'
+ readThenWrite(ES, "2016.10.21")
  //println computeAverage("52.37.169.141", "2016.10.13") 
