@@ -3,7 +3,7 @@
 
 yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-elasticsearch-1000 2>&1
 rpm --import http://packages.elastic.co/GPG-KEY-elasticsearch > /tmp/userdata-elasticsearch-1020 2>&1
-cp /home/ec2-user/gocontainer/nexus-java/elasticsearch.repo /etc/yum.repos.d > /tmp/userdata-elasticsearch-1030 2>&1
+cp /gocontainer/nexus-java/elasticsearch.repo /etc/yum.repos.d > /tmp/userdata-elasticsearch-1030 2>&1
 yum install elasticsearch -y > /tmp/userdata-elasticsearch-1040 2>&1
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/userdata-elasticsearch-1100 2>&1
 export ES_HEAP_SIZE=8g > /tmp/userdata-elasticsearch-1120 2>&1
