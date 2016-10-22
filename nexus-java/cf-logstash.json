@@ -54,8 +54,8 @@
 "#!/bin/bash -ex\n",
 "yum install git -y\n",
 "yum install curl -y\n",
-"git clone -b go https://github.com/craigwongva/gocontainer.git > /tmp/u15 2>&1\n",
-"/gocontainer/nexus-java/userdata-logstash > /tmp/u16 2>&1\n"
+"sudo -u ec2-user bash -c 'cd /home/ec2-user; git clone -b go https://github.com/craigwongva/gocontainer.git > /tmp/u16 2>&1 '\n",
+"/home/ec2-user/gocontainer/nexus-java/userdata-logstash > /tmp/u17 2>&1\n"
      ]
     ]}}
    }

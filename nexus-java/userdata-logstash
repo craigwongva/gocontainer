@@ -9,29 +9,29 @@ openssl req -config /etc/pki/tls/openssl.cnf -x509 -days 3650 -batch -nodes -new
 aws s3 cp /etc/pki/tls/certs/logstash-forwarder.crt s3://venicegeo-devops-dev-logstashforwarder-project > /tmp/userdata-logstash-1500 2>&1
 
 mkdir /opt/logstash/conf.d > /tmp/userdata-logstash-1700 2>&1
-cd /gocontainer/nexus-java > /tmp/userdata-logstash-1600 2>&1
+cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-logstash-1600 2>&1
 echo my directory is `pwd` > /tmp/userdata-logstash-1610 2>&1
-cp /gocontainer/nexus-java/01-lumberjack-input.conf /opt/logstash/conf.d > /tmp/userdata-logstash-1800 2>&1
-cp /gocontainer/nexus-java/10-syslog.conf /opt/logstash/conf.d > /tmp/userdata-logstash-1900 2>&1
-cp /gocontainer/nexus-java/30-lumberjack-output.conf /opt/logstash/conf.d > /tmp/userdata-logstash-2000 2>&1
+cp /home/ec2-user/gocontainer/nexus-java/01-lumberjack-input.conf /opt/logstash/conf.d > /tmp/userdata-logstash-1800 2>&1
+cp /home/ec2-user/gocontainer/nexus-java/10-syslog.conf /opt/logstash/conf.d > /tmp/userdata-logstash-1900 2>&1
+cp /home/ec2-user/gocontainer/nexus-java/30-lumberjack-output.conf /opt/logstash/conf.d > /tmp/userdata-logstash-2000 2>&1
 #cp /gocontainer/nexus-java/modsecgrp_logstash.groovy . > /tmp/userdata-logstash-2100 2>&1
 
 ##
 # Install Groovy.
 ##
 
-cd / > /tmp/userdata-logstash-2190 2>&1
-aws s3 cp s3://venicegeo-devops-dev-logstashforwarder-project/dotsdkman.zip / > /tmp/userdata-logstash-2200 2>&1
+cd /home/ec2-user > /tmp/userdata-logstash-2190 2>&1
+aws s3 cp s3://venicegeo-devops-dev-logstashforwarder-project/dotsdkman.zip /home/ec2-user > /tmp/userdata-logstash-2200 2>&1
 unzip -o dotsdkman.zip > /tmp/userdata-logstash-2300 2>&1
 
 ##
 # Modify security groups that allow Logstash Forwarder to talk to Logstash.
 # Also modify /etc/logstash-forwarder.conf.
 ##
-cd /gocontainer/nexus-java > /tmp/userdata-logstash-2320 2>&1
-cp /.sdkman/candidates/groovy/2.4.7/lib/groovy-2.4.7.jar . > /tmp/userdata-logstash-2340 2>&1
-cp /.sdkman/candidates/groovy/2.4.7/lib/groovy-json-2.4.7.jar . > /tmp/userdata-logstash-2360 2>&1
-/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_logstash.groovy > /tmp/userdata-logstash-2400 2>&1
+cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-logstash-2320 2>&1
+cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-2.4.7.jar . > /tmp/userdata-logstash-2340 2>&1
+cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-json-2.4.7.jar . > /tmp/userdata-logstash-2360 2>&1
+/home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_logstash.groovy > /tmp/userdata-logstash-2400 2>&1
 java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar modsecgrp_logstash /opt/logstash/conf.d/30-lumberjack-output.conf > /tmp/userdata-logstash-2500 2>&1
 
 cd /opt/logstash/server/bin
