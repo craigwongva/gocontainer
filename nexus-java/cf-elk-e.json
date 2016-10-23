@@ -39,7 +39,7 @@
    "Properties": {
     "Tags" : [{
      "Key":"Name",
-     "Value":"craigLF"
+     "Value":"craigES"
     }],
     "ImageId": {
      "Fn::FindInMap": [
