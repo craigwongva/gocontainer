@@ -11,5 +11,5 @@ sudo service elasticsearch start > /tmp/userdata-elasticsearch-1200 2>&1
 #This dir seems outdated:
 #cd /usr/local/elasticsearch-1.6.0/bin > /tmp/userdata-elasticsearch-1300 2>&1
 cd /usr/share/elasticsearch/bin > /tmp/userdata-elasticsearch-1300 2>&1
-./plugin -install mobz/elasticsearch-head/1.6 > /tmp/userdata-elasticsearch-1400 2>&1
+sudo ./plugin -install mobz/elasticsearch-head/1.6 > /tmp/userdata-elasticsearch-1400 2>&1
 
