@@ -89,7 +89,13 @@ def logstashForwarderSecurityGroupID = getSecurityGroupID('craigLF-SecurityGroup
 
 def logstashIPs                      = getInstanceIPAddresses('craigLg','us-west-2')
 println "92: logstashIPs=$logstashIPs"
-def logstashSecurityGroupID          = getSecurityGroupID('craigLg-SecurityGroup','us-west-2')
+//def logstashSecurityGroupID          = getSecurityGroupID('craigLg-SecurityGroup','us-west-2')
+def logstashSecurityGroupID          = getSecurityGroupID('SecurityGroupLg','us-west-2')
+
+def elasticsearchIPs                 = getInstanceIPAddresses('craigES','us-west-2')
+print "95: ES IPs=$elasticsearchIPs"
+//def elasticsearchSecurityGroupID     = getSecurityGroupID('craigES-SecurityGroup','us-west-2')
+def elasticsearchSecurityGroupID     = getSecurityGroupID('SecurityGroupES','us-west-2')
 
 authorizeSecurityGroupIngress(
  'allow LF to receive from Lg on 5043', 
@@ -102,6 +108,12 @@ authorizeSecurityGroupIngress(
  logstashSecurityGroupID, 
  logstashForwarderIPs.privateIpAddress, 
  '5043', 'us-west-2')
+
+authorizeSecurityGroupIngress(
+ 'ES: 9200 LF',
+ elasticsearchSecurityGroupID,
+ logstashForwarderIPs.publicIpAddress,
+ '9200', 'us-west-2')
 
 /**
 * Update /etc/logstash-forwarder.conf

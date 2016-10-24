@@ -79,10 +79,12 @@ def updateLogstashForwarderConfFileLocalhost(confFile, ip) {
 **/
 
 def logstashIPs                      = getInstanceIPAddresses('craigLg')
-def logstashSecurityGroupID          = getSecurityGroupID('craigLg-SecurityGroup')
+//def logstashSecurityGroupID          = getSecurityGroupID('craigLg-SecurityGroup')
+def logstashSecurityGroupID          = getSecurityGroupID('SecurityGroupLg')
 
 def elasticsearchIPs                 = getInstanceIPAddresses('craigES')
-def elasticsearchSecurityGroupID     = getSecurityGroupID('craigES-SecurityGroup')
+//def elasticsearchSecurityGroupID     = getSecurityGroupID('craigES-SecurityGroup')
+def elasticsearchSecurityGroupID     = getSecurityGroupID('SecurityGroupES')
 
 authorizeSecurityGroupIngress(
  'allow Lg to receive from ES on 9200', 
