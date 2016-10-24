@@ -1,0 +1,139 @@
+{
+"AWSTemplateFormatVersion": "2010-09-09",
+"Description": "venicegeo-devops-dev-gocontainer-project, uses vanilla Amazon Linux AMI (ami-7172b611)",
+
+"Mappings": {
+  "EC2RegionMap": {
+   "us-west-2": {"craiggoami": "ami-7172b611"}
+  }
+},
+"Parameters" : {
+ "instancetype" : {
+  "Type" : "String"
+ }
+},
+"Resources": {
+  "SecurityGroupES": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "craiggo security group",
+    "VpcId": "vpc-4e33072b",
+    "SecurityGroupIngress": [
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 22,
+     "IpProtocol": "tcp",
+     "ToPort": 22
+    },
+    {
+     "CidrIp": "52.21.147.39/32",
+     "FromPort": 9200,
+     "IpProtocol": "tcp",
+     "ToPort": 9200
+    }
+    ]
+   }
+  },
+  "SecurityGroupLg": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "craigLg security group",
+    "VpcId": "vpc-4e33072b",
+
+    "SecurityGroupIngress": [
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 22,
+     "IpProtocol": "tcp",
+     "ToPort": 22
+    }
+    ]
+   }
+  },
+
+
+  "Server": {
+   "Type": "AWS::EC2::Instance",
+   "Properties": {
+    "Tags" : [{
+     "Key":"Name",
+     "Value":"craigES"
+    }],
+    "ImageId": {
+     "Fn::FindInMap": [
+      "EC2RegionMap", {
+       "Ref": "AWS::Region"
+      },
+      "craiggoami"
+     ]
+    },
+    "InstanceType": {"Ref" : "instancetype"},
+    "KeyName":  "craigradiantblueoregon" ,
+    "SecurityGroupIds": [{
+     "Ref": "SecurityGroupES"
+    }],
+    "IamInstanceProfile": "craigtest",
+    "BlockDeviceMappings" : [{
+      "DeviceName" : "/dev/xvda",
+      "Ebs" : { "VolumeSize" : "8" }
+    }],
+    "UserData": {"Fn::Base64": {"Fn::Join": ["",
+     [
+"#!/bin/bash -ex\n",
+"yum install git -y\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user; git clone -b go https://github.com/craigwongva/gocontainer.git > /tmp/u01 2>&1 '\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-elasticsearch > /tmp/u03d 2>&1'\n"
+
+     ]
+    ]}}
+   }
+  },
+
+  "ServerLg": {
+   "Type": "AWS::EC2::Instance",
+   "Properties": {
+    "Tags" : [{
+     "Key":"Name",
+     "Value":"craigLg"
+    }],
+    "ImageId": {
+     "Fn::FindInMap": [
+      "EC2RegionMap", {
+       "Ref": "AWS::Region"
+      },
+      "craiggoami"
+     ]
+    },
+    "InstanceType": {"Ref" : "instancetype"},
+    "KeyName":  "craigradiantblueoregon" ,
+    "SecurityGroupIds": [{
+     "Ref": "SecurityGroupLg"
+    }],
+    "IamInstanceProfile": "craigtest",
+    "BlockDeviceMappings" : [{
+      "DeviceName" : "/dev/xvda",
+      "Ebs" : { "VolumeSize" : "8" }
+    }],
+    "UserData": {"Fn::Base64": {"Fn::Join": ["",
+     [
+"#!/bin/bash -ex\n",
+"yum install git -y\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user; git clone -b go https://github.com/craigwongva/gocontainer.git > /tmp/u01 2>&1 '\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-logstash > /tmp/u03d 2>&1'\n"
+     ]
+    ]}}
+   },
+            "DependsOn" : "Server"
+  }
+
+
+},
+"Outputs" : {
+  "InstanceID" : {
+    "Description": "The Instance ID",  
+    "Value" : { "Fn::GetAtt" : [ "Server" , "PublicIp" ] }
+  }
+}
+}
+
+
