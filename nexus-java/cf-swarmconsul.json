@@ -31,7 +31,7 @@
      "Value":"consul"
     }, {
      "Key":"Name",
-     "Value":"consul"
+     "Value":"cwconsul"
     }
     ],
     "ImageId": {

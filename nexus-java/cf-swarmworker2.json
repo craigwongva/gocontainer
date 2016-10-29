@@ -31,7 +31,7 @@
      "Value":"worker2"
     }, {
      "Key":"Name",
-     "Value":"worker2"
+     "Value":"cwworker2"
     }],
     "ImageId": {
      "Fn::FindInMap": [

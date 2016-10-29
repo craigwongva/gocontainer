@@ -31,7 +31,7 @@
      "Value":"manager2"
     }, {
      "Key":"Name",
-     "Value":"manager2"
+     "Value":"cwmanager2"
     }],
     "ImageId": {
      "Fn::FindInMap": [
