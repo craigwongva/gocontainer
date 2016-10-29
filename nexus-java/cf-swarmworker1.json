@@ -61,7 +61,7 @@
 "#!/bin/bash -ex\n",
 "yum install git -y\n",
 "sudo -u ec2-user bash -c 'cd /home/ec2-user; git clone -b go https://github.com/craigwongva/gocontainer.git > /tmp/u01 2>&1 '\n",
-"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-swarmworker1 ", {"Ref" : "instanceprefix"}, " > /tmp/u14 2>&1'\n"
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-swarmworker1 ", {"Ref" : "instanceprefix"}, " ", {"Ref" : "workernum"}, " > /tmp/u14 2>&1'\n"
      ]
     ]}}
    }

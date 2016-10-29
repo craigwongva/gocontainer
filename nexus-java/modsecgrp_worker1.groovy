@@ -75,6 +75,7 @@ def authorizeSecurityGroupIngress(comment, groupID, cidr, port) {
 **/
 
 def prefix = args[1]
+def workernum = args[2]
 
 if (args[0] == 'option1') {
  def consulIPs                        = getInstanceIPAddresses("${prefix}consul")
@@ -83,41 +84,41 @@ if (args[0] == 'option1') {
  def manager1IPs                      = getInstanceIPAddresses("${prefix}manager1")
  def manager1SecurityGroupID          = getSecurityGroupID("${prefix}manager1-SecurityGroup")
 
- def worker1IPs                      = getInstanceIPAddresses("${prefix}worker1")
- def worker1SecurityGroupID          = getSecurityGroupID("${prefix}worker1-SecurityGroup")
+ def worker1IPs                      = getInstanceIPAddresses("${prefix}worker${workernum}")
+ def worker1SecurityGroupID          = getSecurityGroupID("${prefix}worker${workernum}-SecurityGroup")
 
  authorizeSecurityGroupIngress(
-  'consul opens 8500 to worker1',
+  "consul opens 8500 to worker${workernum}",
   consulSecurityGroupID,
   worker1IPs.publicIpAddress,
   '8500')
 
  authorizeSecurityGroupIngress(
-  'manager1 opens ALL to worker1',
+  "manager1 opens ALL to worker${workernum}",
   manager1SecurityGroupID,
   worker1IPs.publicIpAddress,
   '0-65535')
 
  authorizeSecurityGroupIngress(
-  'worker1 opens 2375 to consul',
+  "worker${workernum} opens 2375 to consul",
   worker1SecurityGroupID,
   consulIPs.publicIpAddress,
   '2375')
 
  authorizeSecurityGroupIngress(
-  'worker1 opens 8500 to consul',
+  "worker${workernum} opens 8500 to consul",
   worker1SecurityGroupID,
   consulIPs.publicIpAddress,
   '8500')
 
  authorizeSecurityGroupIngress(
-  'worker1 opens 2375 to manager1',
+  "worker${workernum} opens 2375 to manager1",
   worker1SecurityGroupID,
   manager1IPs.publicIpAddress,
   '2375')
 
  authorizeSecurityGroupIngress(
-  'worker1 opens 8077 to ALL',
+  "worker${workernum} opens 8077 to ALL",
   worker1SecurityGroupID,
   '0.0.0.0',
   '8077')
