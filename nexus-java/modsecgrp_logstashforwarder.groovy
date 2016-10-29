@@ -84,18 +84,17 @@ def updateLogstashForwarderConfFileLocalhost(confFile, ip) {
 **/
 
 def logstashForwarderIPs             = getInstanceIPAddresses('craigLF','us-west-2')
-println "87: logstashForwarderIPs=$logstashForwarderIPs"
-def logstashForwarderSecurityGroupID = getSecurityGroupID('craigLF-SecurityGroup', 'us-west-2')
-
 def logstashIPs                      = getInstanceIPAddresses('craigLg','us-west-2')
-println "92: logstashIPs=$logstashIPs"
-//def logstashSecurityGroupID          = getSecurityGroupID('craigLg-SecurityGroup','us-west-2')
-def logstashSecurityGroupID          = getSecurityGroupID('SecurityGroupLg','us-west-2')
-
 def elasticsearchIPs                 = getInstanceIPAddresses('craigES','us-west-2')
-print "95: ES IPs=$elasticsearchIPs"
-//def elasticsearchSecurityGroupID     = getSecurityGroupID('craigES-SecurityGroup','us-west-2')
+
+def logstashForwarderSecurityGroupID = getSecurityGroupID('craigLF-SecurityGroup', 'us-west-2')
+def logstashSecurityGroupID          = getSecurityGroupID('SecurityGroupLg','us-west-2')
 def elasticsearchSecurityGroupID     = getSecurityGroupID('SecurityGroupES','us-west-2')
+def consulSecurityGroupID            = getSecurityGroupID('cwconsul-SecurityGroup', 'us-west-2')
+
+println "87: logstashForwarderIPs=$logstashForwarderIPs"
+println "92: logstashIPs=$logstashIPs"
+println "95: ES IPs=$elasticsearchIPs"
 
 authorizeSecurityGroupIngress(
  'allow LF to receive from Lg on 5043', 
@@ -114,6 +113,12 @@ authorizeSecurityGroupIngress(
  elasticsearchSecurityGroupID,
  logstashForwarderIPs.publicIpAddress,
  '9200', 'us-west-2')
+
+authorizeSecurityGroupIngress(
+ 'consul: 8500 LF',
+ consulSecurityGroupID,
+ logstashForwarderIPs.publicIpAddress,
+ '8500', 'us-west-2')
 
 /**
 * Update /etc/logstash-forwarder.conf
