@@ -74,17 +74,18 @@ def authorizeSecurityGroupIngress(comment, groupID, cidr, port) {
 * Update AWS security groups
 **/
 
-def consulIPs                        = getInstanceIPAddresses('cwconsul')
-def consulSecurityGroupID            = getSecurityGroupID('cwconsul-SecurityGroup')
-
-def manager1IPs                      = getInstanceIPAddresses('cwmanager1')
-def manager1SecurityGroupID          = getSecurityGroupID('cwmanager1-SecurityGroup')
-
-def worker2IPs                      = getInstanceIPAddresses('cwworker2')
-def worker2SecurityGroupID          = getSecurityGroupID('cwworker2-SecurityGroup')
-
+def prefix = args[1]
 
 if (args[0] == 'option1') {
+ def consulIPs                        = getInstanceIPAddresses("${prefix}consul")
+ def consulSecurityGroupID            = getSecurityGroupID("${prefix}consul-SecurityGroup")
+
+ def manager1IPs                      = getInstanceIPAddresses("${prefix}manager1")
+ def manager1SecurityGroupID          = getSecurityGroupID("${prefix}manager1-SecurityGroup")
+
+ def worker2IPs                      = getInstanceIPAddresses("${prefix}worker2")
+ def worker2SecurityGroupID          = getSecurityGroupID("${prefix}worker2-SecurityGroup")
+
  authorizeSecurityGroupIngress(
   'consul opens 8500 to worker2',
   consulSecurityGroupID, 
@@ -123,5 +124,6 @@ if (args[0] == 'option1') {
 }
 
 if (args[0] == 'option2') {
+ def consulIPs                        = getInstanceIPAddresses("${prefix}consul")
  println consulIPs.publicIpAddress
 }
