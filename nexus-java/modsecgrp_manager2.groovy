@@ -52,10 +52,11 @@ def authorizeSecurityGroupIngress(comment, groupID, cidr, port) {
  def proc
  def sb
 
+ def suffix = (cidr == '0.0.0.0')? '0' : '32'
  def cmd = 
        "aws ec2 authorize-security-group-ingress " +
        " --group-id $groupID" +
-       " --cidr $cidr/32" +
+       " --cidr $cidr/$suffix" +
        " --port $port " +
        " --protocol tcp " +
        " --region us-west-2 " 
@@ -73,11 +74,11 @@ def authorizeSecurityGroupIngress(comment, groupID, cidr, port) {
 * Update AWS security groups
 **/
 
-def manager2IPs                      = getInstanceIPAddresses('manager2')
-def manager2SecurityGroupID          = getSecurityGroupID('manager2-SecurityGroup')
+def manager2IPs                      = getInstanceIPAddresses('cwmanager2')
+def manager2SecurityGroupID          = getSecurityGroupID('cwmanager2-SecurityGroup')
 
-def consulIPs                        = getInstanceIPAddresses('consul')
-def consulSecurityGroupID            = getSecurityGroupID('consul-SecurityGroup')
+def consulIPs                        = getInstanceIPAddresses('cwconsul')
+def consulSecurityGroupID            = getSecurityGroupID('cwconsul-SecurityGroup')
 
 if (args[0] == 'option1') {
  authorizeSecurityGroupIngress(
