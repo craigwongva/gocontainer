@@ -28,6 +28,21 @@
     ]
    }
   },
+  "SecurityGroupManager": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "craiggo security group",
+    "VpcId": "vpc-4e33072b",
+    "SecurityGroupIngress": [
+    {
+     "CidrIp": "0.0.0.0/0",
+     "FromPort": 22,
+     "IpProtocol": "tcp",
+     "ToPort": 22
+    }
+    ]
+   }
+  },
   "Server": {
    "Type": "AWS::EC2::Instance",
    "Properties": {
@@ -95,7 +110,7 @@
     "InstanceType": "t2.micro",
     "KeyName":  "craigradiantblueoregon" ,
     "SecurityGroupIds": [{
-     "Ref": "SecurityGroup"
+     "Ref": "SecurityGroupManager"
     }],
     "IamInstanceProfile": "craigtest",
     "BlockDeviceMappings" : [{
