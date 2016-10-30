@@ -77,7 +77,8 @@ def authorizeSecurityGroupIngress(comment, groupID, cidr, port) {
 def prefix = args[1]
 
 def manager1IPs                      = getInstanceIPAddresses("${prefix}manager1")
-def manager1SecurityGroupID          = getSecurityGroupID("${prefix}manager1-SecurityGroup")
+//The string 'consul' is part of the user-supplied stack name :(
+def manager1SecurityGroupID          = getSecurityGroupID("${prefix}consul-SecurityGroupManager")
 
 def consulIPs                        = getInstanceIPAddresses("${prefix}consul")
 def consulSecurityGroupID            = getSecurityGroupID("${prefix}consul-SecurityGroup")
