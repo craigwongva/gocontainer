@@ -35,6 +35,7 @@
      "Key":"craig-swarm-component",
      "Value":"consul"
     }, {
+     "Key":"Name",
      "Value":
 {"Fn::Join": ["",
 [       {"Ref" : "instanceprefix"}, "consul" ]
