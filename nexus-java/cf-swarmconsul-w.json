@@ -68,7 +68,7 @@
     "InstanceType": "t2.micro",
     "KeyName":  "craigradiantblueoregon" ,
     "SecurityGroupIds": [{
-     "Ref": "SecurityGroup"
+     "Ref": "SecurityGroupConsul"
     }],
     "IamInstanceProfile": "craigtest",
     "BlockDeviceMappings" : [{
