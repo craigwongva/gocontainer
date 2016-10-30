@@ -39,7 +39,10 @@
      "Value":"worker1"
     }, {
      "Key":"Name",
-     "Value": {"Ref" : "instanceprefix"}, "worker", {"Ref" : "workernum"}
+     "Value": 
+{"Fn::Join": [
+       {"Ref" : "instanceprefix"}, "worker", {"Ref" : "workernum"}
+]}
     }],
     "ImageId": {
      "Fn::FindInMap": [
