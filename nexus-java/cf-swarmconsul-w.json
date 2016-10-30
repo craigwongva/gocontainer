@@ -110,7 +110,9 @@
 "sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-swarmmanager1 ", {"Ref" : "instanceprefix"}, " > /tmp/u14 2>&1'\n"
      ]
     ]}}
-   }
+   },
+"DependsOn" : "Server"
+
   }
 
 
