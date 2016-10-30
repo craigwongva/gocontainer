@@ -13,7 +13,7 @@
  }
 },
 "Resources": {
-  "SecurityGroup": {
+  "SecurityGroupConsul": {
    "Type": "AWS::EC2::SecurityGroup",
    "Properties": {
     "GroupDescription": "craiggo security group",

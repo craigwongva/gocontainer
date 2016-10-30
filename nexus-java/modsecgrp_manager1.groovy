@@ -81,7 +81,7 @@ def manager1IPs                      = getInstanceIPAddresses("${prefix}manager1
 def manager1SecurityGroupID          = getSecurityGroupID("${prefix}consul-SecurityGroupManager")
 
 def consulIPs                        = getInstanceIPAddresses("${prefix}consul")
-def consulSecurityGroupID            = getSecurityGroupID("${prefix}consul-SecurityGroup")
+def consulSecurityGroupID            = getSecurityGroupID("${prefix}consul-SecurityGroupConsul")
 
 if (args[0] == 'option1') {
  authorizeSecurityGroupIngress(
