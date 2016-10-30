@@ -88,13 +88,13 @@ if (args[0] == 'option1') {
  def worker1SecurityGroupID          = getSecurityGroupID("${prefix}worker${workernum}-SecurityGroup")
 
  authorizeSecurityGroupIngress(
-  "consul opens 8500 to worker${workernum}",
+  "consul opens 8500 to ${prefix}worker${workernum}",
   consulSecurityGroupID,
   worker1IPs.publicIpAddress,
   '8500')
 
  authorizeSecurityGroupIngress(
-  "manager1 opens ALL to worker${workernum}",
+  "manager1 opens ALL to ${prefix}worker${workernum}",
   manager1SecurityGroupID,
   worker1IPs.publicIpAddress,
   '0-65535')
