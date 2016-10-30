@@ -69,12 +69,61 @@
      ]
     ]}}
    }
+  },
+
+  "ServerManager": {
+   "Type": "AWS::EC2::Instance",
+   "Properties": {
+    "Tags" : [{
+     "Key":"craig-swarm-component",
+     "Value":"manager1"
+    }, {
+     "Key":"Name",
+     "Value":
+{"Fn::Join": ["",
+[       {"Ref" : "instanceprefix"}, "manager1" ]
+]}
+    }],
+    "ImageId": {
+     "Fn::FindInMap": [
+      "EC2RegionMap", {
+       "Ref": "AWS::Region"
+      },
+      "craiggoami"
+     ]
+    },
+    "InstanceType": "t2.micro",
+    "KeyName":  "craigradiantblueoregon" ,
+    "SecurityGroupIds": [{
+     "Ref": "SecurityGroup"
+    }],
+    "IamInstanceProfile": "craigtest",
+    "BlockDeviceMappings" : [{
+      "DeviceName" : "/dev/xvda",
+      "Ebs" : { "VolumeSize" : "8" }
+    }],
+    "UserData": {"Fn::Base64": {"Fn::Join": ["",
+     [
+"#!/bin/bash -ex\n",
+"yum install git -y\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user; git clone -b go https://github.com/craigwongva/gocontainer.git > /tmp/u01 2>&1 '\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-swarmmanager1 > /tmp/u14 2>&1'\n"
+     ]
+    ]}}
+   }
   }
+}
+
+
 },
 "Outputs" : {
-  "InstanceID" : {
-    "Description": "The Instance ID",  
+  "ServerConsulPublicIP" : {
+    "Description": "ConsulPublicIP",  
     "Value" : { "Fn::GetAtt" : [ "Server" , "PublicIp" ] }
+  },
+  "ServerManagerPublicIP" : {
+    "Description": "ManagerPublicIP",  
+    "Value" : { "Fn::GetAtt" : [ "ServerManager" , "PublicIp" ] }
   }
 }
 }
