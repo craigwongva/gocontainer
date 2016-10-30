@@ -40,8 +40,8 @@
     }, {
      "Key":"Name",
      "Value": 
-{"Fn::Join": [
-       {"Ref" : "instanceprefix"}, "worker", {"Ref" : "workernum"}
+{"Fn::Join": ["",
+[       {"Ref" : "instanceprefix"}, "worker", {"Ref" : "workernum"} ]
 ]}
     }],
     "ImageId": {
