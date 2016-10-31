@@ -74,42 +74,36 @@ def authorizeSecurityGroupIngress(comment, groupID, cidr, port) {
 * Update AWS security groups
 **/
 
-def manager1IPs                      = getInstanceIPAddresses('cwmanager1')
-def manager1SecurityGroupID          = getSecurityGroupID('cwmanager1-SecurityGroup')
+def manager2IPs                      = getInstanceIPAddresses('cwmanager2')
+def manager2SecurityGroupID          = getSecurityGroupID('cwmanager2-SecurityGroup')
 
 def consulIPs                        = getInstanceIPAddresses('cwconsul')
 def consulSecurityGroupID            = getSecurityGroupID('cwconsul-SecurityGroup')
 
 if (args[0] == 'option1') {
  authorizeSecurityGroupIngress(
-  'consul opens 4000 to manager1', 
-  consulSecurityGroupID, 
-  manager1IPs.publicIpAddress, 
-  '4000')
-
- authorizeSecurityGroupIngress(
-  'consul opens 8500 to manager1', 
-  consulSecurityGroupID, 
-  manager1IPs.publicIpAddress, 
-  '8500')
-
- authorizeSecurityGroupIngress(
-  'manager1 opens 4000 to consul', 
-  manager1SecurityGroupID, 
+  'consul opens 4000 to manager2', 
+  manager2SecurityGroupID, 
   consulIPs.publicIpAddress, 
   '4000')
 
  authorizeSecurityGroupIngress(
-  'manager1 opens 8500 to consul', 
-  manager1SecurityGroupID, 
+  'consul opens 8500 to manager2', 
+  manager2SecurityGroupID, 
   consulIPs.publicIpAddress, 
   '8500')
 
  authorizeSecurityGroupIngress(
-  'manager1 opens 4000 to ALL', //allow Green Dots to query for worker nodes
-  manager1SecurityGroupID, 
-  '0.0.0.0',
+  'manager2 opens 4000 to consul', 
+  consulSecurityGroupID, 
+  manager2IPs.publicIpAddress, 
   '4000')
+
+ authorizeSecurityGroupIngress(
+  'manager2 opens 8500 to consul', 
+  consulSecurityGroupID, 
+  manager2IPs.publicIpAddress, 
+  '8500')
 }
 
 if (args[0] == 'option2') {

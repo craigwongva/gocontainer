@@ -1,0 +1,36 @@
+sudo yum install docker -y > /tmp/userdata-swarmworker2-7000 2>&1
+
+#yes this start/stop is necessary
+sudo service docker start > /tmp/userdata-swarmworker2-7100 2>&1
+sudo service docker stop > /tmp/userdata-swarmworker2-7300 2>&1
+sleep 30 > /tmp/userdata-swarmworker2-7350 2>&1
+sudo docker daemon -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock & > /tmp/userdata-swarmworker2-7400 2>&1
+
+sleep 30 > /tmp/userdata-swarmworker2-7450 2>&1
+sudo service docker stop > /tmp/userdata-swarmworker2-7500 2>&1
+sudo docker daemon -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock & > /tmp/userdata-swarmworker2-7600 2>&1
+#not sure whether this usermod is necessary
+sudo usermod -aG docker ec2-user > /tmp/userdata-swarmworker2-7700 2>&1
+
+##
+### Install Groovy.
+####
+
+sudo yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-swarmworker2-7800 2>&1
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/userdata-swarmworker2-7900 2>&1
+cd /home/ec2-user > /tmp/userdata-swarmworker2-8300 2>&1
+aws s3 cp s3://venicegeo-devops-dev-logstashforwarder-project/dotsdkman.zip . > /tmp/userdata-swarmworker2-8400 2>&1
+unzip dotsdkman.zip > /tmp/userdata-swarmworker2-8500 2>&1
+
+####
+### Modify security groups that allow Manager to talk to Consul.
+####
+
+cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-swarmworker2-8600 2>&1
+cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-2.4.7.jar . > /tmp/userdata-swarmworker2-8700 2>&1
+cp /home/ec2-user/.sdkman/candidates/groovy/2.4.7/lib/groovy-json-2.4.7.jar . > /tmp/userdata-swarmworker2-8800 2>&1
+/home/ec2-user/.sdkman/candidates/groovy/2.4.7/bin/groovyc modsecgrp_worker2.groovy > /tmp/userdata-swarmworker2-8900 2>&1
+java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar modsecgrp_worker2 option1 cw > /tmp/userdata-swarmworker2-9000 2>&1
+
+sudo docker run -d swarm join --advertise=`curl http://169.254.169.254/latest/meta-data/public-ipv4`:2375 consul://`java -cp .:./groovy-2.4.7.jar:./groovy-json-2.4.7.jar modsecgrp_worker2 option2 cw`:8500 > /tmp/userdata-swarmworker2-9100 2>&1
+
