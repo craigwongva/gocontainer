@@ -43,6 +43,7 @@ def getInstanceIPAddresses(keyvalue) {
   if (found.size() > 0) {
    returnResult.privateIpAddress = i[0].PrivateIpAddress
    returnResult.publicIpAddress =  i[0].PublicIpAddress
+   returnResult.tags             = i[0].Tags[0]
   }
  }
  returnResult
@@ -74,14 +75,22 @@ def authorizeSecurityGroupIngress(comment, groupID, cidr, port) {
 * Update AWS security groups
 **/
 
+//It seems the EC2 name uses the user-supplied prefix (e.g. craig),
+//the SecurityGroup uses the stack name (e.g. mercury of mercuryconsul).
 def prefix = args[1]
 
 def manager1IPs                      = getInstanceIPAddresses("${prefix}manager1")
+println "----start---"
+println manager1IPs.tags
+def tagsValue = manager1IPs.tags.Value
+def tagsValueMinusConsul = tagsValue[0..-('consul'.size()+1)]
+println "----end---"
 //The string 'consul' is part of the user-supplied stack name :(
-def manager1SecurityGroupID          = getSecurityGroupID("${prefix}consul-SecurityGroupManager")
+def manager1SecurityGroupID          = getSecurityGroupID("${tagsValueMinusConsul}-SecurityGroupManager")
 
 def consulIPs                        = getInstanceIPAddresses("${prefix}consul")
 def consulSecurityGroupID            = getSecurityGroupID("${prefix}consul-SecurityGroupConsul")
+
 
 if (args[0] == 'option1') {
  authorizeSecurityGroupIngress(
