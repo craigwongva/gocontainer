@@ -93,3 +93,20 @@ However if your external backing service locations are external (e.g. 52.43.236.
 52.43.236.86 pz-access.localdomain
 52.43.236.86 pz-servicecontroller.localdomain
 ```
+
+## Using Consul with Go but not Grails  ##
+Add ?consul=52.53.54.55 and code will query consul :8500 to find the
+external user services participating through Swarm. 
+The readiness/up status of the external user services is not actually 
+tracked by Consul, so we are actually taking a bit of a shortcut now.
+
+find-eus.go makes this call:
+```
+52.39.26.15:8500/v1/kv/docker/swarm/nodes?keys
+```
+and might get this back:
+```
+["docker/swarm/nodes/52.88.204.91:2375",
+ "docker/swarm/nodes/54.68.69.232:2375",
+ "docker/swarm/nodes"]
+
