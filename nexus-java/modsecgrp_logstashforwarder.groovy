@@ -120,6 +120,12 @@ authorizeSecurityGroupIngress(
  logstashForwarderIPs.publicIpAddress,
  '8500', 'us-west-2')
 
+authorizeSecurityGroupIngress(
+ 'LF: 8077 LF',
+ logstashForwarderSecurityGroupID,
+ logstashForwarderIPs.publicIpAddress,
+ '8077', 'us-west-2')
+
 /**
 * Update /etc/logstash-forwarder.conf
 **/
