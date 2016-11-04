@@ -1,10 +1,10 @@
 echo parm1 (ES IP) is $1
 echo parm2 (YYYY.MM.DD) is $2
-curl -XDELETE http://$1:9200/logstash-$2
 cd ~/gocontainer/nexus-java
 rm -f .logstash-forwarder
 ./replace-a-container gateway
 ./replace-a-container servicecontroller
 ./userdata-groovy-lf1
+curl -XDELETE http://$1:9200/logstash-$2
 ./userdata-groovy-lf2
 sudo /opt/logstash-forwarder/bin/logstash-forwarder -config /etc/logstash-forwarder.conf
