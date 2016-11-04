@@ -1,28 +1,30 @@
-#sudo yum install docker -y > /tmp/userdata-nexus-ingest-6100 2>&1
-#sudo service docker start > /tmp/userdata-nexus-ingest-6200 2>&1
+export TMP=/tmp/userdata-nexus-ingest-
 
-#The following is necessary if working interactively as ec2-user:
-# sudo usermod -a -G docker ec2-user
+# Assume Docker is already installed
 
-cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-nexus-ingest-6300 2>&1
-#sudo cp Dockerfile-first_webapp Dockerfile #this starts 8080 for test purposes but isn't central to docker+nexus issue
+cd /home/ec2-user/gocontainer/nexus-java                    > $TMP6300 2>&1
+
+##
+# s/m: Build directly from Dockerfile-nexus-ingest 
+#      instead of Dockerfile
+##
 
 sed -i -e '/CMD/d' Dockerfile-nexus-ingest
 echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Duuid.protocol=http\", \"-Duuid.port=`cat pz-uuidgen-port-number`\", \"-Dlogger.protocol=http\", \"-Dlogger.port=`cat pz-logger-port-number`\", \"-jar\", \"piazza-ingest-1.0.0-NEXUSSED.jar\"] >> Dockerfile-nexus-ingest
-sudo cp Dockerfile-nexus-ingest Dockerfile > /tmp/userdata-nexus-ingest-6400 2>&1
+sudo cp Dockerfile-nexus-ingest Dockerfile                  > $TMP6400 2>&1
 
-sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_ingest . > /tmp/userdata-nexus-ingest-6500 2>&1
+sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_ingest . > $TMP6500 2>&1
 
-#sudo docker login --username venicegeodev --password demo1024 > /tmp/userdata-nexus-ingest-6510 2>&1
-#sudo docker push venicegeodev/container_ingest > /tmp/userdata-nexus-ingest-6520 2>&1
-#sudo docker pull venicegeodev/container_ingest > /tmp/userdata-nexus-ingest-6530 2>&1
-# Tuesday 8/16 I'm replacing "-p 8084:8084" with '--net="host"'
-sudo docker run -d --net="host" venicegeodev/container_ingest > /tmp/userdata-nexus-ingest-6999 2>&1
+##
+# Code is commented because Dockerhub isn't being used right now.
+##
 
-#This worked manually:
-#sudo docker run -d --net="host" venicegeodev/container_ingest
-#produced container /etc/host:
-#127.0.0.1   localhost localhost.localdomain pz-logger.localdomain
-#52.43.203.74 jobdb.dev
-#52.43.203.74 kafka.dev
-#
+#sudo docker login --username venicegeodev --password demo1024 > $TMP6510 2>&1
+#sudo docker push venicegeodev/container_ingest             > $TMP6520 2>&1
+#sudo docker pull venicegeodev/container_ingest             > $TMP6530 2>&1
+
+##
+# Start the container
+##
+
+sudo docker run -d --net="host" venicegeodev/container_ingest > $TMP6999 2>&1
