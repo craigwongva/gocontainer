@@ -4,28 +4,28 @@ export TMP=/tmp/userdata-grails-green-
 # Install Java
 ##
 
-sudo yum install java-1.7.0-openjdk-devel -y                > $TMP1000 2>&1
-export JAVA_HOME=/usr/lib/jvm/java                          > $TMP1100 2>&1
+sudo yum install java-1.7.0-openjdk-devel -y                > $TMP-1000 2>&1
+export JAVA_HOME=/usr/lib/jvm/java                          > $TMP-1100 2>&1
 
 ##
 # Install Grails
 ##
 
-cd /home/ec2-user                                           > $TMP1200 2>&1
-wget http://get.sdkman.io -O installsdkman                  > $TMP1300 2>&1
-chmod 440 installsdkman                                     > $TMP1400 2>&1
-/bin/bash installsdkman                                     > $TMP1500 2>&1 
-sed -i -e 's/sdkman_auto_answer=false/sdkman_auto_answer=true/' /home/ec2-user/.sdkman/etc/config > $TMP1600 2>&1
-chmod 744 /home/ec2-user/.sdkman/bin/sdkman-init.sh         > $TMP1700 2>&1
-. .sdkman/bin/sdkman-init.sh                                > $TMP1800 2>&1
-sdk install grails 2.4.0                                    > $TMP1900 2>&1 
+cd /home/ec2-user                                           > $TMP-1200 2>&1
+wget http://get.sdkman.io -O installsdkman                  > $TMP-1300 2>&1
+chmod 440 installsdkman                                     > $TMP-1400 2>&1
+/bin/bash installsdkman                                     > $TMP-1500 2>&1 
+sed -i -e 's/sdkman_auto_answer=false/sdkman_auto_answer=true/' /home/ec2-user/.sdkman/etc/config > $TMP-1600 2>&1
+chmod 744 /home/ec2-user/.sdkman/bin/sdkman-init.sh         > $TMP-1700 2>&1
+. .sdkman/bin/sdkman-init.sh                                > $TMP-1800 2>&1
+sdk install grails 2.4.0                                    > $TMP-1900 2>&1 
 
 ##
 # Run the Grails app
 ##
 
-cd .sdkman/candidates/grails/2.4.0                          > $TMP2000 2>&1
-sudo yum install git -y                                     > $TMP2100 2>&1
-git clone https://github.com/craigwongva/green              > $TMP2200 2>&1
-cd green                                                    > $TMP2300 2>&1
-grails -Dserver.port=8078 run-app &                         > $TMP2400 2>&1
+cd .sdkman/candidates/grails/2.4.0                          > $TMP-2000 2>&1
+sudo yum install git -y                                     > $TMP-2100 2>&1
+git clone https://github.com/craigwongva/green              > $TMP-2200 2>&1
+cd green                                                    > $TMP-2300 2>&1
+grails -Dserver.port=8078 run-app &                         > $TMP-2400 2>&1
