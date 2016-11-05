@@ -36,7 +36,7 @@ mvn clean install                                           > $TMP-5150 2>&1
 ####
 
 cd /home/ec2-user                                           > $TMP-5160 2>&1
-git clone https://github.com/venicegeo/pz-ingest            > $TMP-5170 2>&1
+git clone https://github.com/craigwongva/pz-ingest            > $TMP-5170 2>&1
 cd pz-ingest                                                > $TMP-5180 2>&1
 mvn clean install                                           > $TMP-5190 2>&1
 
