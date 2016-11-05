@@ -1,39 +1,36 @@
-sudo yum install git -y > /tmp/userdata-access-5000 2>&1
+export TMP=/tmp/userdata-access
+
+sudo yum install git -y                                     > $TMP-5000 2>&1
 
 ####
-## Install Maven
+## Use Maven
 ####
-#cd /home/ec2-user > /tmp/userdata-access-5010 2>&1
-#wget http://mirror.olnevhost.net/pub/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz > /tmp/userdata-access-5020 2>&1
-#tar xvf apache-maven-3.0.5-bin.tar.gz > /tmp/userdata-access-5030 2>&1
-#sudo mv apache-maven-3.0.5 /usr/local/apache-maven > /tmp/userdata-access-5040 2>&1
-export M2_HOME=/usr/local/apache-maven > /tmp/userdata-access-5050 2>&1
-export M2=$M2_HOME/bin  > /tmp/userdata-access-5060 2>&1
-export PATH=$M2:$PATH > /tmp/userdata-access-5070 2>&1
+#
+export M2_HOME=/usr/local/apache-maven                      > $TMP-5050 2>&1
+export M2=$M2_HOME/bin                                      > $TMP-5060 2>&1
+export PATH=$M2:$PATH                                       > $TMP-5070 2>&1
 
 #### 
 ## Build pz-jobcommon
 ####
-cd /home/ec2-user > /tmp/userdata-access-5100 2>&1
-sudo yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-access-5110 2>&1
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/userdata-access-5120 2>&1 
-git clone https://github.com/craigwongva/pz-jobcommon > /tmp/userdata-access-5130 2>&1
-cd pz-jobcommon > /tmp/userdata-access-5140 2>&1
-mvn clean install > /tmp/userdata-access-5150 2>&1
+cd /home/ec2-user                                           > $TMP-5100 2>&1
+sudo yum install java-1.8.0-openjdk-devel -y                > $TMP-5110 2>&1
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk            > $TMP-5120 2>&1 
+git clone https://github.com/craigwongva/pz-jobcommon       > $TMP-5130 2>&1
+cd pz-jobcommon > $TMP-5140 2>&1
+mvn clean install                                           > $TMP-5150 2>&1
 
 ####
 ## Build pz-access
 ####
-cd /home/ec2-user > /tmp/userdata-access-5160 2>&1
-git clone https://github.com/venicegeo/pz-access > /tmp/userdata-access-5170 2>&1
-cd pz-access > /tmp/userdata-access-5180 2>&1
-mvn clean install > /tmp/userdata-access-5190 2>&1
+cd /home/ec2-user > $TMP-5160 2>&1
+git clone https://github.com/craigwongva/pz-access          > $TMP-5170 2>&1
+cd pz-access                                                > $TMP-5180 2>&1
+mvn clean install                                           > $TMP-5190 2>&1
 
 ####
-## Run pz-access & 
+## POPULATE THE NEXUS REPO
 ####
-cd /home/ec2-user/pz-access > /tmp/userdata-access-5300 2>&1
-#$JAVA_HOME/bin/java -jar piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar & > /tmp/userdata-access-5400 2>&1
 
-#POPULATE THE NEXUS REPO
-curl --user 'admin:admin123' --upload-file target/piazza-access-1.0.0.jar http://localhost:8079/repository/myrawrepo/piazza-access-1.0.0-NEXUSSED.jar > /tmp/userdata-access-5999 2>&1
+cd /home/ec2-user/pz-access                                 > $TMP-5300 2>&1
+curl --user 'admin:admin123' --upload-file target/piazza-access-1.0.0.jar http://localhost:8079/repository/myrawrepo/piazza-access-1.0.0-NEXUSSED.jar > $TMP-5999 2>&1
