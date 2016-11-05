@@ -1,4 +1,4 @@
-export TMP=/tmp/userdata-nexus-ingest-
+export TMP=/tmp/userdata-nexus-ingest
 
 # Assume Docker is already installed
 

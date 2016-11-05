@@ -1,4 +1,4 @@
-export TMP=/tmp/userdata-grails-green-
+export TMP=/tmp/userdata-grails-green
 
 ##
 # Install Java
