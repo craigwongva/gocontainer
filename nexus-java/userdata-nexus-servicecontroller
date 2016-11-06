@@ -1,19 +1,17 @@
-sudo yum install docker -y > /tmp/userdata-nexus-servicecontroller-4100 2>&1
-sudo service docker start > /tmp/userdata-nexus-servicecontroller-4200 2>&1
-#The following is necessary if working interactively as ec2-user:
-# sudo usermod -a -G docker ec2-user
+export TMP=/tmp/userdata-nexus-servicecontroller
 
-cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-nexus-servicecontroller-4300 2>&1
-#sudo cp Dockerfile-first_webapp Dockerfile #this starts 8080 for test purposes but isn't central to docker+nexus issue
+sudo yum install docker -y                                  &> $TMP-4100
+sudo service docker start                                   &> $TMP-4200
+
+cd /home/ec2-user/gocontainer/nexus-java                    &> $TMP-4300
 
 sed -i -e '/CMD/d' Dockerfile-nexus-servicecontroller
 echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Duuid.protocol=http\", \"-Duuid.port=`cat pz-uuidgen-port-number`\", \"-Dlogger.protocol=http\", \"-Dlogger.port=`cat pz-logger-port-number`\", \"-jar\", \"piazzaServiceController-1.0.0.BUILD-SNAPSHOT-NEXUSSED.jar\"] >> Dockerfile-nexus-servicecontroller
-sudo cp Dockerfile-nexus-servicecontroller Dockerfile > /tmp/userdata-nexus-servicecontroller-4400 2>&1
+sudo cp Dockerfile-nexus-servicecontroller Dockerfile       &> $TMP-4400
 
-sudo docker build --no-cache=true --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_servicecontroller . > /tmp/userdata-nexus-servicecontroller-4500 2>&1
-#sudo docker login --username venicegeodev --password demo1024 > /tmp/userdata-nexus-servicecontroller-4510 2>&1
-#sudo docker push venicegeodev/container_servicecontroller > /tmp/userdata-nexus-servicecontroller-4520 2>&1
-#sudo docker pull venicegeodev/container_servicecontroller> /tmp/userdata-nexus-servicecontroller-4530 2>&1
+sudo docker build --no-cache=true --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_servicecontroller . &> $TMP-4500
+#sudo docker login --username venicegeodev --password demo1024 &> $TMP-4510
+#sudo docker push venicegeodev/container_servicecontroller &> $TMP-4520
+#sudo docker pull venicegeodev/container_servicecontroller&> $TMP-4530
 
-#sudo docker run -d -p 8088:8088 --add-host="jobdb.dev:$1" --add-host="kafka.dev:$1" venicegeodev/container_servicecontroller > /tmp/userdata-nexus-servicecontroller-4999 2>&1
-sudo docker run -d --net="host" venicegeodev/container_servicecontroller > /tmp/userdata-nexus-servicecontroller-4999 2>&1
+sudo docker run -d --net="host" venicegeodev/container_servicecontroller &> $TMP-4999

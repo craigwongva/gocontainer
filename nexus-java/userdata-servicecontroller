@@ -1,41 +1,39 @@
-sudo yum install git -y > /tmp/userdata-servicecontroller-3000 2>&1
+export TMP=/tmp/userdata-servicecontroller
+
+sudo yum install git -y                                     &> $TMP-3000
 
 ####
 ## Install Maven
 ####
-cd /home/ec2-user > /tmp/userdata-servicecontroller-3010 2>&1
-wget http://mirror.olnevhost.net/pub/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz > /tmp/userdata-servicecontroller-3020 2>&1
-tar xvf apache-maven-3.0.5-bin.tar.gz > /tmp/userdata-servicecontroller-3030 2>&1
-sudo mv apache-maven-3.0.5 /usr/local/apache-maven > /tmp/userdata-servicecontroller-3040 2>&1
-export M2_HOME=/usr/local/apache-maven > /tmp/userdata-servicecontroller-3050 2>&1
-export M2=$M2_HOME/bin  > /tmp/userdata-servicecontroller-3060 2>&1
-export PATH=$M2:$PATH > /tmp/userdata-servicecontroller-3070 2>&1
+cd /home/ec2-user                                           &> $TMP-3010
+wget http://mirror.olnevhost.net/pub/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz &> $TMP-3020
+tar xvf apache-maven-3.0.5-bin.tar.gz                       &> $TMP-3030
+sudo mv apache-maven-3.0.5 /usr/local/apache-maven          &> $TMP-3040
+export M2_HOME=/usr/local/apache-maven                      &> $TMP-3050
+export M2=$M2_HOME/bin                                      &> $TMP-3060
+export PATH=$M2:$PATH                                       &> $TMP-3070
 
 #### 
 ## Build pz-jobcommon
 ####
-cd /home/ec2-user > /tmp/userdata-servicecontroller-3100 2>&1
-sudo yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-servicecontroller-3110 2>&1
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk > /tmp/userdata-servicecontroller-3120 2>&1 
-git clone https://github.com/venicegeo/pz-jobcommon > /tmp/userdata-servicecontroller-3130 2>&1
-cd pz-jobcommon > /tmp/userdata-servicecontroller-3140 2>&1
-mvn clean install > /tmp/userdata-servicecontroller-3150 2>&1
+cd /home/ec2-user                                           &> $TMP-3100
+sudo yum install java-1.8.0-openjdk-devel -y                &> $TMP-3110
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk            &> $TMP-3120 
+git clone https://github.com/venicegeo/pz-jobcommon         &> $TMP-3130
+cd pz-jobcommon                                             &> $TMP-3140
+mvn clean install                                           &> $TMP-3150
 
 ####
 ## Build pz-servicecontroller
 ####
-cd /home/ec2-user > /tmp/userdata-servicecontroller-3160 2>&1
-#git clone https://github.com/venicegeo/pz-servicecontroller > /tmp/userdata-servicecontroller-3170 2>&1
-git clone https://github.com/craigwongva/pz-servicecontroller > /tmp/userdata-servicecontroller-3170 2>&1
-cd pz-servicecontroller/mainServiceController > /tmp/userdata-servicecontroller-3180 2>&1
-mvn clean install > /tmp/userdata-servicecontroller-3190 2>&1
-cp target/piazzaServiceController-1.0.0.jar conf > /tmp/userdata-servicecontroller-3200 2>&1
+cd /home/ec2-user                                           &> $TMP-3160
+git clone https://github.com/craigwongva/pz-servicecontroller &> $TMP-3170
+cd pz-servicecontroller/mainServiceController               &> $TMP-3180
+mvn clean install                                           &> $TMP-3190
+cp target/piazzaServiceController-1.0.0.jar conf            &> $TMP-3200
 
 ####
-## Run pz-servicecontroller & 
+## Populate the Nexus repo
 ####
-cd /home/ec2-user/pz-servicecontroller/mainServiceController/conf > /tmp/userdata-servicecontroller-3300 2>&1
-#$JAVA_HOME/bin/java -jar piazzaServiceController-1.0.0.BUILD-SNAPSHOT.jar & > /tmp/userdata-servicecontroller-3400 2>&1
-
-#POPULATE THE NEXUS REPO
-curl --user 'admin:admin123' --upload-file piazzaServiceController-1.0.0.jar http://localhost:8079/repository/myrawrepo/piazzaServiceController-1.0.0.BUILD-SNAPSHOT-NEXUSSED.jar > /tmp/userdata-servicecontroller-3999 2>&1
+cd /home/ec2-user/pz-servicecontroller/mainServiceController/conf &> $TMP-3300
+curl --user 'admin:admin123' --upload-file piazzaServiceController-1.0.0.jar http://localhost:8079/repository/myrawrepo/piazzaServiceController-1.0.0.BUILD-SNAPSHOT-NEXUSSED.jar &> $TMP-3999
