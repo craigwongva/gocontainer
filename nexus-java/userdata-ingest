@@ -1,49 +1,49 @@
 export TMP=/tmp/userdata-ingest
 
-sudo yum install git -y                                     > $TMP-5000 2>&1
+sudo yum install git -y                                     &> $TMP-5000
 
 ####
 ## Install Maven
 ## Commented out because earlier Pz services use Maven.
 ####
 
-#cd /home/ec2-user > $TMP-5010 2>&1
-#wget http://mirror.olnevhost.net/pub/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz > $TMP-5020 2>&1
-#tar xvf apache-maven-3.0.5-bin.tar.gz > $TMP-5030 2>&1
-#sudo mv apache-maven-3.0.5 /usr/local/apache-maven > $TMP-5040 2>&1
+#cd /home/ec2-user &> $TMP-5010
+#wget http://mirror.olnevhost.net/pub/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz &> $TMP-5020
+#tar xvf apache-maven-3.0.5-bin.tar.gz &> $TMP-5030
+#sudo mv apache-maven-3.0.5 /usr/local/apache-maven &> $TMP-5040
 
 ####
 ## Use Maven
 ####
 
-export M2_HOME=/usr/local/apache-maven                      > $TMP-5050 2>&1
-export M2=$M2_HOME/bin                                      > $TMP-5060 2>&1
-export PATH=$M2:$PATH                                       > $TMP-5070 2>&1
+export M2_HOME=/usr/local/apache-maven                      &> $TMP-5050
+export M2=$M2_HOME/bin                                      &> $TMP-5060
+export PATH=$M2:$PATH                                       &> $TMP-5070
 
 #### 
 ## Build pz-jobcommon
 ####
 
-cd /home/ec2-user                                           > $TMP-5100 2>&1
-sudo yum install java-1.8.0-openjdk-devel -y                > $TMP-5110 2>&1
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk            > $TMP-5120 2>&1 
-git clone https://github.com/craigwongva/pz-jobcommon       > $TMP-5130 2>&1
-cd pz-jobcommon                                             > $TMP-5140 2>&1
-mvn clean install                                           > $TMP-5150 2>&1
+cd /home/ec2-user                                           &> $TMP-5100
+sudo yum install java-1.8.0-openjdk-devel -y                &> $TMP-5110
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk            &> $TMP-5120 
+git clone https://github.com/craigwongva/pz-jobcommon       &> $TMP-5130
+cd pz-jobcommon                                             &> $TMP-5140
+mvn clean install                                           &> $TMP-5150
 
 ####
 ## Build pz-ingest
 ####
 
-cd /home/ec2-user                                           > $TMP-5160 2>&1
-git clone https://github.com/craigwongva/pz-ingest            > $TMP-5170 2>&1
-cd pz-ingest                                                > $TMP-5180 2>&1
-mvn clean install                                           > $TMP-5190 2>&1
+cd /home/ec2-user                                           &> $TMP-5160
+git clone https://github.com/craigwongva/pz-ingest          &> $TMP-5170
+cd pz-ingest                                                &> $TMP-5180
+mvn clean install                                           &> $TMP-5190
 
 
 ####
 ## Populate the Nexus repo
 ####
 
-cd /home/ec2-user/pz-ingest                                 > $TMP-5300 2>&1
-curl --user 'admin:admin123' --upload-file target/piazza-ingest-1.0.0.jar http://localhost:8079/repository/myrawrepo/piazza-ingest-1.0.0-NEXUSSED.jar > $TMP-5999 2>&1
+cd /home/ec2-user/pz-ingest                                 &> $TMP-5300
+curl --user 'admin:admin123' --upload-file target/piazza-ingest-1.0.0.jar http://localhost:8079/repository/myrawrepo/piazza-ingest-1.0.0-NEXUSSED.jar &> $TMP-5999
