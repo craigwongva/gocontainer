@@ -6,7 +6,8 @@ sed -i -e '/CMD/d' Dockerfile-nexus-jobmanager
 echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Duuid.protocol=http\", \"-Duuid.port=`cat pz-uuidgen-port-number`\", \"-Dlogger.protocol=http\", \"-Dlogger.port=`cat pz-logger-port-number`\", \"-jar\", \"piazza-jobmanager-1.0.0-NEXUSSED.jar\"] >> Dockerfile-nexus-jobmanager
 sudo cp Dockerfile-nexus-jobmanager Dockerfile              &> $TMP-6400
 
-sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_jobmanager . &> $TMP-6500
+export NEXUS=`curl http://169.254.169.254/latest/meta-data/public-ipv4`
+sudo docker build --build-arg WHEREISNEXUS=$NEXUS -t venicegeodev/container_jobmanager . &> $TMP-6500
 #sudo docker login --username venicegeodev --password demo1024 &> $TMP-6510
 #sudo docker push venicegeodev/container_jobmanager &> $TMP-6520
 #sudo docker pull venicegeodev/container_jobmanager &> $TMP-6530

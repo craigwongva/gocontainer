@@ -7,7 +7,8 @@ sed -i -e '/CMD/d' Dockerfile-nexus-gateway
 echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Duuid.protocol=http\", \"-Duuid.port=`cat pz-uuidgen-port-number`\", \"-Dlogger.protocol=http\", \"-Dlogger.port=`cat pz-logger-port-number`\", \"-jar\", \"piazza-gateway-1.0.0-NEXUSSED.jar\"] >> Dockerfile-nexus-gateway
 
 sudo cp Dockerfile-nexus-gateway Dockerfile                 &> $TMP-8400
-sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_gateway . &> $TMP-8500
+export NEXUS=`curl http://169.254.169.254/latest/meta-data/public-ipv4`
+sudo docker build --build-arg WHEREISNEXUS=$NEXUS -t venicegeodev/container_gateway . &> $TMP-8500
 #sudo docker login --username venicegeodev --password demo1024 &> $TMP-8510
 #sudo docker push venicegeodev/container_gateway &> $TMP-8520
 #sudo docker pull venicegeodev/container_gateway &> $TMP-8530
