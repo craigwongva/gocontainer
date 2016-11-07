@@ -5,8 +5,7 @@ cd /home/ec2-user/gocontainer/nexus-java                    &> $TMP-6300
 sed -i -e '/CMD/d' Dockerfile-nexus-access
 echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Duuid.protocol=http\", \"-Duuid.port=`cat pz-uuidgen-port-number`\", \"-Dlogger.protocol=http\", \"-Dlogger.port=`cat pz-logger-port-number`\", \"-jar\", \"piazza-access-1.0.0-NEXUSSED.jar\"] >> Dockerfile-nexus-access
 sudo cp Dockerfile-nexus-access Dockerfile                 &> $TMP-6400
-export NEXUS=`curl http://169.254.169.254/latest/meta-data/public-ipv4`
-sudo docker build --build-arg WHEREISNEXUS=$NEXUS -t venicegeodev/container_access . &> $TMP-6500
+sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_access . &> $TMP-6500
 
 ####
 ## Commented out because dockerhub isn't being used right now.

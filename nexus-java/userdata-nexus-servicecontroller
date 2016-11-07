@@ -9,8 +9,7 @@ sed -i -e '/CMD/d' Dockerfile-nexus-servicecontroller
 echo CMD [\"/usr/lib/jvm/java-1.8.0-openjdk/bin/java\", \"-Duuid.protocol=http\", \"-Duuid.port=`cat pz-uuidgen-port-number`\", \"-Dlogger.protocol=http\", \"-Dlogger.port=`cat pz-logger-port-number`\", \"-jar\", \"piazzaServiceController-1.0.0.BUILD-SNAPSHOT-NEXUSSED.jar\"] >> Dockerfile-nexus-servicecontroller
 sudo cp Dockerfile-nexus-servicecontroller Dockerfile       &> $TMP-4400
 
-export NEXUS=`curl http://169.254.169.254/latest/meta-data/public-ipv4`
-sudo docker build --no-cache=true --build-arg WHEREISNEXUS=$NEXUS -t venicegeodev/container_servicecontroller . &> $TMP-4500
+sudo docker build --no-cache=true --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_servicecontroller . &> $TMP-4500
 #sudo docker login --username venicegeodev --password demo1024 &> $TMP-4510
 #sudo docker push venicegeodev/container_servicecontroller &> $TMP-4520
 #sudo docker pull venicegeodev/container_servicecontroller&> $TMP-4530
