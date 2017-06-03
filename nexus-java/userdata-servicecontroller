@@ -27,7 +27,8 @@ mvn clean install                                           &> $TMP-3150
 ## Build pz-servicecontroller
 ####
 cd /home/ec2-user                                           &> $TMP-3160
-git clone https://github.com/venicegeo/pz-servicecontroller &> $TMP-3170
+git clone https://github.com/craigwongva/pz-servicecontroller-2 &> $TMP-3170
+mv pz-servicecontroller-2 pz-servicecontroller              &> $TMP-3174
 cd pz-servicecontroller               &> $TMP-3180
 mvn clean install                                           &> $TMP-3190
 cp target/piazzaServiceController-1.0.0.jar conf            &> $TMP-3200
