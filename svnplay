@@ -1,0 +1,9 @@
+# invocation:
+#  ansible-playbook svnplay -i inventory --private-key ~/oregonansiblegeneric.pem --sudo
+---
+- hosts: greekserver
+  tasks:
+  - name: install svn
+    yum: name=svn state=present
+  - name: ensure jdk
+    yum: name=java-1.7.0-openjdk-devel state=present

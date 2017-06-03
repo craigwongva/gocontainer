@@ -16,7 +16,7 @@ export PATH=$M2:$PATH                                       &> $TMP-7070
 cd /home/ec2-user                                           &> $TMP-7100
 sudo yum install java-1.8.0-openjdk-devel -y                &> $TMP-7110
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk            &> $TMP-7120 
-git clone https://github.com/craigwongva/pz-jobcommon       &> $TMP-7130
+git clone https://github.com/venicegeo/pz-jobcommon         &> $TMP-7130
 cd pz-jobcommon                                             &> $TMP-7140
 mvn clean install                                           &> $TMP-7150
 

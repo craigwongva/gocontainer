@@ -19,7 +19,7 @@ export PATH=$M2:$PATH                                       &> $TMP-3070
 cd /home/ec2-user                                           &> $TMP-3100
 sudo yum install java-1.8.0-openjdk-devel -y                &> $TMP-3110
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk            &> $TMP-3120 
-git clone https://github.com/craigwongva/pz-jobcommon       &> $TMP-3130
+git clone https://github.com/venicegeo/pz-jobcommon         &> $TMP-3130
 cd pz-jobcommon                                             &> $TMP-3140
 mvn clean install                                           &> $TMP-3150
 
@@ -27,14 +27,13 @@ mvn clean install                                           &> $TMP-3150
 ## Build pz-servicecontroller
 ####
 cd /home/ec2-user                                           &> $TMP-3160
-git clone https://github.com/craigwongva/pz-servicecontroller-2 &> $TMP-3170
-mv pz-servicecontroller-2 pz-servicecontroller
-cd pz-servicecontroller                                     &> $TMP-3180
+git clone https://github.com/craigwongva/pz-servicecontroller &> $TMP-3170
+cd pz-servicecontroller/mainServiceController               &> $TMP-3180
 mvn clean install                                           &> $TMP-3190
 cp target/piazzaServiceController-1.0.0.jar conf            &> $TMP-3200
 
 ####
 ## Populate the Nexus repo
 ####
-cd /home/ec2-user/pz-servicecontroller/conf &> $TMP-3300
+cd /home/ec2-user/pz-servicecontroller/mainServiceController/conf &> $TMP-3300
 curl --user 'admin:admin123' --upload-file piazzaServiceController-1.0.0.jar http://localhost:8079/repository/myrawrepo/piazzaServiceController-1.0.0.BUILD-SNAPSHOT-NEXUSSED.jar &> $TMP-3999

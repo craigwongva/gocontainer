@@ -1,0 +1,31 @@
+yum install git -y
+
+wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz
+tar -xzf go1.4.2.linux-amd64.tar.gz -C /usr/local
+export GOROOT=/usr/local/go
+export GOPATH=/
+export PATH=$PATH:$GOROOT/bin
+
+git clone https://github.com/sausheong/gwp
+
+mkdir /src
+mkdir /src/first_webapp
+cp gwp/Chapter_1_Go_And_Web_Applications/first_webapp/server.go src/first_webapp/
+
+cd /
+
+go install first_webapp
+
+#Assumes :8080 is open.
+#/bin/first_webapp &
+
+cd /
+git clone https://github.com/venicegeo/pzsvc-hello.git
+mkdir /src/pzhello
+cp pzsvc-hello/main.go src/pzhello
+go get github.com/venicegeo/pz-gocommon/gocommon
+go get github.com/gin-gonic/gin
+go install pzhello
+#/bin/pzhello
+
+

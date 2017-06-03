@@ -1,0 +1,21 @@
+yum install git -y
+
+wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz
+tar -xzf go1.4.2.linux-amd64.tar.gz -C /usr/local
+export GOROOT=/usr/local/go
+export GOPATH=/
+export PATH=$PATH:$GOROOT/bin
+
+git clone https://github.com/sausheong/gwp
+
+mkdir /src
+mkdir /src/first_webapp
+cp gwp/Chapter_1_Go_And_Web_Applications/first_webapp/server.go src/first_webapp/
+
+cd /
+
+go install first_webapp
+
+/bin/first_webapp &
+
+#Assumes :8080 is open.
