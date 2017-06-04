@@ -1,0 +1,12 @@
+sudo docker pull venicegeodev/container_servicecontroller
+sudo docker pull venicegeodev/container_jobmanager
+sudo docker pull venicegeodev/container_gateway
+sudo docker pull venicegeodev/container_access
+sudo docker pull venicegeodev/container_ingest
+
+sudo docker run -d --net="host" venicegeodev/container_servicecontroller
+sudo docker run -d --net="host" venicegeodev/container_jobmanager
+sudo docker run -d --net="host" venicegeodev/container_gateway
+sudo docker run -d --net="host" venicegeodev/container_access
+sudo docker run -d --net="host" venicegeodev/container_ingest
+
