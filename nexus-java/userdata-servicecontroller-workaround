@@ -1,0 +1,8 @@
+export TMP=/tmp/userdata-servicecontroller
+
+####
+## Populate the Nexus repo
+####
+cd /home/ec2-user &> $TMP-3300
+aws s3 cp s3://venicegeo-devops-dev-gocontainer-project/piazzaServiceController-1.0.0.jar . &> $TMP-3305
+curl --user 'admin:admin123' --upload-file piazzaServiceController-1.0.0.jar http://localhost:8079/repository/myrawrepo/piazzaServiceController-1.0.0.BUILD-SNAPSHOT-NEXUSSED.jar &> $TMP-3999
