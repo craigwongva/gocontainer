@@ -1,5 +1,28 @@
 export TMP=/tmp/userdata-servicecontroller
 
+sudo yum install git -y                                     &> $TMP-3000
+
+####
+## Install Maven
+####
+cd /home/ec2-user                                           &> $TMP-3010
+wget http://mirror.olnevhost.net/pub/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz &> $TMP-3020
+tar xvf apache-maven-3.0.5-bin.tar.gz                       &> $TMP-3030
+sudo mv apache-maven-3.0.5 /usr/local/apache-maven          &> $TMP-3040
+export M2_HOME=/usr/local/apache-maven                      &> $TMP-3050
+export M2=$M2_HOME/bin                                      &> $TMP-3060
+export PATH=$M2:$PATH                                       &> $TMP-3070
+
+####
+## Build pz-jobcommon
+####
+cd /home/ec2-user                                           &> $TMP-3100
+sudo yum install java-1.8.0-openjdk-devel -y                &> $TMP-3110
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk            &> $TMP-3120
+git clone https://github.com/venicegeo/pz-jobcommon         &> $TMP-3130
+cd pz-jobcommon                                             &> $TMP-3140
+mvn clean install                                           &> $TMP-3150
+
 ####
 ## Populate the Nexus repo
 ####
