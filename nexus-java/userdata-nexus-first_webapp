@@ -10,7 +10,7 @@ sudo docker build --build-arg WHEREISNEXUS=$1 -t venicegeodev/container_first_we
 sudo docker login --username venicegeodev --password demo1024 > /tmp/userdata-next-first-webapp-1510 2>&1
 sudo docker push venicegeodev/container_first_webapp > /tmp/userdata-next-first-webapp-1520 2>&1
 sudo docker pull venicegeodev/container_first_webapp > /tmp/userdata-next-first-webapp-1530 2>&1
-sudo docker run -d -p 8080:8080 venicegeodev/container_first_webapp > /tmp/userdata-next-first-webapp-9999 2>&1
+sudo docker run -d -p 7080:7080 venicegeodev/container_first_webapp > /tmp/userdata-next-first-webapp-9999 2>&1
 
 
 
