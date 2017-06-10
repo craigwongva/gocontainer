@@ -14,13 +14,17 @@
  "nexuspassword" : {
   "Type" : "String",
   "NoEcho" : "true"
+ },
+ "tomcatmgrpassword" : {
+  "Type" : "String",
+  "NoEcho" : "true"
  }
 },
 "Metadata" : {
   "AWS::CloudFormation::Interface" : {
     "ParameterGroups" : [
       {
-        "Label" : { "default" : "Nexus crednetials" },
+        "Label" : { "default" : "Nexus credentials" },
         "Parameters" : [ "nexususername", "nexuspassword" ]
       }]}},
 "Resources": {
