@@ -154,7 +154,7 @@
 "#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-access `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u11 2>&1'\n",
 "#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-ingest `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u12 2>&1'\n",
 "#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-ingest `curl http://169.254.169.254/latest/meta-data/public-ipv4` `cat pz-logger-port-number` > /tmp/u13 2>&1'\n",
-"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-grails-green > /tmp/u14 2>&1'\n",
+"sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-grails-green ", {"Ref" : "tomcatmgrpassword"}, "'\n",
 "#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-pz-services > /tmp/u15 2>&1'\n"
      ]
     ]}}
