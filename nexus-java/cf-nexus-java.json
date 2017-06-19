@@ -28,87 +28,6 @@
         "Parameters" : [ "nexususername", "nexuspassword" ]
       }]}},
 "Resources": {
-  "SecurityGroup": {
-   "Type": "AWS::EC2::SecurityGroup",
-   "Properties": {
-    "GroupDescription": "craiggo security group",
-    "VpcId": "vpc-4e33072b",
-    "SecurityGroupIngress": [
-    {
-     "CidrIp": "0.0.0.0/0",
-     "FromPort": 22,
-     "IpProtocol": "tcp",
-     "ToPort": 22
-    },
-    {
-     "CidrIp": "0.0.0.0/0",
-     "FromPort": 7080,
-     "IpProtocol": "tcp",
-     "ToPort": 7080
-    },
-    {
-     "CidrIp": "0.0.0.0/0",
-     "FromPort": 8078,
-     "IpProtocol": "tcp",
-     "ToPort": 8078
-    },
-    {
-     "CidrIp": "0.0.0.0/0",
-     "FromPort": 8079,
-     "IpProtocol": "tcp",
-     "ToPort": 8079
-    },
-    {
-     "CidrIp": "173.242.16.106/0",
-     "FromPort": 8080,
-     "IpProtocol": "tcp",
-     "ToPort": 8080
-    },
-    {
-     "CidrIp": "0.0.0.0/0",
-     "FromPort": 8081,
-     "IpProtocol": "tcp",
-     "ToPort": 8081
-    },
-    {
-     "CidrIp": "0.0.0.0/0",
-     "FromPort": 8083,
-     "IpProtocol": "tcp",
-     "ToPort": 8083
-    },
-    {
-     "CidrIp": "0.0.0.0/0",
-     "FromPort": 8084,
-     "IpProtocol": "tcp",
-     "ToPort": 8084
-    },
-    {
-     "CidrIp": "0.0.0.0/0",
-     "FromPort": 8085,
-     "IpProtocol": "tcp",
-     "ToPort": 8085
-    },
-    {
-     "CidrIp": "0.0.0.0/0",
-     "FromPort": 8088,
-     "IpProtocol": "tcp",
-     "ToPort": 8088
-    },
-    {
-     "CidrIp": "0.0.0.0/0",
-     "FromPort": 9092,
-     "IpProtocol": "tcp",
-     "ToPort": 9092
-    },
-    {
-     "CidrIp": "0.0.0.0/0",
-     "FromPort": 27017,
-     "IpProtocol": "tcp",
-     "ToPort": 27017
-    }
-    ]
-   }
-  },
   "Server": {
    "Type": "AWS::EC2::Instance",
    "Properties": {
@@ -126,9 +45,9 @@
     },
     "InstanceType": "m4.xlarge",
     "KeyName":  "craigradiantblueoregon" ,
-    "SecurityGroupIds": [{
-     "Ref": "SecurityGroup"
-    }],
+    "SecurityGroupIds": [
+     "sg-bd756cc6"
+    ],
     "IamInstanceProfile": "craigtest",
     "BlockDeviceMappings" : [{
       "DeviceName" : "/dev/xvda",
