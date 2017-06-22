@@ -12,13 +12,21 @@ export JAVA_HOME=/usr/lib/jvm/java                          > $TMP-1100 2>&1
 ##
 
 cd /home/ec2-user                                           > $TMP-1200 2>&1
-wget http://get.sdkman.io -O installsdkman                  > $TMP-1300 2>&1
-chmod 440 installsdkman                                     > $TMP-1400 2>&1
-/bin/bash installsdkman                                     > $TMP-1500 2>&1 
-sed -i -e 's/sdkman_auto_answer=false/sdkman_auto_answer=true/' /home/ec2-user/.sdkman/etc/config > $TMP-1600 2>&1
-chmod 744 /home/ec2-user/.sdkman/bin/sdkman-init.sh         > $TMP-1700 2>&1
+#Remove the following five lines cuz
+# sometimes bin/sdkman-init.sh doesn't appear after installsdkman,
+# so cp from S3 instead:
+#wget http://get.sdkman.io -O installsdkman                  > $TMP-1300 2>&1
+#chmod 440 installsdkman                                     > $TMP-1400 2>&1
+#/bin/bash installsdkman                                     > $TMP-1500 2>&1 
+#sed -i -e 's/sdkman_auto_answer=false/sdkman_auto_answer=true/' /home/ec2-user/.sdkman/etc/config > $TMP-1600 2>&1
+#chmod 744 /home/ec2-user/.sdkman/bin/sdkman-init.sh         > $TMP-1700 2>&1
+aws s3 cp s3://venicegeo-devops-dev-gocontainer-project/dotsdkman-grails.zip . > $TMP-1210 2>&1
+unzip dotsdkman-grails.zip                                  > $TMP-1220 2>&1
 . .sdkman/bin/sdkman-init.sh                                > $TMP-1800 2>&1
 sdk install grails 2.4.0                                    > $TMP-1900 2>&1 
+
+
+
 
 ##
 # Run the Grails app
@@ -55,3 +63,8 @@ sudo service tomcat7 start                                  &> $TMP-2450 2>&1
 cd ~/.sdkman/candidates/grails/2.4.0/green                    &> $TMP-2650 2>&1
 mvn -DskipTests install                                       &> $TMP-2700 2>&1
 sudo cp target/green-1.0-SNAPSHOT.war /usr/share/tomcat7/webapps/green.war &> $TMP-2800 2>&1
+
+##
+# Enable war on this instance to access this instance's services
+##
+aws ec2 authorize-security-group-ingress --region us-west-2 --group-name GreenDots --protocol tcp --port 0-27017 --cidr `curl 169.254.169.254/latest/meta-data/public-ipv4`/32
