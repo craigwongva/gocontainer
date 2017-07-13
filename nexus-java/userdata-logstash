@@ -11,7 +11,7 @@ sudo yum -y install logstash > $TMPOUT-1160 2>&1
 sudo sed -i '227iAT_LINE_227_INSERT_THIS_INSTANCES_PRIVATE_IP' /etc/pki/tls/openssl.cnf | sudo sed -i "s/AT_LINE_227_INSERT_THIS_INSTANCES_PRIVATE_IP/subjectAltName = IP: `curl http://169.254.169.254/latest/meta-data/local-ipv4 2>/dev/null`/" /etc/pki/tls/openssl.cnf
 cd /etc/pki/tls > /tmp/userdata-logstash-1300 2>&1
 sudo openssl req -config /etc/pki/tls/openssl.cnf -x509 -days 3650 -batch -nodes -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt > /tmp/userdata-logstash-1400 2>&1
-aws s3 cp /etc/pki/tls/certs/logstash-forwarder.crt s3://venicegeo-devops-dev-logstashforwarder-project > /tmp/userdata-logstash-1500 2>&1
+aws s3 cp /etc/pki/tls/certs/logstash-forwarder.crt s3://venicegeo-devops-dev-root/logstashforwarder > /tmp/userdata-logstash-1500 2>&1
 
 sudo mkdir /opt/logstash/conf.d > /tmp/userdata-logstash-1700 2>&1
 cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-logstash-1600 2>&1
@@ -27,7 +27,7 @@ sudo cp /home/ec2-user/gocontainer/nexus-java/30-lumberjack-output.conf /opt/log
 ##
 
 cd /home/ec2-user > /tmp/userdata-logstash-2190 2>&1
-aws s3 cp s3://venicegeo-devops-dev-logstashforwarder-project/dotsdkman.zip /home/ec2-user > /tmp/userdata-logstash-2200 2>&1
+aws s3 cp s3://venicegeo-devops-dev-root/logstashforwarder/dotsdkman.zip /home/ec2-user > /tmp/userdata-logstash-2200 2>&1
 unzip -o dotsdkman.zip > /tmp/userdata-logstash-2300 2>&1
 
 ##
