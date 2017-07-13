@@ -24,12 +24,6 @@
      "FromPort": 22,
      "IpProtocol": "tcp",
      "ToPort": 22
-    },
-    {
-     "CidrIp": "52.21.147.39/32",
-     "FromPort": 9200,
-     "IpProtocol": "tcp",
-     "ToPort": 9200
     }
     ]
    }
