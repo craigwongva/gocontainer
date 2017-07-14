@@ -7,14 +7,14 @@ sudo yum -y install logstash-forwarder > /tmp/userdata-groovy-lf-1030 2>&1
 ## Get the Logstash host-generated certificate that allows Logstash Forwarder to talk to Logstash.
 ###
 
-aws s3 cp s3://venicegeo-devops-dev-logstashforwarder-project/logstash-forwarder.crt . > /tmp/userdata-groovy-lf-1032 2>&1
+aws s3 cp s3://venicegeo-devops-dev-root/logstashforwarder/logstash-forwarder.crt . > /tmp/userdata-groovy-lf-1032 2>&1
 sudo mv logstash-forwarder.crt /etc/pki/tls/certs > /tmp/userdata-groovy-lf-1034 2>&1
 
 ##
 ## Get the template Logstash Forwarder conf file.
 ###
 
-aws s3 cp s3://venicegeo-devops-dev-gocontainer-project/logstash-forwarder.conf .  > /tmp/userdata-groovy-lf-1100 2>&1
+aws s3 cp s3://venicegeo-devops-dev-root/logstashforwarder/logstash-forwarder.conf .  > /tmp/userdata-groovy-lf-1100 2>&1
 sudo cp logstash-forwarder.conf /etc  > /tmp/userdata-groovy-lf-1200 2>&1
 
 cd /home/ec2-user/.sdkman/bin > /tmp/userdata-groovy-lf-1600 2>&1
