@@ -4,8 +4,15 @@ node {
     def TEST_STACK_IP
 
     stage('checkout') {
-        checkout([$class: 'GitSCM', branches: [[name: '*/go']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/craigwongva/gocontainer']]])
-    }
+      checkout([
+        $class: 'GitSCM', 
+        branches: [[name: '*/go']], 
+        doGenerateSubmoduleConfigurations: false, 
+        extensions: [], 
+        submoduleCfg: [], 
+        userRemoteConfigs: [[url: 'https://github.com/craigwongva/gocontainer']]
+      ]) 
+    } 
 
 /*
     stage('buildTestInstanceWithApp') {
@@ -61,17 +68,6 @@ node {
     	  error "red rover3 ${TEST_STACK_IP}:8080/green/timer/status $mickey" 
 	}
     }
-
-    stage('checkout') {
-      checkout([
-        $class: 'GitSCM', 
-        branches: [[name: '*/master']], 
-        doGenerateSubmoduleConfigurations: false, 
-        extensions: [], 
-        submoduleCfg: [], 
-        userRemoteConfigs: [[url: 'https://github.com/craigwongva/green']]
-      ]) 
-    } 
 
     stage('rebuildApp') { 
         sh "/usr/local/apache-maven/bin/mvn clean -DskipTests install"
