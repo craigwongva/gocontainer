@@ -23,6 +23,8 @@ node {
     }
 */
     stage('waitThenInvokePhantomOnApp') {
+        sh "echo `pwd`"
+        sh "echo `ls`"
 	sh "BUILD_ID=dontKillMe ./nexus-java/invoke-phantom ${TEST_STACK_IP} &"
     }
 
