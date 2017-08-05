@@ -2,6 +2,11 @@ node {
     def mvn = tool 'M3.0.5' 
     def TEST_STACK_NAME = 'craigu01'
     def TEST_STACK_IP
+
+    stage('checkout') {
+        checkout([$class: 'GitSCM', branches: [[name: '*/go']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/craigwongva/gocontainer']]])
+    }
+
 /*
     stage('buildTestInstanceWithApp') {
       sh "aws cloudformation create-stack --stack-name ${TEST_STACK_NAME} --template-url https://s3.amazonaws.com/venicegeo-devops-dev-gocontainer-project/cf-nexus-java.json --region us-west-2 --parameters ParameterKey=nexususername,ParameterValue=unused ParameterKey=nexuspassword,ParameterValue=unused ParameterKey=tomcatmgrpassword,ParameterValue=unused"
