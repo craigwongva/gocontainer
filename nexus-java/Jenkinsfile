@@ -68,6 +68,8 @@ node {
     stage('checkoutGreen') {
       println "---checkout---"
       sh "echo pwd is `pwd`"
+      sh "cd .."
+      sh "echo pwd is `pwd`"
       checkout([
         $class: 'GitSCM', 
         branches: [[name: '*/master']], 
