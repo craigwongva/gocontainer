@@ -5,11 +5,11 @@ node {
 
     stage('buildTestInstanceWithApp') {
       println "---buildTestInstanceWithApp---"
-//      sh "aws cloudformation create-stack --stack-name ${TEST_STACK_NAME} --template-url https://s3.amazonaws.com/venicegeo-devops-dev-gocontainer-project/cf-nexus-java.json --region us-west-2 --parameters ParameterKey=nexususername,ParameterValue=unused ParameterKey=nexuspassword,ParameterValue=unused ParameterKey=tomcatmgrpassword,ParameterValue=unused"
+      sh "aws cloudformation create-stack --stack-name ${TEST_STACK_NAME} --template-url https://s3.amazonaws.com/venicegeo-devops-dev-gocontainer-project/cf-nexus-java.json --region us-west-2 --parameters ParameterKey=nexususername,ParameterValue=unused ParameterKey=nexuspassword,ParameterValue=unused ParameterKey=tomcatmgrpassword,ParameterValue=unused"
     }
 
     stage('sleep60') {
-//      sh "sleep 60"
+      sh "sleep 60"
     }
 
     stage('describeTestInstance') {
@@ -22,24 +22,22 @@ node {
     }
 
     stage('sleep1500') {
-//      sh "sleep 1500"
+      sh "sleep 1500"
     }
 
     stage('waitThenInvokePhantomOnApp') {
       println "---waitThenInvokePhantomOnApp---"
-        sh "echo `pwd`"
-        sh "echo `ls`"
-//	sh "BUILD_ID=dontKillMe ./nexus-java/invoke-phantom ${TEST_STACK_IP} &"
+	sh "BUILD_ID=dontKillMe ./nexus-java/invoke-phantom ${TEST_STACK_IP} &"
     }
 
     stage('sleep61') {
       println "---sleep61---"
-//      sh "sleep 60"
+      sh "sleep 60"
     }
 
     stage('curlAndInterpretAppStatus') {
       println "---curlAndInterpretAppStatus---"
-/*
+
 	//Groovy question: Why is this a day plus?
         // sleep(1000*60*2) 
 	def mickey = [
@@ -62,17 +60,14 @@ node {
           '4444444444444444444444444444444444444444444444444444444444') < 0) {
     	  error "red rover3 ${TEST_STACK_IP}:8080/green/timer/status $mickey" 
 	}
-*/
     }
 
     stage('checkoutGreen') {
       println "---checkout---"
-    dir('gvs-2017-ss') {
-       git branch: 'master', url: 'https://github.com/craigwongva/green.git'
-    }
+      dir('gvs-2017-ss') {
+        git branch: 'master', url: 'https://github.com/craigwongva/green.git'
+      }
 
-      sh "echo pwd is `pwd`"
-/*
       checkout([
         $class: 'GitSCM', 
         branches: [[name: '*                                /master']], 
@@ -81,29 +76,24 @@ node {
         submoduleCfg: [], 
         userRemoteConfigs: [[url: 'https://github.com/craigwongva/green']]
       ]) 
-      sh "echo pwd is `pwd`"
-*/
     } 
 
     stage('rebuildApp') { 
       println "---rebuildApp---"
-    dir('gvs-2017-ss') {
-       git branch: 'master', url: 'https://github.com/craigwongva/green.git'
-    }
-      sh "echo pwd is `pwd`"
+      dir('gvs-2017-ss') {
+        git branch: 'master', url: 'https://github.com/craigwongva/green.git'
+      }
       sh "/usr/local/apache-maven/bin/mvn clean -DskipTests install"
     } 
 
     stage('deployAppToTestInstanceTomcat') { 
       println "---deployAppToTestInstanceTomcat---"
-      sh "echo pwd is `pwd`"
-      //sh "cp /var/lib/jenkins/.m2/repository/com/demo/green/1.0-SNAPSHOT/green-1.0-SNAPSHOT.war /usr/share/tomcat7/webapps/green.war" 
       sh "scp -i /home/jenkins/craigradiantblueoregon.pem -o StrictHostKeyChecking=no /var/lib/jenkins/.m2/repository/com/demo/green/1.0-SNAPSHOT/green-1.0-SNAPSHOT.war ec2-user@${TEST_STACK_IP}:/usr/share/tomcat7/webapps/green.war" 
     }
 
     stage('cleanup') { 
       println "---cleanup---"
-      //sh "pkill -f phantomjs"
+      sh "pkill -f phantomjs || true"
       //sh "aws cloudformation delete-stack --stack-name ${TEST_STACK_NAME}  --region us-west-2"
     }
 }
