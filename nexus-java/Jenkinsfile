@@ -27,7 +27,7 @@ node {
 
     stage('waitThenInvokePhantomOnApp') {
       println "---waitThenInvokePhantomOnApp---"
-	sh "BUILD_ID=dontKillMe ./nexus-java/invoke-phantom ${TEST_STACK_IP} &"
+	sh "BUILD_ID=dontKillMe ./invoke-phantom ${TEST_STACK_IP} &"
     }
 
     stage('sleep61') {
