@@ -14,9 +14,6 @@ node {
       s += 'cf-nexus-java.json ' 
       s += '--region us-west-2 ' 
       s += '--parameters ' 
-      s += 'ParameterKey=nexususername,ParameterValue=unused '
-      s += 'ParameterKey=nexuspassword,ParameterValue=unused'
-      s += 'ParameterKey=tomcatmgrpassword,ParameterValue=unused '
       sh s
     }
 
