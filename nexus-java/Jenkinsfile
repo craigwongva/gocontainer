@@ -68,7 +68,7 @@ node {
     stage('checkoutGreen') {
       println "---checkout---"
       sh "echo pwd is `pwd`"
-      sh "cd .."
+      sh "cd /var/lib/jenkins/workspace"
       sh "echo pwd is `pwd`"
       checkout([
         $class: 'GitSCM', 
