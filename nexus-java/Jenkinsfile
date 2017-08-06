@@ -3,18 +3,6 @@ node {
     def TEST_STACK_NAME = 'craigu01'
     def TEST_STACK_IP
 
-    stage('checkout') {
-      println "---checkout---"
-      checkout([
-        $class: 'GitSCM', 
-        branches: [[name: '*/go']], 
-        doGenerateSubmoduleConfigurations: false, 
-        extensions: [], 
-        submoduleCfg: [], 
-        userRemoteConfigs: [[url: 'https://github.com/craigwongva/gocontainer']]
-      ]) 
-    } 
-
     stage('buildTestInstanceWithApp') {
       println "---buildTestInstanceWithApp---"
       sh "aws cloudformation create-stack --stack-name ${TEST_STACK_NAME} --template-url https://s3.amazonaws.com/venicegeo-devops-dev-gocontainer-project/cf-nexus-java.json --region us-west-2 --parameters ParameterKey=nexususername,ParameterValue=unused ParameterKey=nexuspassword,ParameterValue=unused ParameterKey=tomcatmgrpassword,ParameterValue=unused"
@@ -74,21 +62,37 @@ node {
 	}
     }
 
+    stage('checkoutGreen') {
+      println "---checkout---"
+      sh "echo pwd is `pwd`"
+      checkout([
+        $class: 'GitSCM', 
+        branches: [[name: '*/go']], 
+        doGenerateSubmoduleConfigurations: false, 
+        extensions: [], 
+        submoduleCfg: [], 
+        userRemoteConfigs: [[url: 'https://github.com/craigwongva/gocontainer']]
+      ]) 
+      sh "echo pwd is `pwd`"
+    } 
+
     stage('rebuildApp') { 
       println "---rebuildApp---"
-        sh "/usr/local/apache-maven/bin/mvn clean -DskipTests install"
+      sh "echo pwd is `pwd`"
+      sh "/usr/local/apache-maven/bin/mvn clean -DskipTests install"
     } 
 
     stage('deployAppToTestInstanceTomcat') { 
       println "---deployAppToTestInstanceTomcat---"
-        sh "whoami" 
-        sh "pwd" 
-        sh "scp -i /home/jenkins/craigradiantblueoregon.pem -o StrictHostKeyChecking=no /var/lib/jenkins/.m2/repository/com/demo/green/1.0-SNAPSHOT/green-1.0-SNAPSHOT.war ec2-user@${TEST_STACK_IP}:/usr/share/tomcat7/webapps/green.war" 
+      sh "echo pwd is `pwd`"
+      sh "whoami" 
+      sh "pwd" 
+      //s/m: don't need scp here for this local copy     sh "scp -i /home/jenkins/craigradiantblueoregon.pem -o StrictHostKeyChecking=no /var/lib/jenkins/.m2/repository/com/demo/green/1.0-SNAPSHOT/green-1.0-SNAPSHOT.war ec2-user@${TEST_STACK_IP}:/usr/share/tomcat7/webapps/green.war" 
     }
 
     stage('cleanup') { 
       println "---cleanup---"
-        sh "pkill -f phantomjs"
-        //sh "aws cloudformation delete-stack --stack-name ${TEST_STACK_NAME}  --region us-west-2"
+      sh "pkill -f phantomjs"
+      //sh "aws cloudformation delete-stack --stack-name ${TEST_STACK_NAME}  --region us-west-2"
     }
 }
