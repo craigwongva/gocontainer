@@ -12,10 +12,7 @@
 "Metadata" : {
   "AWS::CloudFormation::Interface" : {
     "ParameterGroups" : [
-      {
-        "Label" : { "default" : "Nexus credentials" },
-        "Parameters" : [ "nexususername", "nexuspassword" ]
-      }]}},
+    ]}},
 "Resources": {
   "Server": {
    "Type": "AWS::EC2::Instance",
