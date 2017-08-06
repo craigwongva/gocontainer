@@ -67,9 +67,12 @@ node {
 
     stage('checkoutGreen') {
       println "---checkout---"
+    dir('gvs-2017-ss') {
+       git branch: 'master', url: 'https://github.com/craigwongva/green.git'
+    }
+
       sh "echo pwd is `pwd`"
-      sh "cd /var/lib/jenkins/workspace"
-      sh "echo pwd is `pwd`"
+/*
       checkout([
         $class: 'GitSCM', 
         branches: [[name: '*/master']], 
@@ -79,10 +82,14 @@ node {
         userRemoteConfigs: [[url: 'https://github.com/craigwongva/green']]
       ]) 
       sh "echo pwd is `pwd`"
+*/
     } 
 
     stage('rebuildApp') { 
       println "---rebuildApp---"
+    dir('gvs-2017-ss') {
+       git branch: 'master', url: 'https://github.com/craigwongva/green.git'
+    }
       sh "echo pwd is `pwd`"
       sh "/usr/local/apache-maven/bin/mvn clean -DskipTests install"
     } 
