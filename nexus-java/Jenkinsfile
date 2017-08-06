@@ -97,8 +97,7 @@ node {
     stage('deployAppToTestInstanceTomcat') { 
       println "---deployAppToTestInstanceTomcat---"
       sh "echo pwd is `pwd`"
-      sh "whoami" 
-      sh "pwd" 
+      sh "cp /var/lib/jenkins/.m2/repository/com/demo/green/1.0-SNAPSHOT/green-1.0-SNAPSHOT.war /usr/share/tomat7/webapps/green.war" 
       //s/m: don't need scp here for this local copy     sh "scp -i /home/jenkins/craigradiantblueoregon.pem -o StrictHostKeyChecking=no /var/lib/jenkins/.m2/repository/com/demo/green/1.0-SNAPSHOT/green-1.0-SNAPSHOT.war ec2-user@${TEST_STACK_IP}:/usr/share/tomcat7/webapps/green.war" 
     }
 
