@@ -1,19 +1,19 @@
-node { 
+node {
     def mvn = tool 'M3.0.5' 
     def TEST_STACK_NAME = 'craigu01'
     def TEST_STACK_IP
 
     stage('buildTestInstanceWithApp') {
       println "---buildTestInstanceWithApp---"
-      def s = ''
-      s += 'aws cloudformation create-stack '
-      s += "--stack-name ${TEST_STACK_NAME} " 
-      s += '--template-url '
-      s += 'https://s3.amazonaws.com/'
-      s += 'venicegeo-devops-dev-gocontainer-project/'
-      s += 'cf-nexus-java.json ' 
-      s += '--region us-west-2 ' 
-      s += '--parameters ' 
+      def s = '' +
+        'aws cloudformation create-stack ' +
+        "--stack-name ${TEST_STACK_NAME} " +
+        '--template-url ' +
+        'https://s3.amazonaws.com/' +
+        'venicegeo-devops-dev-gocontainer-project/' +
+        'cf-nexus-java.json ' +
+        '--region us-west-2 ' +
+        '--parameters ' 
       sh s
     }
 
@@ -23,14 +23,15 @@ node {
 
     stage('describeTestInstance') {
       println "---describeTestInstance---"
-      def s = ''
-      s += 'aws cloudformation describe-stacks '
-      s += "--stack-name ${TEST_STACK_NAME} "
-      s += '--region us-west-2'
+      def s = '' +
+        'aws cloudformation describe-stacks ' +
+        "--stack-name ${TEST_STACK_NAME} " +
+        '--region us-west-2'
       def x = sh(script: s, returnStdout: true)
       def temp = (x =~ /"OutputValue": "(.*)"/)
       TEST_STACK_IP = temp[0][1]
       println "TEST_STACK_IP is $TEST_STACK_IP"
+
       //Jenkins question: The following statement seems
       // to cause a Jenkins failure.
       //sh "sleep 1500"
@@ -106,10 +107,10 @@ node {
     stage('deployAppToTestInstanceTomcat') { 
       println "---deployAppToTestInstanceTomcat---"
       def s = '' +
-        'scp -i /home/jenkins/craigradiantblueoregon.pem '
-        '-o StrictHostKeyChecking=no '
-        '/var/lib/jenkins/.m2/repository/com/demo/'
-        'green/1.0-SNAPSHOT/green-1.0-SNAPSHOT.war '
+        'scp -i /home/jenkins/craigradiantblueoregon.pem ' +
+        '-o StrictHostKeyChecking=no ' +
+        '/var/lib/jenkins/.m2/repository/com/demo/' +
+        'green/1.0-SNAPSHOT/green-1.0-SNAPSHOT.war ' +
         "ec2-user@${TEST_STACK_IP}:/usr/share/tomcat7/webapps/green.war"
       sh s
     }
