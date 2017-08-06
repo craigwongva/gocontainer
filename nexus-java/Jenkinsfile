@@ -17,6 +17,7 @@ node {
       def x = sh(script: "aws cloudformation describe-stacks --stack-name ${TEST_STACK_NAME} --region us-west-2", returnStdout: true)
       def temp = (x =~ /"OutputValue": "(.*)"/)
       TEST_STACK_IP = temp[0][1]
+      prtintln "TEST_STACK_IP is $TEST_STACK_IP"
       //sh "sleep 1500": this statement seems to cause a Jenkins failure
     }
 
@@ -69,11 +70,11 @@ node {
       sh "echo pwd is `pwd`"
       checkout([
         $class: 'GitSCM', 
-        branches: [[name: '*/go']], 
+        branches: [[name: '*/master']], 
         doGenerateSubmoduleConfigurations: false, 
         extensions: [], 
         submoduleCfg: [], 
-        userRemoteConfigs: [[url: 'https://github.com/craigwongva/gocontainer']]
+        userRemoteConfigs: [[url: 'https://github.com/craigwongva/green']]
       ]) 
       sh "echo pwd is `pwd`"
     } 
