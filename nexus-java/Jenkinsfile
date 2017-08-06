@@ -97,13 +97,13 @@ node {
     stage('deployAppToTestInstanceTomcat') { 
       println "---deployAppToTestInstanceTomcat---"
       sh "echo pwd is `pwd`"
-      sh "cp /var/lib/jenkins/.m2/repository/com/demo/green/1.0-SNAPSHOT/green-1.0-SNAPSHOT.war /usr/share/tomat7/webapps/green.war" 
+      sh "cp /var/lib/jenkins/.m2/repository/com/demo/green/1.0-SNAPSHOT/green-1.0-SNAPSHOT.war /usr/share/tomcat7/webapps/green.war" 
       //s/m: don't need scp here for this local copy     sh "scp -i /home/jenkins/craigradiantblueoregon.pem -o StrictHostKeyChecking=no /var/lib/jenkins/.m2/repository/com/demo/green/1.0-SNAPSHOT/green-1.0-SNAPSHOT.war ec2-user@${TEST_STACK_IP}:/usr/share/tomcat7/webapps/green.war" 
     }
 
     stage('cleanup') { 
       println "---cleanup---"
-      sh "pkill -f phantomjs"
+      //sh "pkill -f phantomjs"
       //sh "aws cloudformation delete-stack --stack-name ${TEST_STACK_NAME}  --region us-west-2"
     }
 }
