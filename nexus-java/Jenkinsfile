@@ -1,6 +1,6 @@
 node {
     def mvn = tool 'M3.0.5' 
-    def TEST_STACK_NAME = 'craigu01'
+    def TEST_STACK_NAME = 'craigu02'
     def TEST_STACK_IP
 
     stage('buildTestInstanceWithApp') {
