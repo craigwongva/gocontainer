@@ -1,15 +1,17 @@
+TMP=/tmp/06-logger
+
 #Removing old files helps debugging.
-rm pz-logger-port-number-line > /tmp/userdata-nexus-logger-6100 2>&1
-rm pz-logger-port-number > /tmp/userdata-nexus-logger-6200 2>&1
+rm pz-logger-port-number-line > $TMP-6100 2>&1
+rm pz-logger-port-number > $TMP-6200 2>&1
 
-cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-nexus-logger-6300 2>&1
+cd /home/ec2-user/gocontainer/nexus-java > $TMP-6300 2>&1
 
-sudo docker build -f Dockerfile-nexus-logger -t venicegeodev/container_logger . > /tmp/userdata-nexus-logger-6400 2>&1
-sudo docker run -d --net="host" venicegeodev/container_logger > /tmp/userdata-nexus-logger-6500 2>&1
+sudo docker build -f Dockerfile-nexus-logger -t venicegeodev/container_logger . > $TMP-6400 2>&1
+sudo docker run -d --net="host" venicegeodev/container_logger > $TMP-6500 2>&1
 
 #It needs time to print its output message.
-sleep 3 >/tmp/userdata-nexus-logger-6600 2>&1
-sudo docker cp `sudo docker ps -a | grep logger | cut -c1-6`:/tmp/pz-logger-port-number-line pz-logger-port-number-line > /tmp/userdata-nexus-logger-6700 2>&1
+sleep 3 >$TMP-6600 2>&1
+sudo docker cp `sudo docker ps -a | grep logger | cut -c1-6`:/tmp/pz-logger-port-number-line pz-logger-port-number-line > $TMP-6700 2>&1
 
 #Extract just the process number between : and )
 cat pz-logger-port-number-line | cut -d':' -f3 | cut -d')' -f1 > pz-logger-port-number
@@ -19,6 +21,6 @@ cat pz-logger-port-number-line | cut -d':' -f3 | cut -d')' -f1 > pz-logger-port-
 ## empty, so remove it.
 sed -i -e '/^$/d' pz-logger-port-number
 
-touch /tmp/userdata-nexus-logger-9999
+touch $TMP-9999
 
 

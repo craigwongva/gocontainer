@@ -1,33 +1,32 @@
+TMP=/tmp/01-nexus-only
+
 #INSTALL NEXUS
-echo A1000 > /tmp/filea1000
-sudo yum install java-1.8.0-openjdk-devel -y > /tmp/userdata-nexus-only-080 2>&1
-echo A1100 > /tmp/filea1100
-echo $JAVA_HOME > /tmp/userdata-nexus-only-090 2>&1
-echo A1200 > /tmp/filea1200
+sudo yum install java-1.8.0-openjdk-devel -y > $TMP-080 2>&1
+echo $JAVA_HOME > $TMP-090 2>&1
 
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
-echo $JAVA_HOME > /tmp/userdata-nexus-only-100 2>&1
+echo $JAVA_HOME > $TMP-100 2>&1
 
-cd /home/ec2-user/gocontainer > /tmp/userdata-nexus-only-110 2>&1
-echo `pwd` > /tmp/userdata-nexus-only-200 2>&1
+cd /home/ec2-user/gocontainer > $TMP-110 2>&1
+echo `pwd` > $TMP-200 2>&1
 
-rm -rf nexus-3.0.0-03 > /tmp/userdata-nexus-only-210 2>&1
+rm -rf nexus-3.0.0-03 > $TMP-210 2>&1
 cp nexus-java/craig-nexus-3.0.0-03-unix.tar .
-tar -xvf craig-nexus-3.0.0-03-unix.tar > /tmp/userdata-nexus-only-240 2>&1
-echo `ls` > /tmp/userdata-nexus-only-300 2>&1
+tar -xvf craig-nexus-3.0.0-03-unix.tar > $TMP-240 2>&1
+echo `ls` > $TMP-300 2>&1
 
-sed -i '2s/application-port=8081/application-port=8079/' /home/ec2-user/gocontainer/nexus-3.0.0-03/etc/org.sonatype.nexus.cfg > /tmp/userdata-nexus-only-310 2>&1
+sed -i '2s/application-port=8081/application-port=8079/' /home/ec2-user/gocontainer/nexus-3.0.0-03/etc/org.sonatype.nexus.cfg > $TMP-310 2>&1
 
-cd /home/ec2-user/gocontainer/nexus-3.0.0-03/bin > /tmp/userdata-nexus-only-350 2>&1
-echo `pwd` > /tmp/userdata-nexus-only-400 2>&1
+cd /home/ec2-user/gocontainer/nexus-3.0.0-03/bin > $TMP-350 2>&1
+echo `pwd` > $TMP-400 2>&1
 
 #EXPOSE 8081
 
-./nexus start > /tmp/userdata-nexus-only-440 2>&1
-echo sleeping for 180 seconds > /tmp/userdata-nexus-only-500 2>&1
+./nexus start > $TMP-440 2>&1
+echo sleeping for 180 seconds > $TMP-500 2>&1
 sleep 180
-echo done sleeping > /tmp/userdata-nexus-only-600 2>&1
-curl localhost:8079 > /tmp/userdata-nexus-only-610 2>&1
+echo done sleeping > $TMP-600 2>&1
+curl localhost:8079 > $TMP-610 2>&1
 
 #
 ##make sure 8081 is open
@@ -35,8 +34,8 @@ curl localhost:8079 > /tmp/userdata-nexus-only-610 2>&1
 
 #CREATE A NEXUS REPO
 
-cd /home/ec2-user/gocontainer > /tmp/userdata-nexus-only-690 2>&1
-touch /tmp/userdata-nexus-only-700
+cd /home/ec2-user/gocontainer > $TMP-690 2>&1
+touch $TMP-700
 echo  > createrawrepo.json
 sed -i '$a {'                                                                   createrawrepo.json
 sed -i '$a  \"name\": \"rawcmd\",'                                              createrawrepo.json
@@ -44,33 +43,33 @@ sed -i '$a  \"type\": \"groovy\",'                                              
 sed -i '$a  \"content\": \"repository.createRawHosted(SINGLEQUOTEmyrawrepoSINGLEQUOTE)\"'          createrawrepo.json
 sed -i '$a }' createrawrepo.json
 sed -i '1,$s/SINGLEQUOTE/\x27/g'                                                createrawrepo.json
-touch /tmp/userdata-nexus-only-800
+touch $TMP-800
 
 #idempotent?:
-curl -XDELETE -u admin:admin123 'http://localhost:8079/service/siesta/rest/v1/script/maven' > /tmp/userdata-nexus-only-810 2>&1
-curl -XPOST -u admin:admin123 --header "Content-Type: application/json" 'http://localhost:8079/service/siesta/rest/v1/script' -d @createrawrepo.json > /tmp/userdata-nexus-only-820 2>&1
-curl -XGET -u admin:admin123 'http://localhost:8079/service/siesta/rest/v1/script' > /tmp/userdata-nexus-only-830 2>&1
-curl -XPOST -u admin:admin123 --header "Content-Type: text/plain" 'http://localhost:8079/service/siesta/rest/v1/script/rawcmd/run' > /tmp/userdata-nexus-only-840 2>&1
+curl -XDELETE -u admin:admin123 'http://localhost:8079/service/siesta/rest/v1/script/maven' > $TMP-810 2>&1
+curl -XPOST -u admin:admin123 --header "Content-Type: application/json" 'http://localhost:8079/service/siesta/rest/v1/script' -d @createrawrepo.json > $TMP-820 2>&1
+curl -XGET -u admin:admin123 'http://localhost:8079/service/siesta/rest/v1/script' > $TMP-830 2>&1
+curl -XPOST -u admin:admin123 --header "Content-Type: text/plain" 'http://localhost:8079/service/siesta/rest/v1/script/rawcmd/run' > $TMP-840 2>&1
 
 #CREATE AN ARTIFACT FOR NEXUS REPO'S CONSUMPTION
 
-sudo yum install wget -y > /tmp/userdata-nexus-only-850 2>&1
-wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz > /tmp/userdata-nexus-only-860 2>&1
-sudo tar -xzf go1.4.2.linux-amd64.tar.gz -C /usr/local > /tmp/userdata-nexus-only-870 2>&1
-cd /home/ec2-user/gocontainer > /tmp/userdata-nexus-only-880 2>&1
+sudo yum install wget -y > $TMP-850 2>&1
+wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz > $TMP-860 2>&1
+sudo tar -xzf go1.4.2.linux-amd64.tar.gz -C /usr/local > $TMP-870 2>&1
+cd /home/ec2-user/gocontainer > $TMP-880 2>&1
 
-rm -rf gwp > /tmp/userdata-nexus-only-882 2>&1
-git clone https://github.com/sausheong/gwp > /tmp/userdata-nexus-only-884 2>&1
-mkdir -p src/first_webapp > /tmp/userdata-nexus-only-886 2>&1
+rm -rf gwp > $TMP-882 2>&1
+git clone https://github.com/sausheong/gwp > $TMP-884 2>&1
+mkdir -p src/first_webapp > $TMP-886 2>&1
 
 cp gwp/Chapter_1_Go_And_Web_Applications/first_webapp/server.go src/first_webapp
 export GOROOT=/usr/local/go
 export GOPATH=/home/ec2-user/gocontainer
 export PATH=$PATH:$GOROOT/bin
 go install first_webapp
-touch /tmp/userdata-nexus-only-900
+touch $TMP-900
 #CMD ["/bin/first_webapp"]
 
 
 #POPULATE THE NEXUS REPO
-curl --user 'admin:admin123' --upload-file bin/first_webapp http://localhost:8079/repository/myrawrepo/first_webapp_from_nexus > /tmp/userdata-nexus-only-999 2>&1
+curl --user 'admin:admin123' --upload-file bin/first_webapp http://localhost:8079/repository/myrawrepo/first_webapp_from_nexus > $TMP-999 2>&1

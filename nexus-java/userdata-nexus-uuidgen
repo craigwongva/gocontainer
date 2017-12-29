@@ -1,15 +1,17 @@
+TMP=/tmp/07-uuidgen
+
 #Removing old files helps debugging.
-rm pz-uuidgen-port-number-line > /tmp/userdata-nexus-uuidgen-6100 2>&1
-rm pz-uuidgen-port-number > /tmp/userdata-nexus-uuidgen-6200 2>&1
+rm pz-uuidgen-port-number-line > $TMP-6100 2>&1
+rm pz-uuidgen-port-number > $TMP-6200 2>&1
 
-cd /home/ec2-user/gocontainer/nexus-java > /tmp/userdata-nexus-uuidgen-6300 2>&1
+cd /home/ec2-user/gocontainer/nexus-java > $TMP-6300 2>&1
 
-sudo docker build -f Dockerfile-nexus-uuidgen -t venicegeodev/container_uuidgen . > /tmp/userdata-nexus-uuidgen-6400 2>&1
-sudo docker run -d --net="host" venicegeodev/container_uuidgen > /tmp/userdata-nexus-uuidgen-6500 2>&1
+sudo docker build -f Dockerfile-nexus-uuidgen -t venicegeodev/container_uuidgen . > $TMP-6400 2>&1
+sudo docker run -d --net="host" venicegeodev/container_uuidgen > $TMP-6500 2>&1
 
 #It needs time to print its output message.
-sleep 3 >/tmp/userdata-nexus-uuidgen-6600 2>&1
-sudo docker cp `sudo docker ps -a | grep uuidgen | cut -c1-6`:/tmp/pz-uuidgen-port-number-line pz-uuidgen-port-number-line > /tmp/userdata-nexus-uuidgen-6700 2>&1
+sleep 3 >$TMP-6600 2>&1
+sudo docker cp `sudo docker ps -a | grep uuidgen | cut -c1-6`:/tmp/pz-uuidgen-port-number-line pz-uuidgen-port-number-line > $TMP-6700 2>&1
 
 #Extract just the process number between : and )
 cat pz-uuidgen-port-number-line | cut -d':' -f3 | cut -d')' -f1 > pz-uuidgen-port-number
@@ -19,6 +21,6 @@ cat pz-uuidgen-port-number-line | cut -d':' -f3 | cut -d')' -f1 > pz-uuidgen-por
 ## empty, so remove it.
 sed -i -e '/^$/d' pz-uuidgen-port-number
 
-touch /tmp/userdata-nexus-uuidgen-9999
+touch $TMP-9999
 
 
