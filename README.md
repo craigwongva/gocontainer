@@ -1,7 +1,7 @@
 ## How to run
 `aws cloudformation create-stack --stack-name gocontainer --region us-west-2`
 
-Wait 15 minutes.
+Wait 12 minutes.
 
 From ec2w, `http://x.y.z.w:8080/green/timer/dots`
 

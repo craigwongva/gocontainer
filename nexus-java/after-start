@@ -1,4 +1,4 @@
-TMP=/tmp/after
+TMP=/tmp/01a-after
 
 sudo yum install jq -y                   &> $TMP-1020
 
