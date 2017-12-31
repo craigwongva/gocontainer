@@ -1,3 +1,10 @@
+## How to run
+`aws cloudformation create-stack --stack-name gocontainer --region us-west-2`
+
+Wait 15 minutes.
+
+From ec2w, `http://x.y.z.w:8080/green/timer/dots`
+
 ## About Piazza service builds ##
 This blurb describes how Piazza services are built. (Someday there will be a separate description for how backing services are built.)
 
