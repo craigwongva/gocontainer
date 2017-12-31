@@ -15,3 +15,7 @@ TEMP_TRAC2=`aws ec2 describe-instances --region us-west-2 | jq ".Reservations | 
 #open gocontainer's :22 to trac
 echo TEMP_GOCONTAINER_SECGRP=$TEMP_GOCONTAINER_SECGRP, TEMP_TRAC2=$TEMP_TRAC2 &> $TMP-1080
 aws ec2 authorize-security-group-ingress --group-id $TEMP_GOCONTAINER_SECGRP --cidr $TEMP_TRAC2/32 --port 22 --protocol tcp --region us-west-2 &> $TMP-1090
+
+#open gocontainer's :8080 to ec2w
+TEMP_EC2W_PUBLICIP=`aws route53 list-resource-record-sets --hosted-zone-id Z14MX2BF8JTF7J --region us-west-2 | jq '.ResourceRecordSets  | .[] | select((.Name | contains("ec2w"))) | select((.Type | contains("A"))) | .ResourceRecords | .[] | .Value' | sed s/\"//g` &> $TMP-1300
+aws ec2 authorize-security-group-ingress --group-id $TEMP_GOCONTAINER_SECGRP --cidr $TEMP_EC2W_PUBLICIP/32 --port 8080 --protocol tcp --region us-west-2 &> $TMP-1400
