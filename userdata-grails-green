@@ -65,8 +65,3 @@ cd ~/.sdkman/candidates/grails/2.4.0/green                    &> $TMP-2650 2>&1
 mvn -DskipTests install                                       &> $TMP-2700 2>&1
 sudo cp target/green-1.0-SNAPSHOT.war /usr/share/tomcat7/webapps/green.war &> $TMP-2800 2>&1
 sudo chown ec2-user:ec2-user /usr/share/tomcat7/webapps/green.war          &> $TMP-2805 2>&1
-
-##
-# Enable war on this instance to access this instance's services
-##
-aws ec2 authorize-security-group-ingress --region us-west-2 --group-name GreenDots --protocol tcp --port 0-27017 --cidr `curl 169.254.169.254/latest/meta-data/public-ipv4`/32
