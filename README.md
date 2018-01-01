@@ -1,7 +1,7 @@
 ## How to run
 `aws cloudformation create-stack --stack-name gocontainer --region us-west-2`
 
-Wait 12 minutes.
+Wait 12 minutes for everything to install, then 4 more minutes before green dots are enabled (I'm not sure why this delay exists).
 
 From ec2w, `http://x.y.z.w:8080/green/timer/dots`
 
