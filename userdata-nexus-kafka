@@ -1,9 +1,11 @@
 TMP=/tmp/04-kafka
 
-cd /home/ec2-user/gocontainer/nexus-java > $TMP-1000 2>&1
+#cd /home/ec2-user/gocontainer/nexus-java > $TMP-1000 2>&1
+cd /home/ec2-user/gocontainer > $TMP-1000 2>&1
 #wget eliminated by storing kafka locally:
 # wget http://apache.mivzakim.net/kafka/0.9.0.0/kafka_2.11-1.0.0.tgz > /tmp/kafka1020 2>&1
-tar -zxvf ../kafka_2.11-1.0.0.tgz > $TMP-1100 2>&1
+#tar -zxvf ../kafka_2.11-1.0.0.tgz > $TMP-1100 2>&1
+tar -zxvf kafka_2.11-1.0.0.tgz > $TMP-1100 2>&1
 cd kafka_2.11-1.0.0 > $TMP-1200 2>&1
 bin/zookeeper-server-start.sh config/zookeeper.properties > $TMP-1300 2>&1 &
 bin/kafka-server-start.sh config/server.properties > $TMP-1400 2>&1 &
