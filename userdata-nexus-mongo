@@ -3,7 +3,7 @@ TMP=/tmp/03-mongo
 #cd /home/ec2-user/gocontainer/nexus-java
 cd /home/ec2-user/gocontainer
 #sudo cp ../mongodb-org-3.2.repo /etc/yum.repos.d &> $TMP-1000
-sudo cp /mongodb-org-3.2.repo /etc/yum.repos.d &> $TMP-1000
+sudo cp mongodb-org-3.2.repo /etc/yum.repos.d &> $TMP-1000
 sudo yum install mongodb-org -y &> $TMP-1100
 sudo sed -i '1,$s/bindIp: 127.0.0.1/bindIp: 0.0.0.0/' /etc/mongod.conf &> $TMP-1200
 sudo service mongod start &> $TMP-1300
