@@ -1,17 +1,17 @@
 MY_IP=`curl http://169.254.169.254/latest/meta-data/public-ipv4`
 cd /home/ec2-user/gocontainer
 ./personalize-settingsxml > /tmp/u03 2>&1
-./userdata-nexus-only     > /tmp/u04 2>&1
+./userdata-nexus          > /tmp/u04 2>&1
 ./after-start             > /tmp/u05 2>&1
-./userdata-nexus-first_webapp $MY_IP > /tmp/u06 2>&1
-./userdata-nexus-mongo $MY_IP > /tmp/u07 2>&1
-./userdata-nexus-kafka $MY_IP > /tmp/u08 2>&1
-./userdata-elasticsearch > /tmp/u09 2>&1
+./userdata-first_webapp $MY_IP > /tmp/u06 2>&1
+./userdata-mongo $MY_IP   > /tmp/u07 2>&1
+./userdata-kafka $MY_IP   > /tmp/u08 2>&1
+./userdata-elasticsearch  > /tmp/u09 2>&1
 #Comment out the next two lines because I don't think 
 # they are working/used.
 #./userdata-nexus-logger  > /tmp/u10 2>&1
 #./userdata-nexus-uuidgen > /tmp/u11 2>&1
-./userdata-dockerhub     > /tmp/u12 2>&1
+./userdata-dockerhub      > /tmp/u12 2>&1
 
 #"#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-servicecontroller-workaround `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u04 2>&1'\n",
 #"#sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer/nexus-java; ./userdata-nexus-servicecontroller `curl http://169.254.169.254/latest/meta-data/public-ipv4` > /tmp/u05 2>&1'\n",
