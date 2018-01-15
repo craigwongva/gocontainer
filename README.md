@@ -1,5 +1,5 @@
 ## How to run
-`aws cloudformation create-stack --stack-name gocontainer --region us-west-2`
+`aws cloudformation create-stack --stack-name gocontainer --template-body file://cf-nexus-java.yaml --region us-west-2`
 
 Wait 12 minutes for everything to install, then 4 more minutes before green dots are enabled (I'm not sure why this delay exists).
 
