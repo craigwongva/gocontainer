@@ -12,7 +12,7 @@ Resources:
         - Key: Name
           Value: craigLF
       ImageId: ami-bf4193c7
-      InstanceType: m4.large
+      InstanceType: m4.xlarge
       KeyName:  oregonkeypair
       SecurityGroupIds: 
         - !Ref gocontainersecgrp
