@@ -1,7 +1,9 @@
 TMP=/tmp/04-kafka
 
+echo `curl 169.254.169.254/latest/meta-data/public-ipv4` kafka.dev | sudo tee -a /etc/hosts > $TMP-1000 2>&1
+
 #cd /home/ec2-user/gocontainer/nexus-java > $TMP-1000 2>&1
-cd /home/ec2-user/gocontainer > $TMP-1000 2>&1
+cd /home/ec2-user/gocontainer > $TMP-1050 2>&1
 #wget eliminated by storing kafka locally:
 # wget http://apache.mivzakim.net/kafka/0.9.0.0/kafka_2.11-1.0.0.tgz > /tmp/kafka1020 2>&1
 #tar -zxvf ../kafka_2.11-1.0.0.tgz > $TMP-1100 2>&1
