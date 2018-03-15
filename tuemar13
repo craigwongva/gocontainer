@@ -1,0 +1,33 @@
+curl localhost:8081
+Hello, Health Check here for pz-gateway.
+curl localhost:8083
+Hello, Health Check here for pz-jobmanager.
+curl localhost:8084
+Hello, Health Check here for Loader.
+curl localhost:8085
+Hello, Health Check here for pz-access.
+curl localhost:8088
+<HTML><TITLE>Piazza Service Controller Welcome</TITLE>
+
+curl localhost:8079
+//long Nexus html response
+curl localhost:2181
+curl: (52) Empty reply from server
+curl localhost:9092
+curl: (56) Recv failure: Connection reset by peer
+curl localhost:9200
+//long ES json response
+mongo localhost:27017/test
+> db.stats()
+
+I ran using Go, and it was also slow.
+I ran using grails not mvn, and it was also slow.
+I ran 
+curl -v -k -X GET -H "Content-Type: application/json" http://54.218.254.46:8081/job/null
+message" : "Error fetching Job: MongoDB instance not available."
+
+Wednesday 3/14:
+The secgrp for port 22 should open (see after-start) to cloud9, not Beck.
+Successfully ran yellow dots in Grails via cloudformation.
+Successfully ran grails-go yellow dots via Golang manually.
+The secgrp for port 8077 had to be opened manually.
