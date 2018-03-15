@@ -19,3 +19,6 @@ aws ec2 authorize-security-group-ingress --group-id $TEMP_GOCONTAINER_SECGRP --c
 #open gocontainer's :8080 to ec2w
 TEMP_EC2W_PUBLICIP=`aws route53 list-resource-record-sets --hosted-zone-id Z14MX2BF8JTF7J --region us-west-2 | jq '.ResourceRecordSets  | .[] | select((.Name | contains("ec2w"))) | select((.Type | contains("A"))) | .ResourceRecords | .[] | .Value' | sed s/\"//g` &> $TMP-1300
 aws ec2 authorize-security-group-ingress --group-id $TEMP_GOCONTAINER_SECGRP --cidr $TEMP_EC2W_PUBLICIP/32 --port 8080 --protocol tcp --region us-west-2 &> $TMP-1400
+
+aws ec2 authorize-security-group-ingress --group-id $TEMP_GOCONTAINER_SECGRP --cidr $1/32 --port 8080 --protocol tcp --region us-west-2 &> $TMP-2000
+aws ec2 authorize-security-group-ingress --group-id $TEMP_GOCONTAINER_SECGRP --cidr $1/32 --port   22 --protocol tcp --region us-west-2 &> $TMP-2000
