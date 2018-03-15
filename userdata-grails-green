@@ -33,6 +33,10 @@ sdk install grails 2.4.0                                    > $TMP-1900 2>&1
 ##
 
 cd .sdkman/candidates/grails/2.4.0                          > $TMP-2000 2>&1
+
+#The zip accidentally includes /green, so delete it
+#and download the latest version.
+rm -rf green                                                > $TMP-2080 2>&1
 sudo yum install git -y                                     > $TMP-2100 2>&1
 git clone https://github.com/craigwongva/green              > $TMP-2200 2>&1
 cd green                                                    > $TMP-2300 2>&1
