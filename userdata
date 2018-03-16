@@ -1,7 +1,7 @@
 MY_IP=`curl http://169.254.169.254/latest/meta-data/public-ipv4`
 cd /home/ec2-user/gocontainer
 ./personalize-settingsxml > /tmp/u03 2>&1
-./userdata-nexus          > /tmp/u04 2>&1
+#./userdata-nexus          > /tmp/u04 2>&1
 ./after-start $1 $2       > /tmp/u05 2>&1
 ./userdata-first_webapp $MY_IP > /tmp/u06 2>&1
 ./userdata-mongo $MY_IP   > /tmp/u07 2>&1
