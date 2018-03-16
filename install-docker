@@ -1,0 +1,7 @@
+TMP=/tmp/docker
+
+sudo yum install docker -y > $TMP-1100 2>&1
+sudo service docker start > $TMP-1200 2>&1
+
+#The following is necessary if working interactively as ec2-user:
+# sudo usermod -a -G docker ec2-user
