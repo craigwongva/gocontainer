@@ -1,5 +1,5 @@
 ## How to run
-`aws cloudformation create-stack --stack-name gocontainer --template-body file://cf-nexus-java.yaml --region us-west-2`--parameter ParameterKey=invocationIP,ParameterValue=REDACTED
+`aws cloudformation create-stack --stack-name gocontainer --template-body file://cf-nexus-java.yaml --region us-west-2`--parameter ParameterKey=IP8080,ParameterValue=REDACTED ParameterKey=IP22,ParameterValue=REDACTED
 
 Wait 12 minutes for everything to install, then 4 more minutes before green dots are enabled (I'm not sure why this delay exists).
 

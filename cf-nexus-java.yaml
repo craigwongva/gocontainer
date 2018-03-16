@@ -1,8 +1,10 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: "gocontainer"
 Parameters:
-  invocationIP:
+  IP8080:
     Type: String
+  IP22:
+    Type: String    
 Resources:
   gocontainersecgrp:
     Type: AWS::EC2::SecurityGroup
@@ -33,7 +35,9 @@ Resources:
               - "yum install git -y\n"
               - "sudo -u ec2-user bash -c 'cd /home/ec2-user; git clone -b go https://github.com/craigwongva/gocontainer.git > /tmp/u01 2>&1 '\n"
               - "sudo -u ec2-user bash -c 'cd /home/ec2-user/gocontainer; ./userdata "
-              - !Ref invocationIP
+              - !Ref IP8080
+              - " "
+              - !Ref IP22
               - " > /tmp/u02 2>&1'\n"
 Outputs:
   InstanceID:

@@ -21,4 +21,4 @@ TEMP_EC2W_PUBLICIP=`aws route53 list-resource-record-sets --hosted-zone-id Z14MX
 aws ec2 authorize-security-group-ingress --group-id $TEMP_GOCONTAINER_SECGRP --cidr $TEMP_EC2W_PUBLICIP/32 --port 8080 --protocol tcp --region us-west-2 &> $TMP-1400
 
 aws ec2 authorize-security-group-ingress --group-id $TEMP_GOCONTAINER_SECGRP --cidr $1/32 --port 8080 --protocol tcp --region us-west-2 &> $TMP-2000
-aws ec2 authorize-security-group-ingress --group-id $TEMP_GOCONTAINER_SECGRP --cidr $1/32 --port   22 --protocol tcp --region us-west-2 &> $TMP-2000
+aws ec2 authorize-security-group-ingress --group-id $TEMP_GOCONTAINER_SECGRP --cidr $2/32 --port   22 --protocol tcp --region us-west-2 &> $TMP-2000
