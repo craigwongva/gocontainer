@@ -1,6 +1,5 @@
 export TMP=/tmp/greendots
 
-#export JAVA_HOME=/usr/lib/jvm/java                          > $TMP-1100 2>&1
 export M2_HOME=/usr/local/apache-maven                      &> $TMP-1430 2>&1
 export M2=$M2_HOME/bin                                      &> $TMP-1435 2>&1
 export PATH=$M2:$PATH                                       &> $TMP-1440 2>&1
