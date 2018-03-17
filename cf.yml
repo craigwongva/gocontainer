@@ -15,17 +15,13 @@ Resources:
     Properties:
       Tags:
         - Key: Name
-          Value: craigLF
+          Value: gocontainer
       ImageId: ami-bf4193c7
       InstanceType: m4.large
       KeyName:  oregonkeypair
       SecurityGroupIds: 
         - !Ref gocontainersecgrp
       IamInstanceProfile: RoleForTestingRoles
-      BlockDeviceMappings:
-        - DeviceName: "/dev/xvda"
-          Ebs:
-            VolumeSize: 16
       UserData:
         Fn::Base64:
           Fn::Join:

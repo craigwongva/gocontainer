@@ -21,5 +21,5 @@ cd /home/ec2-user/gocontainer/userdata
 ./maven/install                    > /tmp/u16 2>&1
 ./greendots/install                > /tmp/u17 2>&1
 
-../upsert-route53                   > /tmp/u18 2>&1
+./upsert-route53                   > /tmp/u18 2>&1
 

@@ -6,7 +6,11 @@ sudo yum install jq -y                   &> $TMP-1020
 TEMP_GOCONTAINER_SECGRP=`aws ec2 describe-security-groups --region us-west-2 | jq '.SecurityGroups | .[] | select((.GroupName | contains("gocontainer"))) | .GroupId' | sed s/\"//g` &> $TMP-1030
 TEMP_MY_IP=`curl http://169.254.169.254/latest/meta-data/public-ipv4`
 echo TEMP_GOCONTAINER_SECGRP=$TEMP_GOCONTAINER_SECGRP, TEMP_MY_IP=$TEMP_MY_IP &> $TMP-1040
-aws ec2 authorize-security-group-ingress --group-id $TEMP_GOCONTAINER_SECGRP --cidr $TEMP_MY_IP/32 --port 0-27017 --protocol tcp --region us-west-2 &> $TMP-1050
+
+aws ec2 authorize-security-group-ingress \
+    --group-id $TEMP_GOCONTAINER_SECGRP \
+    --cidr $TEMP_MY_IP/32 --port 0-27017 --protocol tcp \
+    --region us-west-2 &> $TMP-1050
 
 #get trac's IP
 TEMP_TRAC1=`aws cloudformation describe-stack-resources --stack-name trac --region us-west-2 | jq '.StackResources | .[].PhysicalResourceId'` &> $TMP-1060
@@ -14,11 +18,26 @@ TEMP_TRAC2=`aws ec2 describe-instances --region us-west-2 | jq ".Reservations | 
 
 #open gocontainer's :22 to trac
 echo TEMP_GOCONTAINER_SECGRP=$TEMP_GOCONTAINER_SECGRP, TEMP_TRAC2=$TEMP_TRAC2 &> $TMP-1080
-aws ec2 authorize-security-group-ingress --group-id $TEMP_GOCONTAINER_SECGRP --cidr $TEMP_TRAC2/32 --port 22 --protocol tcp --region us-west-2 &> $TMP-1090
+
+aws ec2 authorize-security-group-ingress \
+    --group-id $TEMP_GOCONTAINER_SECGRP \
+    --cidr $TEMP_TRAC2/32 --port 22 --protocol tcp \
+    --region us-west-2 &> $TMP-1090
 
 #open gocontainer's :8080 to ec2w
 TEMP_EC2W_PUBLICIP=`aws route53 list-resource-record-sets --hosted-zone-id Z14MX2BF8JTF7J --region us-west-2 | jq '.ResourceRecordSets  | .[] | select((.Name | contains("ec2w"))) | select((.Type | contains("A"))) | .ResourceRecords | .[] | .Value' | sed s/\"//g` &> $TMP-1300
-aws ec2 authorize-security-group-ingress --group-id $TEMP_GOCONTAINER_SECGRP --cidr $TEMP_EC2W_PUBLICIP/32 --port 8080 --protocol tcp --region us-west-2 &> $TMP-1400
 
-aws ec2 authorize-security-group-ingress --group-id $TEMP_GOCONTAINER_SECGRP --cidr $1/32 --port 8080 --protocol tcp --region us-west-2 &> $TMP-2000
-aws ec2 authorize-security-group-ingress --group-id $TEMP_GOCONTAINER_SECGRP --cidr $2/32 --port   22 --protocol tcp --region us-west-2 &> $TMP-2000
+aws ec2 authorize-security-group-ingress \
+    --group-id $TEMP_GOCONTAINER_SECGRP 
+    --cidr $TEMP_EC2W_PUBLICIP/32 --port 8080 --protocol tcp \
+    --region us-west-2 &> $TMP-1400
+
+aws ec2 authorize-security-group-ingress \ 
+    --group-id $TEMP_GOCONTAINER_SECGRP \
+    --cidr $1/32 --port 8080 --protocol tcp \
+    --region us-west-2 &> $TMP-2000
+    
+aws ec2 authorize-security-group-ingress \
+    --group-id $TEMP_GOCONTAINER_SECGRP \
+    --cidr $2/32 --port 22 --protocol tcp \
+    --region us-west-2 &> $TMP-2100
