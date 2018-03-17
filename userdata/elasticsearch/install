@@ -1,6 +1,8 @@
 TMP=/tmp/elasticsearch
 
-sudo yum install java-1.8.0-openjdk-devel -y > $TMP-1000 2>&1
+cd /home/ec2-user/gocontainer
+
+#sudo yum install java-1.8.0-openjdk-devel -y > $TMP-1000 2>&1
 sudo rpm --import http://packages.elastic.co/GPG-KEY-elasticsearch > $TMP-1020 2>&1
 sudo cp /home/ec2-user/gocontainer/elasticsearch.repo /etc/yum.repos.d > $TMP-1030 2>&1
 sudo yum install elasticsearch -y > $TMP-1040 2>&1
