@@ -4,7 +4,7 @@ cd /home/ec2-user                                           &> $TMP-2410 2>&1
 wget http://mirror.olnevhost.net/pub/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz &> $TMP-2415 2>&1
 tar xvf apache-maven-3.0.5-bin.tar.gz                       &> $TMP-2420 2>&1
 sudo mv apache-maven-3.0.5 /usr/local/apache-maven          &> $TMP-2425 2>&1
-export M2_HOME=/usr/local/apache-maven                      &> $TMP-2430 2>&1
-export M2=$M2_HOME/bin                                      &> $TMP-2435 2>&1
-export PATH=$M2:$PATH                                       &> $TMP-2440 2>&1
+#export M2_HOME=/usr/local/apache-maven                      &> $TMP-2430 2>&1
+#export M2=$M2_HOME/bin                                      &> $TMP-2435 2>&1
+#export PATH=$M2:$PATH                                       &> $TMP-2440 2>&1
 
