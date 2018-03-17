@@ -1,4 +1,4 @@
-export TMP=/tmp/09-grails-green
+export TMP=/tmp/grails-green
 
 ##
 # Install Java
@@ -12,35 +12,24 @@ export JAVA_HOME=/usr/lib/jvm/java                          > $TMP-1100 2>&1
 ##
 
 cd /home/ec2-user                                           > $TMP-1200 2>&1
-#Remove the following five lines cuz
-# sometimes bin/sdkman-init.sh doesn't appear after installsdkman,
-# so cp from S3 instead:
-#wget http://get.sdkman.io -O installsdkman                  > $TMP-1300 2>&1
-#chmod 440 installsdkman                                     > $TMP-1400 2>&1
-#/bin/bash installsdkman                                     > $TMP-1500 2>&1 
-#sed -i -e 's/sdkman_auto_answer=false/sdkman_auto_answer=true/' /home/ec2-user/.sdkman/etc/config > $TMP-1600 2>&1
-#chmod 744 /home/ec2-user/.sdkman/bin/sdkman-init.sh         > $TMP-1700 2>&1
+
 aws s3 cp s3://redf4rth-root/gocontainer/dotsdkman-grails.zip . > $TMP-1210 2>&1
 unzip dotsdkman-grails.zip                                  > $TMP-1220 2>&1
 . .sdkman/bin/sdkman-init.sh                                > $TMP-1800 2>&1
 sdk install grails 2.4.0                                    > $TMP-1900 2>&1 
-
-
-
+#The zip accidentally includes /green, so delete it
+#and download the latest version.
+rm -rf green                                                > $TMP-1920 2>&1
 
 ##
 # Run the Grails app
 ##
 
 cd .sdkman/candidates/grails/2.4.0                          > $TMP-2000 2>&1
-
-#The zip accidentally includes /green, so delete it
-#and download the latest version.
-rm -rf green                                                > $TMP-2080 2>&1
 sudo yum install git -y                                     > $TMP-2100 2>&1
 git clone https://github.com/craigwongva/green              > $TMP-2200 2>&1
 cd green                                                    > $TMP-2300 2>&1
-#grails -Dserver.port=8078 run-app &                         > $TMP-2400 2>&1
+#grails -Dserver.port=8080 run-app &                         > $TMP-2400 2>&1
 
 ####
 ## Install Maven
@@ -56,15 +45,12 @@ export PATH=$M2:$PATH                                       &> $TMP-2440 2>&1
 ##
 # Install Tomcat
 ##
-#cd ~/gocontainer/nexus-java                                 &> $TMP-2442 2>&1
 cd ~/gocontainer                                            &> $TMP-2442 2>&1
 sed -i "s/CHANGEME/unused/" tomcat-users.xml                &> $TMP-2444 2>&1
 sudo yum install tomcat7 tomcat7-webapps tomcat7-docs-webapp tomcat7-admin-webapps -y > $TMP-2446 2>&1
 sudo cp tomcat-users.xml /usr/share/tomcat7/conf/           &> $TMP-2448 2>&1
 sudo service tomcat7 start                                  &> $TMP-2450 2>&1
 
-#grails war                                                  > $TMP-2500 2>&1
-#sudo cp target/green-0.1.war /usr/share/tomcat7/webapps/green.war > $TMP-2600 2>&1
 cd ~/.sdkman/candidates/grails/2.4.0/green                    &> $TMP-2650 2>&1
 mvn -DskipTests install                                       &> $TMP-2700 2>&1
 sudo cp target/green-1.0-SNAPSHOT.war /usr/share/tomcat7/webapps/green.war &> $TMP-2800 2>&1
