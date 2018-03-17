@@ -32,7 +32,7 @@ aws ec2 authorize-security-group-ingress \
     --cidr $TEMP_EC2W_PUBLICIP/32 --port 8080 --protocol tcp \
     --region us-west-2 &> $TMP-1400
 
-aws ec2 authorize-security-group-ingress \ 
+aws ec2 authorize-security-group-ingress \
     --group-id $TEMP_GOCONTAINER_SECGRP \
     --cidr $1/32 --port 8080 --protocol tcp \
     --region us-west-2 &> $TMP-2000
