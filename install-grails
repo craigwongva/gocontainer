@@ -1,0 +1,8 @@
+export TMP=/tmp/grails
+
+cd /home/ec2-user                                           > $TMP-1200 2>&1
+
+aws s3 cp s3://redf4rth-root/gocontainer/dotsdkman-grails.zip . > $TMP-1210 2>&1
+unzip dotsdkman-grails.zip                                  > $TMP-1220 2>&1
+. .sdkman/bin/sdkman-init.sh                                > $TMP-1800 2>&1
+sdk install grails 2.4.0                                    > $TMP-1900 2>&1
