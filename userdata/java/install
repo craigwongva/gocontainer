@@ -1,0 +1,8 @@
+export TMP=/tmp/java
+
+#Elasticsearch needs Java 1.8.
+sudo yum install java-1.8.0-openjdk-devel -y > $TMP-1000 2>&1
+
+#/green pom.xml references Java 1.7
+#I'm not sure how the pom finds the Java 1.7 dir, though.
+sudo yum install java-1.7.0-openjdk-devel -y                > $TMP-1100 2>&1
