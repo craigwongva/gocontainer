@@ -1,9 +1,6 @@
 TMP=/tmp/tomcat
 
-##
-# Install Tomcat
-##
-cd ~/gocontainer                                            &> $TMP-2442 2>&1
+cd /home/ec2-user/gocontainer                                            &> $TMP-2442 2>&1
 sed -i "s/CHANGEME/unused/" tomcat-users.xml                &> $TMP-2444 2>&1
 sudo yum install tomcat7 tomcat7-webapps tomcat7-docs-webapp tomcat7-admin-webapps -y > $TMP-2446 2>&1
 sudo cp tomcat-users.xml /usr/share/tomcat7/conf/           &> $TMP-2448 2>&1
