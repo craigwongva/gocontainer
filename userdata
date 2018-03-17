@@ -16,6 +16,6 @@ cd /home/ec2-user/gocontainer
 ./install-grails                   > /tmp/u14 2>&1
 ./install-maven                    > /tmp/u15 2>&1
 ./install-tomcat                   > /tmp/u16 2>&1
-./install-grails-green             > /tmp/u17 2>&1
+./install-greendots                > /tmp/u17 2>&1
 ./upsert-route53                   > /tmp/u18 2>&1
 

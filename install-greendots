@@ -1,0 +1,28 @@
+export TMP=/tmp/greendots
+
+echo $JAVA_HOME       > $TMP-1010
+echo $M2_HOME         > $TMP-1020
+echo $M2=$M2_HOME/bin > $TMP-1030
+echo PATH=$M2:$PATH   > $TMP-1040
+
+export JAVA_HOME=/usr/lib/jvm/java                          > $TMP-1100 2>&1
+export M2_HOME=/usr/local/apache-maven                      &> $TMP-1430 2>&1
+export M2=$M2_HOME/bin                                      &> $TMP-1435 2>&1
+export PATH=$M2:$PATH                                       &> $TMP-1440 2>&1
+
+echo $JAVA_HOME       > $TMP-1510
+echo $M2_HOME         > $TMP-1520
+echo $M2=$M2_HOME/bin > $TMP-1530
+echo PATH=$M2:$PATH   > $TMP-1540
+
+cd /home/ec2-user/.sdkman/candidates/grails/2.4.0           > $TMP-2000 2>&1
+#The zip accidentally includes /green, so delete it
+#and download the latest version.
+rm -rf green                                                > $TMP-2020 2>&1
+sudo yum install git -y                                     > $TMP-2100 2>&1
+git clone https://github.com/craigwongva/green              > $TMP-2200 2>&1
+cd green                                                    > $TMP-2300 2>&1
+
+mvn -DskipTests install                                       &> $TMP-2700 2>&1
+sudo cp target/green-1.0-SNAPSHOT.war /usr/share/tomcat7/webapps/green.war &> $TMP-2800 2>&1
+sudo chown ec2-user:ec2-user /usr/share/tomcat7/webapps/green.war          &> $TMP-2805 2>&1
