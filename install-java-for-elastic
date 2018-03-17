@@ -1,0 +1,4 @@
+export TMP=/tmp/java-ES
+
+#Elasticsearch needs Java 1.8.
+sudo yum install java-1.8.0-openjdk-devel -y > $TMP-1000 2>&1

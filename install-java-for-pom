@@ -1,4 +1,4 @@
-export TMP=/tmp/java
+export TMP=/tmp/java-pom
 
 #/green pom.xml references Java 1.7
 #I'm not sure how the pom finds the Java 1.7 dir, though.
