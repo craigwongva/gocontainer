@@ -23,3 +23,4 @@ cd /home/ec2-user/gocontainer/userdata
 
 ./upsert-route53                   > /tmp/u18 2>&1
 
+./greendots-golang/install $1 $3   > /tmp/u19 2>&1

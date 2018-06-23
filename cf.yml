@@ -5,6 +5,8 @@ Parameters:
     Type: String
   IP22:
     Type: String    
+  githubpassword:
+    Type: String    
 Resources:
   gocontainersecgrp:
     Type: AWS::EC2::SecurityGroup
@@ -34,6 +36,8 @@ Resources:
               - !Ref IP8080
               - " "
               - !Ref IP22
+              - " "
+              - !Ref githubpassword
               - " > /tmp/u02 2>&1'\n"
 Outputs:
   InstanceID:
