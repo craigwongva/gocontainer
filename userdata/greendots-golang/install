@@ -1,3 +1,4 @@
+cd /home/ec2-user
 git clone https://craigwongva:$2@github.com/craigwongva/greendots-golang.git > /tmp/greendots-golang-10
 cd greendots-golang # branch master
 ./userdata/install $1 # <your browser IP>
