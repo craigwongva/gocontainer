@@ -1,9 +1,12 @@
 ## How to run
-`aws cloudformation create-stack --stack-name gocontainer --template-body file://cf.yml --region us-west-2`--parameter ParameterKey=IP8080,ParameterValue=REDACTED ParameterKey=IP22,ParameterValue=REDACTED
+`aws cloudformation create-stack --stack-name gocontainer --template-body file://cf.yml --region us-west-2`--parameter ParameterKey=IP8080,ParameterValue=REDACTED ParameterKey=IP22,ParameterValue=`curl 169.254.169.254/latest/meta-data/public-ipv4` ParameterKey=githubpassword,ParameterValue=REDACTED
 
 Wait 12 minutes for everything to install, then 4 more minutes before green dots are enabled (I'm not sure why this delay exists).
 
-From ec2w, `http://x.y.z.w:8080/green/timer/dots`
+All three URLs (java green dots on :8080, Golang green dots on :8077, slides on :6060) have been witnessed to return within 26 minutes.
+* `http://gocontainer:8080/green/timer/dots`
+* `http://gocontainer:8077`
+* `http://gocontainer:6060`
 
 ## About Piazza service builds ##
 This blurb describes how Piazza services are built. (Someday there will be a separate description for how backing services are built.)
