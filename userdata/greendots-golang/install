@@ -1,7 +1,17 @@
+export BROWSER_IP=$1
+export GITHUBPASSWORD=$2
 cd /home/ec2-user
-git clone https://craigwongva:$2@github.com/craigwongva/greendots-golang.git > /tmp/greendots-golang-10
+git clone https://craigwongva:$GITHUBPASSWORD@github.com/craigwongva/greendots-golang.git > /tmp/greendots-golang-10
 cd greendots-golang # branch master
-./userdata/install $1 # <your browser IP>
+./userdata/install $BROWSER_IP 
 
+export GOROOT=/usr/local/go
+export GOPATH=/home/ec2-user/greendots-golang
+export PATH=$PATH:$GOROOT/bin
+
+cd /home/ec2-user/greendots-golang # branch master
+./userdata/update-secgrp $BROWSER_IP # if ./userdata/install wasn't run earlier for greendots-golang
+go get golang.org/x/tools/cmd/present # if first time
+$GOPATH/bin/present -play=false -http="0.0.0.0:6060" &
 
 
