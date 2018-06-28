@@ -1,12 +1,29 @@
-## How to run
-`aws cloudformation create-stack --stack-name gocontainer --template-body file://cf.yml --region us-west-2`--parameter ParameterKey=IP8080,ParameterValue=REDACTED ParameterKey=IP22,ParameterValue=`curl 169.254.169.254/latest/meta-data/public-ipv4` ParameterKey=githubpassword,ParameterValue=REDACTED
+# Portfolio
+This repo blends gocontainer, green, greendots-golang (master).
+## Motivation
+This repo shows Java green dots :8080, Go green dots :8077, slides :6060.
+## Screenshots
+
+## Technology/Framework Used
+
+## Features
+
+## Installation
+```
+aws cloudformation create-stack --stack-name gocontainer --template-body file://cf.yml --region us-west-2 --parameter ParameterKey=IP8080,ParameterValue=REDACTED ParameterKey=IP22,ParameterValue=`curl 169.254.169.254/latest/meta-data/public-ipv4` ParameterKey=githubpassword,ParameterValue=REDACTED
+```
 
 Wait 12 minutes for everything to install, then 4 more minutes before green dots are enabled (I'm not sure why this delay exists).
 
-All three URLs (java green dots on :8080, Golang green dots on :8077, slides on :6060) have been witnessed to return within 26 minutes.
+## Usage
+All three URLs (java green dots on :8080, Golang green dots on :8077, slides on :6060) have been witnessed to return within 15 minutes.
 * `http://gocontainer:8080/green/timer/dots`
 * `http://gocontainer:8077`
 * `http://gocontainer:6060`
+
+## Tests
+
+## Credits
 
 ## About Piazza service builds ##
 This blurb describes how Piazza services are built. (Someday there will be a separate description for how backing services are built.)
