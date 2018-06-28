@@ -1,4 +1,4 @@
-# Portfolio
+# gocontainer
 This repo blends gocontainer, green, greendots-golang (master).
 ## Motivation
 This repo shows Java green dots :8080, Go green dots :8077, slides :6060.
