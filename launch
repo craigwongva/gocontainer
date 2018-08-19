@@ -1,0 +1,12 @@
+export stackname=$1
+export githubpassword=$2
+export ip8080=$3
+
+aws cloudformation create-stack --stack-name $stackname \
+   --template-body file://cf.yml \
+   --region us-west-2 \
+   --parameter ParameterKey=IP8080,ParameterValue=$ip8080 \
+               ParameterKey=IP22,ParameterValue=`curl 169.254.169.254/latest/meta-data/public-ipv4` \
+               ParameterKey=githubpassword,ParameterValue=$githubpassword
+
+#aws cloudformation validate-template --template-body file://cf.yml
